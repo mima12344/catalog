@@ -1,0 +1,260 @@
+<title>Предмет</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+    }
+
+    .page {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 50px 30px 80px;
+        text-align: center;
+    }
+
+    /* ГАЛЕРЕЯ */
+
+    .gallery {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 55px;
+    }
+
+    .photo-container {
+        width: min(900px, 90vw);
+        height: min(650px, 70vh);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+    }
+
+    .photo-container img {
+        max-width: 100%;
+        max-height: 100%;
+
+        width: auto;
+        height: auto;
+
+        object-fit: contain;
+        display: block;
+    }
+
+    .arrow {
+        position: absolute;
+
+        top: 50%;
+        transform: translateY(-50%);
+
+        width: 50px;
+        height: 50px;
+
+        border: none;
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+
+        border-radius: 50%;
+
+        font-size: 28px;
+        line-height: 50px;
+
+        cursor: pointer;
+
+        transition: background 0.2s ease;
+    }
+
+    .arrow:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .arrow-left {
+        left: 10px;
+    }
+
+    .arrow-right {
+        right: 10px;
+    }
+
+    .photo-counter {
+        margin-top: 15px;
+        color: #777;
+        font-size: 13px;
+    }
+
+    /* ТЕКСТ */
+
+    .content {
+        max-width: 760px;
+        margin: 0 auto;
+    }
+
+    .number {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    h1 {
+        margin: 0 0 35px;
+
+        font-size: clamp(26px, 4vw, 44px);
+        font-weight: 400;
+        line-height: 1.15;
+    }
+
+    .description {
+        max-width: 680px;
+        margin: 0 auto 50px;
+
+        font-size: 17px;
+        line-height: 1.7;
+        color: #ddd;
+
+        /*
+         * Текст находится в ограниченной невидимой области.
+         */
+        padding: 0 20px;
+    }
+
+    .expertise {
+        margin: 0 auto;
+        max-width: 680px;
+
+        padding-top: 35px;
+        border-top: 1px solid #222;
+    }
+
+    .expertise-title {
+        margin-bottom: 18px;
+
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+
+        color: #777;
+    }
+
+    .expertise a {
+        color: #fff;
+        text-decoration: none;
+
+        display: inline-block;
+
+        border: 1px solid #444;
+        padding: 12px 22px;
+
+        transition: background 0.2s ease;
+    }
+
+    .expertise a:hover {
+        background: #fff;
+        color: #000;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* ТЕЛЕФОН */
+
+    @media (max-width: 600px) {
+
+        .page {
+            padding: 25px 15px 60px;
+        }
+
+        .photo-container {
+            width: 100%;
+            height: 60vh;
+        }
+
+        .arrow {
+            width: 42px;
+            height: 42px;
+            line-height: 42px;
+            font-size: 23px;
+        }
+
+        .arrow-left {
+            left: 0;
+        }
+
+        .arrow-right {
+            right: 0;
+        }
+
+        .gallery {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 1.65;
+            padding: 0 10px;
+        }
+    }
+</style>
+<div class="gallery">
+
+    <button class="arrow arrow-left" id="prev">
+        ‹
+    </button>
+
+    <div class="photo-container">
+        <img id="photo" src="" alt="">
+    </div>
+
+    <button class="arrow arrow-right" id="next">
+        ›
+    </button>
+
+</div>
+
+<div class="photo-counter" id="counter"></div>
+
+<main class="content">
+
+    <div class="number" id="number"></div>
+
+    <h1 id="title"></h1>
+
+    <div class="description" id="description"></div>
+
+    <div class="expertise hidden" id="expertise">
+  
+          <div class="expertise-title">
+              Экспертиза
+          </div>
+
+        <a id="expertise-link"
+           href=""
+           target="_blank"
+           download>
+            Открыть экспертное заключение
+        </a>
+
+    </div>
+
+</main>
