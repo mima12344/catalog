@@ -1,4 +1,4 @@
-const ACCESS_CODE = "F7k29Qm81ZxP4";
+const ACCESS_CODE = "aQdk150EXmnlNnMlHYmvcPHi62ZKQZFruwia0sa5tRY";
 export default { 
   async fetch(request, env) { 
     const url = new URL(request.url);
@@ -19,7 +19,7 @@ export default {
 
     if (!cookies.includes(`catalog_access=${ACCESS_CODE}`)) {
       return new Response(
-        "Доступ закрыт. Отсканируйте QR-код на выставке.",
+        "Доступ закрыт.",
         {
           status: 403,
           headers: {
