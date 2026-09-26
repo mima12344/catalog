@@ -1,234 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Предмет</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+box-sizing: border-box;
+}
 
-    html, body {
-        margin: 0;
-        padding: 0;
-        background: #000;
-        color: #fff;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+html, body {
+margin: 0;
+padding: 0;
+background: #000;
+color: #fff;
+font-family: Arial, Helvetica, sans-serif;
+}
 
-    body {
-        min-height: 100vh;
-    }
+body {
+min-height: 100vh;
+}
 
-    .page {
-        width: 100%;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 50px 30px 80px;
-        text-align: center;
-    }
+.page {
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding: 50px 30px 80px;
+text-align: center;
+}
 
-    /* ГАЛЕРЕЯ */
+.gallery {
+position: relative;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-bottom: 55px;
+}
 
-    .gallery {
-        position: relative;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 55px;
-    }
+.photo-container {
+width: min(900px, 90vw);
+height: min(650px, 70vh);
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
 
-    .photo-container {
-        width: min(900px, 90vw);
-        height: min(650px, 70vh);
+.photo-container img {
+max-width: 100%;
+max-height: 100%;
+width: auto;
+height: auto;
+object-fit: contain;
+display: block;
+}
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+width: 50px;
+height: 50px;
+border: none;
+background: rgba(255, 255, 255, 0.08);
+color: #fff;
+border-radius: 50%;
+font-size: 28px;
+cursor: pointer;
+}
 
-        overflow: hidden;
-    }
+.arrow:hover {
+background: rgba(255, 255, 255, 0.2);
+}
 
-    .photo-container img {
-        max-width: 100%;
-        max-height: 100%;
+.arrow-left {
+left: 10px;
+}
 
-        width: auto;
-        height: auto;
+.arrow-right {
+right: 10px;
+}
 
-        object-fit: contain;
-        display: block;
-    }
+.photo-counter {
+margin-top: 15px;
+margin-bottom: 35px;
+color: #777;
+font-size: 13px;
+}
 
-    .arrow {
-        position: absolute;
+.content {
+max-width: 760px;
+margin: 0 auto;
+}
 
-        top: 50%;
-        transform: translateY(-50%);
+.number {
+color: #777;
+font-size: 14px;
+margin-bottom: 12px;
+}
 
-        width: 50px;
-        height: 50px;
+h1 {
+margin: 0 0 35px;
+font-size: clamp(26px, 4vw, 44px);
+font-weight: 400;
+line-height: 1.15;
+}
 
-        border: none;
-        background: rgba(255, 255, 255, 0.08);
-        color: #fff;
+.description {
+max-width: 680px;
+margin: 0 auto 50px;
+font-size: 17px;
+line-height: 1.7;
+color: #ddd;
+padding: 0 20px;
+}
 
-        border-radius: 50%;
+.expertise {
+margin: 0 auto;
+max-width: 680px;
+padding-top: 35px;
+border-top: 1px solid #222;
+}
 
-        font-size: 28px;
-        line-height: 50px;
+.expertise-title {
+margin-bottom: 18px;
+font-size: 13px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: #777;
+}
 
-        cursor: pointer;
+.expertise a {
+color: #fff;
+text-decoration: none;
+display: inline-block;
+border: 1px solid #444;
+padding: 12px 22px;
+}
 
-        transition: background 0.2s ease;
-    }
+.expertise a:hover {
+background: #fff;
+color: #000;
+}
 
-    .arrow:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
+.hidden {
+display: none;
+}
 
-    .arrow-left {
-        left: 10px;
-    }
+.error {
+color: #888;
+font-size: 16px;
+margin-top: 100px;
+}
 
-    .arrow-right {
-        right: 10px;
-    }
+@media (max-width: 600px) {
 
-    .photo-counter {
-        margin-top: 15px;
-        color: #777;
-        font-size: 13px;
-    }
+.page {
+padding: 25px 15px 60px;
+}
 
-    /* ТЕКСТ */
+.photo-container {
+width: 100%;
+height: 60vh;
+}
 
-    .content {
-        max-width: 760px;
-        margin: 0 auto;
-    }
+.arrow {
+width: 42px;
+height: 42px;
+font-size: 23px;
+}
 
-    .number {
-        color: #777;
-        font-size: 14px;
-        margin-bottom: 12px;
-    }
+.arrow-left {
+left: 0;
+}
 
-    h1 {
-        margin: 0 0 35px;
+.arrow-right {
+right: 0;
+}
 
-        font-size: clamp(26px, 4vw, 44px);
-        font-weight: 400;
-        line-height: 1.15;
-    }
+.gallery {
+margin-bottom: 30px;
+}
 
-    .description {
-        max-width: 680px;
-        margin: 0 auto 50px;
+h1 {
+margin-bottom: 25px;
+}
 
-        font-size: 17px;
-        line-height: 1.7;
-        color: #ddd;
-
-        /*
-         * Текст находится в ограниченной невидимой области.
-         */
-        padding: 0 20px;
-    }
-
-    .expertise {
-        margin: 0 auto;
-        max-width: 680px;
-
-        padding-top: 35px;
-        border-top: 1px solid #222;
-    }
-
-    .expertise-title {
-        margin-bottom: 18px;
-
-        font-size: 13px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-
-        color: #777;
-    }
-
-    .expertise a {
-        color: #fff;
-        text-decoration: none;
-
-        display: inline-block;
-
-        border: 1px solid #444;
-        padding: 12px 22px;
-
-        transition: background 0.2s ease;
-    }
-
-    .expertise a:hover {
-        background: #fff;
-        color: #000;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    /* ТЕЛЕФОН */
-
-    @media (max-width: 600px) {
-
-        .page {
-            padding: 25px 15px 60px;
-        }
-
-        .photo-container {
-            width: 100%;
-            height: 60vh;
-        }
-
-        .arrow {
-            width: 42px;
-            height: 42px;
-            line-height: 42px;
-            font-size: 23px;
-        }
-
-        .arrow-left {
-            left: 0;
-        }
-
-        .arrow-right {
-            right: 0;
-        }
-
-        .gallery {
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            margin-bottom: 25px;
-        }
-
-        .description {
-            font-size: 16px;
-            line-height: 1.65;
-            padding: 0 10px;
-        }
-    }
+.description {
+font-size: 16px;
+line-height: 1.65;
+padding: 0 10px;
+}
+}
 </style>
-<div class="gallery">
+</head>
 
-    <button class="arrow arrow-left" id="prev">
-        ‹
-    </button>
+<body>
 
-    <div class="photo-container">
-        <img id="photo" src="" alt="">
-    </div>
+<div class="page">
 
-    <button class="arrow arrow-right" id="next">
-        ›
-    </button>
+<div class="gallery" id="gallery">
+
+<button class="arrow arrow-left" id="prev">
+‹
+</button>
+
+<div class="photo-container">
+<img id="photo" src="" alt="">
+</div>
+
+<button class="arrow arrow-right" id="next">
+›
+</button>
 
 </div>
 
@@ -236,25 +222,193 @@
 
 <main class="content">
 
-    <div class="number" id="number"></div>
+<div class="number" id="number"></div>
 
-    <h1 id="title"></h1>
+<h1 id="title"></h1>
 
-    <div class="description" id="description"></div>
+<div class="description" id="description"></div>
 
-    <div class="expertise hidden" id="expertise">
-  
-          <div class="expertise-title">
-              Экспертиза
-          </div>
+<div class="expertise hidden" id="expertise">
 
-        <a id="expertise-link"
-           href=""
-           target="_blank"
-           download>
-            Открыть экспертное заключение
-        </a>
+<div class="expertise-title">
+Экспертиза
+</div>
 
-    </div>
+<a id="expertise-link"
+href=""
+target="_blank"
+download>
+Открыть экспертное заключение
+</a>
+
+</div>
 
 </main>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const objectId = params.get("object");
+
+let photos = [];
+let currentPhoto = 0;
+let objectFolder = "";
+
+async function loadObject() {
+
+if (!objectId) {
+showError("Предмет не указан.");
+return;
+}
+
+try {
+
+// Загружаем список объектов
+const catalogResponse = await fetch("catalog.json");
+
+if (!catalogResponse.ok) {
+throw new Error("Не удалось загрузить catalog.json");
+}
+
+const catalog = await catalogResponse.json();
+
+objectFolder = catalog[objectId];
+
+if (!objectFolder) {
+throw new Error(
+`Предмет ${objectId} не найден в catalog.json`
+);
+}
+
+// Загружаем информацию о предмете
+const infoResponse = await fetch(
+`objects/${encodeURIComponent(objectFolder)}/info.json`
+);
+
+if (!infoResponse.ok) {
+throw new Error("Не удалось загрузить info.json");
+}
+
+const data = await infoResponse.json();
+
+document.getElementById("number").textContent =
+data.catalognumber
+? `№ ${data.catalognumber}`
+: "";
+
+document.getElementById("title").textContent =
+data.title || "";
+
+document.getElementById("description").textContent =
+data.description || "";
+
+photos = data.photos || [];
+
+if (photos.length > 0) {
+
+showPhoto(0);
+
+if (photos.length === 1) {
+document.getElementById("prev").style.display = "none";
+document.getElementById("next").style.display = "none";
+}
+
+} else {
+
+document.getElementById("gallery")
+.classList.add("hidden");
+
+document.getElementById("counter")
+.classList.add("hidden");
+}
+
+// Экспертиза
+if (data.expertise) {
+
+const expertiseBlock =
+document.getElementById("expertise");
+
+const expertiseLink =
+document.getElementById("expertise-link");
+
+expertiseLink.href =
+`objects/${encodeURIComponent(objectFolder)}/${encodeURIComponent(data.expertise)}`;
+
+expertiseBlock.classList.remove("hidden");
+}
+
+} catch (error) {
+
+console.error(error);
+showError("Не удалось загрузить предмет.");
+
+}
+}
+
+function showPhoto(index) {
+
+if (photos.length === 0) {
+return;
+}
+
+currentPhoto = index;
+
+const photo =
+document.getElementById("photo");
+
+photo.src =
+`objects/${encodeURIComponent(objectFolder)}/${encodeURIComponent(photos[currentPhoto])}`;
+
+photo.alt =
+document.getElementById("title").textContent;
+
+document.getElementById("counter").textContent =
+`${currentPhoto + 1} / ${photos.length}`;
+}
+
+function showError(message) {
+
+document.getElementById("gallery")
+.classList.add("hidden");
+
+document.getElementById("counter")
+.classList.add("hidden");
+
+document.getElementById("title")
+.textContent = message;
+}
+
+document.getElementById("prev").addEventListener("click", () => {
+
+if (photos.length === 0) return;
+
+let next = currentPhoto - 1;
+
+if (next < 0) {
+next = photos.length - 1;
+}
+
+showPhoto(next);
+});
+
+document.getElementById("next").addEventListener("click", () => {
+
+if (photos.length === 0) return;
+
+let next = currentPhoto + 1;
+
+if (next >= photos.length) {
+next = 0;
+}
+
+showPhoto(next);
+});
+
+loadObject();
+
+</script>
+
+</body>
+</html>
