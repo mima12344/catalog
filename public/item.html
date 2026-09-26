@@ -7,19 +7,15 @@
 <title>Страница предмета</title>
 
 <style>
-
 * {
 box-sizing: border-box;
 }
 
-html,
-body {
+html, body {
 margin: 0;
 padding: 0;
-
 background: #000;
 color: #fff;
-
 font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -27,32 +23,22 @@ body {
 min-height: 100vh;
 }
 
-
-/* ОСНОВНАЯ СТРАНИЦА */
-
 .page {
 width: 100%;
 max-width: 1300px;
-
 margin: 0 auto;
-
 padding: 50px 30px 100px;
-
 text-align: center;
 }
 
-
-/* ФОТОГАЛЕРЕЯ */
+/* ФОТО */
 
 .gallery {
 position: relative;
-
 width: 100%;
-
 display: flex;
 justify-content: center;
 align-items: center;
-
 margin-bottom: 20px;
 }
 
@@ -61,8 +47,8 @@ width: min(1000px, 90vw);
 height: min(700px, 72vh);
 
 display: flex;
-justify-content: center;
 align-items: center;
+justify-content: center;
 
 overflow: hidden;
 }
@@ -70,21 +56,16 @@ overflow: hidden;
 .photo-container img {
 max-width: 100%;
 max-height: 100%;
-
 width: auto;
 height: auto;
-
 object-fit: contain;
-
 display: block;
 }
 
-
-/* СТРЕЛКИ ФОТО */
+/* СТРЕЛКИ */
 
 .arrow {
 position: absolute;
-
 top: 50%;
 transform: translateY(-50%);
 
@@ -95,14 +76,10 @@ border: none;
 border-radius: 50%;
 
 background: rgba(255,255,255,0.08);
-
 color: #fff;
 
 font-size: 32px;
-
 cursor: pointer;
-
-transition: background 0.2s;
 }
 
 .arrow:hover {
@@ -117,64 +94,48 @@ left: 10px;
 right: 10px;
 }
 
-
-/* СЧЁТЧИК ФОТО */
-
 .photo-counter {
 margin: 15px 0 50px;
-
 color: #777;
-
 font-size: 13px;
 }
-
 
 /* ТЕКСТ */
 
 .content {
 max-width: 800px;
-
 margin: 0 auto;
 }
 
 .number {
-margin-bottom: 12px;
-
 color: #777;
-
 font-size: 14px;
+margin-bottom: 12px;
 }
 
 h1 {
 margin: 0 0 35px;
 
 font-size: clamp(26px, 4vw, 44px);
-
 font-weight: 400;
-
 line-height: 1.15;
 }
 
 .description {
 max-width: 700px;
-
 margin: 0 auto 60px;
 
 padding: 0 20px;
 
 color: #ddd;
-
 font-size: 17px;
-
 line-height: 1.7;
 }
-
 
 /* ЭКСПЕРТИЗА */
 
 .expertise {
 width: 100%;
-
 margin: 0 auto;
 
 padding-top: 40px;
@@ -188,83 +149,20 @@ margin-bottom: 30px;
 color: #777;
 
 font-size: 13px;
-
 letter-spacing: 0.12em;
-
 text-transform: uppercase;
 }
 
-
-/* ОБЛАСТЬ PDF */
-
-.pdf-container {
+.pdf-viewer {
 width: 100%;
+height: 1100px;
 
-display: flex;
-justify-content: center;
-
-background: #111;
-}
-
-#pdf-canvas {
 display: block;
 
-width: 100%;
-height: auto;
+border: none;
 
 background: #fff;
 }
-
-
-/* УПРАВЛЕНИЕ PDF */
-
-.pdf-controls {
-display: flex;
-
-justify-content: center;
-align-items: center;
-
-gap: 20px;
-
-margin-top: 20px;
-}
-
-.pdf-button {
-min-width: 44px;
-height: 44px;
-
-padding: 0 16px;
-
-border: 1px solid #444;
-
-background: transparent;
-
-color: #fff;
-
-font-size: 16px;
-
-cursor: pointer;
-}
-
-.pdf-button:hover {
-background: #fff;
-color: #000;
-}
-
-.pdf-button:disabled {
-opacity: 0.3;
-
-cursor: default;
-}
-
-.pdf-page-number {
-color: #777;
-
-font-size: 14px;
-}
-
-
-/* СКАЧИВАНИЕ */
 
 .expertise-download {
 display: inline-block;
@@ -276,27 +174,17 @@ padding: 12px 24px;
 border: 1px solid #444;
 
 color: #fff;
-
 text-decoration: none;
-
-transition:
-background 0.2s,
-color 0.2s;
 }
 
 .expertise-download:hover {
 background: #fff;
-
 color: #000;
 }
-
 
 .hidden {
 display: none;
 }
-
-
-/* МОБИЛЬНАЯ ВЕРСИЯ */
 
 @media (max-width: 600px) {
 
@@ -306,14 +194,12 @@ padding: 25px 15px 60px;
 
 .photo-container {
 width: 100%;
-
 height: 60vh;
 }
 
 .arrow {
 width: 42px;
 height: 42px;
-
 font-size: 25px;
 }
 
@@ -331,151 +217,68 @@ margin-bottom: 25px;
 
 .description {
 padding: 0 10px;
-
 font-size: 16px;
-
 line-height: 1.65;
 }
 
-.pdf-controls {
-gap: 12px;
+.pdf-viewer {
+height: 800px;
 }
-
 }
-
 </style>
 </head>
-
 
 <body>
 
 <div class="page">
 
-
 <!-- ФОТОГАЛЕРЕЯ -->
 
-<div
-class="gallery"
-id="gallery">
+<div class="gallery" id="gallery">
 
-<button
-class="arrow arrow-left"
-id="prev">
-
+<button class="arrow arrow-left" id="prev">
 ‹
-
 </button>
-
 
 <div class="photo-container">
-
-<img
-id="photo"
-src=""
-alt="">
-
+<img id="photo" src="" alt="">
 </div>
 
-
-<button
-class="arrow arrow-right"
-id="next">
-
+<button class="arrow arrow-right" id="next">
 ›
-
 </button>
 
 </div>
 
-
-<!-- СЧЁТЧИК ФОТО -->
-
-<div
-class="photo-counter"
-id="counter">
-</div>
+<div class="photo-counter" id="counter"></div>
 
 
-<!-- ИНФОРМАЦИЯ О ПРЕДМЕТЕ -->
+<!-- ИНФОРМАЦИЯ -->
 
 <main class="content">
 
-
-<div
-class="number"
-id="number">
-</div>
-
+<div class="number" id="number"></div>
 
 <h1 id="title"></h1>
 
-
-<div
-class="description"
-id="description">
-</div>
-
+<div class="description" id="description"></div>
 
 </main>
 
 
-<!-- ЭКСПЕРТНОЕ ЗАКЛЮЧЕНИЕ -->
+<!-- ЭКСПЕРТИЗА -->
 
-<section
-class="expertise hidden"
-id="expertise">
-
+<section class="expertise hidden" id="expertise">
 
 <div class="expertise-title">
-
 Экспертное заключение
-
 </div>
 
-
-<div class="pdf-container">
-
-<canvas id="pdf-canvas"></canvas>
-
-</div>
-
-
-<!-- УПРАВЛЕНИЕ СТРАНИЦАМИ PDF -->
-
-<div class="pdf-controls">
-
-
-<button
-class="pdf-button"
-id="pdf-prev">
-
-‹
-
-</button>
-
-
-<div
-class="pdf-page-number"
-id="pdf-page-number">
-
-1 / 1
-
-</div>
-
-
-<button
-class="pdf-button"
-id="pdf-next">
-
-›
-
-</button>
-
-
-</div>
-
-
-<!-- СКАЧИВАНИЕ -->
+<iframe
+id="pdf-viewer"
+class="pdf-viewer"
+src="">
+</iframe>
 
 <a
 id="expertise-download"
@@ -487,161 +290,86 @@ download>
 
 </a>
 
-
 </section>
-
 
 </div>
 
 
-<script type="module">
-
-
-/*
-* PDF.JS
-*/
-
-import * as pdfjsLib
-from "./pdfjs/pdf.mjs";
-
-
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-"./pdfjs/pdf.worker.mjs";
-
-
-/*
-* ПОЛУЧАЕМ НОМЕР ПРЕДМЕТА
-*
-* Например:
-*
-* item.html?object=001
-*/
+<script>
 
 const params =
-new URLSearchParams(
-window.location.search
-);
-
+new URLSearchParams(window.location.search);
 
 const objectId =
 params.get("object");
 
-
 let photos = [];
-
 let currentPhoto = 0;
-
 let objectFolder = "";
 
 
-/*
-* PDF
-*/
-
-let pdfDocument = null;
-
-let pdfPage = 1;
-
-
-/*
-* ЗАГРУЗКА ПРЕДМЕТА
-*/
-
 async function loadObject() {
 
-
 if (!objectId) {
-
-document.getElementById("title")
-.textContent =
+document.getElementById("title").textContent =
 "Предмет не указан";
-
 return;
-
 }
-
 
 try {
 
-
-/*
-* 1.
-* Загружаем catalog.json
-*/
+/* catalog.json */
 
 const catalogResponse =
 await fetch("catalog.json");
 
-
 if (!catalogResponse.ok) {
-
 throw new Error(
 "Не удалось загрузить catalog.json"
 );
-
 }
-
 
 const catalog =
 await catalogResponse.json();
 
 
-/*
-* 2.
-* Находим папку предмета
-*/
+/* Папка предмета */
 
 objectFolder =
 catalog[objectId];
 
-
 if (!objectFolder) {
-
 throw new Error(
 "Предмет не найден в catalog.json"
 );
-
 }
 
 
-/*
-* 3.
-* Загружаем info.json
-*/
+/* info.json */
 
 const infoResponse =
 await fetch(
-`objects/${encodeURIComponent(objectFolder)}/info.json`
+`objects/${objectFolder}/info.json`
 );
 
-
 if (!infoResponse.ok) {
-
 throw new Error(
 "Не удалось загрузить info.json"
 );
-
 }
-
 
 const data =
 await infoResponse.json();
 
 
-/*
-* 4.
-* Название вкладки
-*/
+/* Название вкладки */
 
 document.title =
 data.title ||
 "Страница предмета";
 
 
-/*
-* 5.
-* Номер
-*/
+/* Номер */
 
 document.getElementById("number")
 .textContent =
@@ -650,30 +378,21 @@ data.catalognumber
 : "";
 
 
-/*
-* 6.
-* Название
-*/
+/* Название */
 
 document.getElementById("title")
 .textContent =
 data.title || "";
 
 
-/*
-* 7.
-* Описание
-*/
+/* Описание */
 
 document.getElementById("description")
 .textContent =
 data.description || "";
 
 
-/*
-* 8.
-* ФОТО
-*/
+/* ФОТО */
 
 photos =
 data.photos || [];
@@ -681,51 +400,36 @@ data.photos || [];
 
 if (photos.length > 0) {
 
-
 showPhoto(0);
-
 
 if (photos.length === 1) {
 
 document.getElementById("prev")
-.style.display =
-"none";
+.style.display = "none";
 
 document.getElementById("next")
-.style.display =
-"none";
-
+.style.display = "none";
 }
-
 
 } else {
 
-
 document.getElementById("gallery")
-.classList
-.add("hidden");
-
+.classList.add("hidden");
 
 document.getElementById("counter")
-.classList
-.add("hidden");
-
+.classList.add("hidden");
 }
 
 
-/*
-* 9.
-* ЭКСПЕРТИЗА
-*/
+/* ЭКСПЕРТИЗА */
 
 if (data.expertise) {
 
-
 const expertise =
-document.getElementById(
-"expertise"
-);
+document.getElementById("expertise");
 
+const viewer =
+document.getElementById("pdf-viewer");
 
 const download =
 document.getElementById(
@@ -734,469 +438,110 @@ document.getElementById(
 
 
 const file =
-`objects/${encodeURIComponent(objectFolder)}/${encodeURIComponent(data.expertise)}`;
+`objects/${objectFolder}/${data.expertise}`;
 
 
 /*
-* Ссылка на скачивание
+* PDF открывается сразу
+* с масштабированием по ширине
 */
 
-download.href =
-file;
+viewer.src =
+file + "#view=FitH";
 
 
-/*
-* Показываем блок
-*/
+/* Скачивание */
 
-expertise.classList
-.remove("hidden");
+download.href = file;
 
 
-/*
-* Загружаем PDF
-*/
+/* Показываем блок */
 
-await loadPDF(file);
-
+expertise.classList.remove(
+"hidden"
+);
 }
-
 
 }
 
 catch (error) {
 
-
 console.error(error);
-
 
 document.getElementById("title")
 .textContent =
 "Не удалось загрузить предмет.";
-
+}
 }
 
-}
 
-
-/*
-* ФОТО
-*/
+/* Показ фотографии */
 
 function showPhoto(index) {
-
 
 if (photos.length === 0) {
 return;
 }
 
-
 currentPhoto = index;
-
 
 const photo =
 document.getElementById("photo");
 
-
 photo.src =
-`objects/${encodeURIComponent(objectFolder)}/${encodeURIComponent(photos[currentPhoto])}`;
-
+`objects/${objectFolder}/${photos[currentPhoto]}`;
 
 photo.alt =
 document.getElementById("title")
 .textContent;
 
-
 document.getElementById("counter")
 .textContent =
 `${currentPhoto + 1} / ${photos.length}`;
-
 }
 
 
-/*
-* ЛЕВАЯ СТРЕЛКА ФОТО
-*/
+/* Левая стрелка */
 
 document.getElementById("prev")
-.addEventListener(
-"click",
-() => {
-
+.addEventListener("click", () => {
 
 if (photos.length === 0) {
 return;
 }
-
 
 let next =
 currentPhoto - 1;
 
-
 if (next < 0) {
-
-next =
-photos.length - 1;
-
+next = photos.length - 1;
 }
-
 
 showPhoto(next);
-
-}
-);
+});
 
 
-/*
-* ПРАВАЯ СТРЕЛКА ФОТО
-*/
+/* Правая стрелка */
 
 document.getElementById("next")
-.addEventListener(
-"click",
-() => {
-
+.addEventListener("click", () => {
 
 if (photos.length === 0) {
 return;
 }
 
-
 let next =
 currentPhoto + 1;
 
-
 if (next >= photos.length) {
-
 next = 0;
-
 }
-
 
 showPhoto(next);
-
-}
-);
-
-
-/*
-* ЗАГРУЗКА PDF
-*/
-
-async function loadPDF(file) {
-
-
-try {
-
-
-pdfDocument =
-await pdfjsLib.getDocument(file)
-.promise;
-
-
-pdfPage = 1;
-
-
-await renderPDFPage(pdfPage);
-
-
-updatePDFControls();
-
-
-}
-
-catch (error) {
-
-
-console.error(
-"Ошибка загрузки PDF:",
-error
-);
-
-}
-
-}
-
-
-/*
-* ОТРИСОВКА СТРАНИЦЫ PDF
-*/
-
-async function renderPDFPage(pageNumber) {
-
-
-if (!pdfDocument) {
-return;
-}
-
-
-const page =
-await pdfDocument
-.getPage(pageNumber);
-
-
-const canvas =
-document.getElementById(
-"pdf-canvas"
-);
-
-
-const context =
-canvas.getContext("2d");
-
-
-/*
-* Получаем размер страницы
-*/
-
-const baseViewport =
-page.getViewport({
-scale: 1
 });
 
 
-/*
-* Ширина контейнера
-*/
-
-const container =
-document.querySelector(
-".pdf-container"
-);
-
-
-const containerWidth =
-container.clientWidth;
-
-
-/*
-* Масштабируем PDF
-* ровно по ширине
-*/
-
-const scale =
-containerWidth /
-baseViewport.width;
-
-
-const viewport =
-page.getViewport({
-scale: scale
-});
-
-
-/*
-* Устанавливаем размер canvas
-*/
-
-const outputScale =
-window.devicePixelRatio || 1;
-
-
-canvas.width =
-Math.floor(
-viewport.width *
-outputScale
-);
-
-
-canvas.height =
-Math.floor(
-viewport.height *
-outputScale
-);
-
-
-canvas.style.width =
-Math.floor(
-viewport.width
-) + "px";
-
-
-canvas.style.height =
-Math.floor(
-viewport.height
-) + "px";
-
-
-/*
-* Рендерим страницу
-*/
-
-const renderContext = {
-
-canvasContext:
-context,
-
-viewport:
-viewport,
-
-transform:
-outputScale !== 1
-? [
-outputScale,
-0,
-0,
-outputScale,
-0,
-0
-]
-: null
-
-};
-
-
-await page.render(
-renderContext
-).promise;
-
-}
-
-
-/*
-* ОБНОВЛЕНИЕ КНОПОК PDF
-*/
-
-function updatePDFControls() {
-
-
-if (!pdfDocument) {
-return;
-}
-
-
-document.getElementById(
-"pdf-page-number"
-).textContent =
-`${pdfPage} / ${pdfDocument.numPages}`;
-
-
-document.getElementById(
-"pdf-prev"
-).disabled =
-pdfPage <= 1;
-
-
-document.getElementById(
-"pdf-next"
-).disabled =
-pdfPage >= pdfDocument.numPages;
-
-}
-
-
-/*
-* ПРЕДЫДУЩАЯ СТРАНИЦА PDF
-*/
-
-document.getElementById("pdf-prev")
-.addEventListener(
-"click",
-async () => {
-
-
-if (!pdfDocument) {
-return;
-}
-
-
-if (pdfPage <= 1) {
-return;
-}
-
-
-pdfPage--;
-
-
-await renderPDFPage(
-pdfPage
-);
-
-
-updatePDFControls();
-
-}
-);
-
-
-/*
-* СЛЕДУЮЩАЯ СТРАНИЦА PDF
-*/
-
-document.getElementById("pdf-next")
-.addEventListener(
-"click",
-async () => {
-
-
-if (!pdfDocument) {
-return;
-}
-
-
-if (
-pdfPage >=
-pdfDocument.numPages
-) {
-return;
-}
-
-
-pdfPage++;
-
-
-await renderPDFPage(
-pdfPage
-);
-
-
-updatePDFControls();
-
-}
-);
-
-
-/*
-* ПЕРЕРИСОВКА PDF
-* при изменении размера окна
-*/
-
-let resizeTimer;
-
-
-window.addEventListener(
-"resize",
-() => {
-
-
-clearTimeout(
-resizeTimer
-);
-
-
-resizeTimer =
-setTimeout(
-() => {
-
-if (pdfDocument) {
-
-renderPDFPage(
-pdfPage
-);
-
-}
-
-},
-200
-);
-
-}
-);
-
-
-/*
-* ЗАПУСК
-*/
+/* Запуск */
 
 loadObject();
 
