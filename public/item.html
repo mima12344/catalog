@@ -26,26 +26,29 @@ min-height: 100vh;
 
 .page {
 width: 100%;
-max-width: 1200px;
+max-width: 1300px;
 margin: 0 auto;
-padding: 50px 30px 80px;
+padding: 50px 30px 100px;
 text-align: center;
 }
+
 
 /* ФОТОГАЛЕРЕЯ */
 
 .gallery {
 position: relative;
 width: 100%;
+
 display: flex;
 justify-content: center;
 align-items: center;
+
 margin-bottom: 20px;
 }
 
 .photo-container {
-width: min(900px, 90vw);
-height: min(650px, 70vh);
+width: min(1000px, 90vw);
+height: min(700px, 72vh);
 
 display: flex;
 align-items: center;
@@ -65,6 +68,7 @@ object-fit: contain;
 display: block;
 }
 
+
 /* СТРЕЛКИ */
 
 .arrow {
@@ -73,8 +77,8 @@ position: absolute;
 top: 50%;
 transform: translateY(-50%);
 
-width: 50px;
-height: 50px;
+width: 52px;
+height: 52px;
 
 border: none;
 border-radius: 50%;
@@ -82,10 +86,12 @@ border-radius: 50%;
 background: rgba(255, 255, 255, 0.08);
 color: #fff;
 
-font-size: 30px;
-line-height: 50px;
+font-size: 32px;
+line-height: 52px;
 
 cursor: pointer;
+
+transition: background 0.2s ease;
 }
 
 .arrow:hover {
@@ -100,20 +106,22 @@ left: 10px;
 right: 10px;
 }
 
-/* СЧЁТЧИК ФОТО */
+
+/* СЧЁТЧИК */
 
 .photo-counter {
-margin: 15px 0 45px;
+margin: 15px 0 50px;
 
 color: #777;
 
 font-size: 13px;
 }
 
-/* ТЕКСТ */
+
+/* ИНФОРМАЦИЯ */
 
 .content {
-max-width: 760px;
+max-width: 800px;
 margin: 0 auto;
 }
 
@@ -136,9 +144,9 @@ line-height: 1.15;
 }
 
 .description {
-max-width: 680px;
+max-width: 700px;
 
-margin: 0 auto 50px;
+margin: 0 auto 60px;
 
 font-size: 17px;
 line-height: 1.7;
@@ -148,14 +156,17 @@ color: #ddd;
 padding: 0 20px;
 }
 
+
 /* ЭКСПЕРТИЗА */
 
 .expertise {
-max-width: 900px;
+width: 100%;
+
+max-width: 1150px;
 
 margin: 0 auto;
 
-padding-top: 35px;
+padding-top: 40px;
 
 border-top: 1px solid #222;
 }
@@ -174,7 +185,8 @@ color: #777;
 
 .expertise-viewer {
 width: 100%;
-height: 800px;
+
+height: 1000px;
 
 border: none;
 
@@ -183,11 +195,37 @@ background: #fff;
 display: block;
 }
 
+.expertise-download {
+display: inline-block;
+
+margin-top: 20px;
+
+padding: 12px 24px;
+
+border: 1px solid #444;
+
+color: #fff;
+
+text-decoration: none;
+
+transition: background 0.2s ease,
+color 0.2s ease;
+}
+
+.expertise-download:hover {
+background: #fff;
+color: #000;
+}
+
+
+/* СКРЫТЫЕ ЭЛЕМЕНТЫ */
+
 .hidden {
 display: none;
 }
 
-/* МОБИЛЬНАЯ ВЕРСИЯ */
+
+/* ТЕЛЕФОН */
 
 @media (max-width: 600px) {
 
@@ -204,7 +242,7 @@ height: 60vh;
 width: 42px;
 height: 42px;
 
-font-size: 24px;
+font-size: 25px;
 line-height: 42px;
 }
 
@@ -222,31 +260,47 @@ margin-bottom: 25px;
 
 .description {
 font-size: 16px;
+
 line-height: 1.65;
 
 padding: 0 10px;
+
+margin-bottom: 45px;
+}
+
+.expertise {
+width: 100%;
 }
 
 .expertise-viewer {
-height: 600px;
+height: 700px;
 }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
 <div class="page">
 
-<!-- ФОТО -->
 
-<div class="gallery" id="gallery">
+<!-- ФОТОГАЛЕРЕЯ -->
+
+<div
+class="gallery"
+id="gallery">
 
 <button
 class="arrow arrow-left"
 id="prev">
+
 ‹
+
 </button>
+
 
 <div class="photo-container">
 
@@ -257,16 +311,19 @@ alt="">
 
 </div>
 
+
 <button
 class="arrow arrow-right"
 id="next">
+
 ›
+
 </button>
 
 </div>
 
 
-<!-- СЧЁТЧИК -->
+<!-- НОМЕР ФОТО -->
 
 <div
 class="photo-counter"
@@ -274,9 +331,10 @@ id="counter">
 </div>
 
 
-<!-- ИНФОРМАЦИЯ -->
+<!-- ИНФОРМАЦИЯ О ПРЕДМЕТЕ -->
 
 <main class="content">
+
 
 <div
 class="number"
@@ -293,34 +351,62 @@ id="description">
 </div>
 
 
+</main>
+
+
 <!-- ЭКСПЕРТИЗА -->
 
 <div
 class="expertise hidden"
 id="expertise">
 
+
 <div class="expertise-title">
+
 Экспертное заключение
+
 </div>
+
 
 <iframe
 id="expertise-viewer"
 src="">
 </iframe>
 
+
+<a
+id="expertise-download"
+class="expertise-download"
+href=""
+download>
+
+Скачать экспертное заключение
+
+</a>
+
+
 </div>
 
-</main>
 
 </div>
 
 
 <script>
 
-/* Получаем номер предмета из URL */
+
+/*
+* ПОЛУЧАЕМ НОМЕР ПРЕДМЕТА
+*
+* Например:
+*
+* item.html?object=001
+*/
 
 const params =
-new URLSearchParams(window.location.search);
+new URLSearchParams(
+window.location.search
+);
+
 
 const objectId =
 params.get("object");
@@ -339,16 +425,19 @@ let objectFolder = "";
 
 async function loadObject() {
 
+
 if (!objectId) {
 
 document.getElementById("title").textContent =
 "Предмет не указан";
 
 return;
+
 }
 
 
 try {
+
 
 /*
 * 1. Загружаем catalog.json
@@ -412,15 +501,16 @@ await infoResponse.json();
 
 
 /*
-* 4. Название вкладки браузера
+* 4. НАЗВАНИЕ ВКЛАДКИ
 */
 
 document.title =
-data.title || "Каталог";
+data.title ||
+"Страница предмета";
 
 
 /*
-* 5. Номер предмета
+* 5. НОМЕР ПРЕДМЕТА
 */
 
 document.getElementById("number").textContent =
@@ -430,7 +520,7 @@ data.catalognumber
 
 
 /*
-* 6. Название предмета
+* 6. НАЗВАНИЕ
 */
 
 document.getElementById("title").textContent =
@@ -438,7 +528,7 @@ data.title || "";
 
 
 /*
-* 7. Описание
+* 7. ОПИСАНИЕ
 */
 
 document.getElementById("description").textContent =
@@ -455,11 +545,12 @@ data.photos || [];
 
 if (photos.length > 0) {
 
+
 showPhoto(0);
 
 
 /*
-* Если фотография только одна,
+* Если фотография одна —
 * стрелки не нужны
 */
 
@@ -475,13 +566,15 @@ document.getElementById("next")
 
 } else {
 
+
 /*
-* Если фотографий нет,
-* галерея полностью скрывается
+* Нет фотографий —
+* скрываем галерею
 */
 
 document.getElementById("gallery")
 .classList.add("hidden");
+
 
 document.getElementById("counter")
 .classList.add("hidden");
@@ -495,27 +588,64 @@ document.getElementById("counter")
 
 if (data.expertise) {
 
+
 const expertise =
 document.getElementById("expertise");
 
 
 const viewer =
-document.getElementById("expertise-viewer");
+document.getElementById(
+"expertise-viewer"
+);
 
 
-viewer.src =
+const download =
+document.getElementById(
+"expertise-download"
+);
+
+
+/*
+* Путь к PDF
+*/
+
+const file =
 `objects/${objectFolder}/${data.expertise}`;
 
 
-expertise.classList.remove("hidden");
+/*
+* Показываем PDF
+* прямо на странице
+*/
+
+viewer.src = file;
+
+
+/*
+* Ссылка на скачивание
+*/
+
+download.href = file;
+
+
+/*
+* Показываем блок
+*/
+
+expertise.classList.remove(
+"hidden"
+);
 
 }
+
 
 }
 
 catch (error) {
 
+
 console.error(error);
+
 
 document.getElementById("title").textContent =
 "Не удалось загрузить предмет.";
@@ -526,10 +656,11 @@ document.getElementById("title").textContent =
 
 
 /*
-* ПОКАЗ ФОТОГРАФИИ
+* ПОКАЗ ФОТО
 */
 
 function showPhoto(index) {
+
 
 if (photos.length === 0) {
 return;
@@ -548,10 +679,12 @@ photo.src =
 
 
 photo.alt =
-document.getElementById("title").textContent;
+document.getElementById("title")
+.textContent;
 
 
-document.getElementById("counter").textContent =
+document.getElementById("counter")
+.textContent =
 `${currentPhoto + 1} / ${photos.length}`;
 
 }
@@ -562,7 +695,10 @@ document.getElementById("counter").textContent =
 */
 
 document.getElementById("prev")
-.addEventListener("click", () => {
+.addEventListener(
+"click",
+() => {
+
 
 if (photos.length === 0) {
 return;
@@ -583,7 +719,8 @@ photos.length - 1;
 
 showPhoto(next);
 
-});
+}
+);
 
 
 /*
@@ -591,7 +728,10 @@ showPhoto(next);
 */
 
 document.getElementById("next")
-.addEventListener("click", () => {
+.addEventListener(
+"click",
+() => {
+
 
 if (photos.length === 0) {
 return;
@@ -611,7 +751,8 @@ next = 0;
 
 showPhoto(next);
 
-});
+}
+);
 
 
 /*
