@@ -7,6 +7,7 @@
 <title>Страница предмета</title>
 
 <style>
+
 * {
 box-sizing: border-box;
 }
@@ -15,8 +16,10 @@ html,
 body {
 margin: 0;
 padding: 0;
+
 background: #000;
 color: #fff;
+
 font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,11 +27,17 @@ body {
 min-height: 100vh;
 }
 
+
+/* ОСНОВНАЯ СТРАНИЦА */
+
 .page {
 width: 100%;
 max-width: 1300px;
+
 margin: 0 auto;
+
 padding: 50px 30px 100px;
+
 text-align: center;
 }
 
@@ -37,6 +46,7 @@ text-align: center;
 
 .gallery {
 position: relative;
+
 width: 100%;
 
 display: flex;
@@ -51,8 +61,8 @@ width: min(1000px, 90vw);
 height: min(700px, 72vh);
 
 display: flex;
-align-items: center;
 justify-content: center;
+align-items: center;
 
 overflow: hidden;
 }
@@ -65,11 +75,12 @@ width: auto;
 height: auto;
 
 object-fit: contain;
+
 display: block;
 }
 
 
-/* СТРЕЛКИ */
+/* СТРЕЛКИ ФОТО */
 
 .arrow {
 position: absolute;
@@ -83,19 +94,19 @@ height: 52px;
 border: none;
 border-radius: 50%;
 
-background: rgba(255, 255, 255, 0.08);
+background: rgba(255,255,255,0.08);
+
 color: #fff;
 
 font-size: 32px;
-line-height: 52px;
 
 cursor: pointer;
 
-transition: background 0.2s ease;
+transition: background 0.2s;
 }
 
 .arrow:hover {
-background: rgba(255, 255, 255, 0.2);
+background: rgba(255,255,255,0.2);
 }
 
 .arrow-left {
@@ -107,7 +118,7 @@ right: 10px;
 }
 
 
-/* СЧЁТЧИК */
+/* СЧЁТЧИК ФОТО */
 
 .photo-counter {
 margin: 15px 0 50px;
@@ -118,19 +129,20 @@ font-size: 13px;
 }
 
 
-/* ИНФОРМАЦИЯ */
+/* ТЕКСТ */
 
 .content {
 max-width: 800px;
+
 margin: 0 auto;
 }
 
 .number {
+margin-bottom: 12px;
+
 color: #777;
 
 font-size: 14px;
-
-margin-bottom: 12px;
 }
 
 h1 {
@@ -148,12 +160,13 @@ max-width: 700px;
 
 margin: 0 auto 60px;
 
-font-size: 17px;
-line-height: 1.7;
+padding: 0 20px;
 
 color: #ddd;
 
-padding: 0 20px;
+font-size: 17px;
+
+line-height: 1.7;
 }
 
 
@@ -161,8 +174,6 @@ padding: 0 20px;
 
 .expertise {
 width: 100%;
-
-max-width: 1150px;
 
 margin: 0 auto;
 
@@ -172,33 +183,93 @@ border-top: 1px solid #222;
 }
 
 .expertise-title {
-margin-bottom: 25px;
+margin-bottom: 30px;
+
+color: #777;
 
 font-size: 13px;
 
 letter-spacing: 0.12em;
 
 text-transform: uppercase;
-
-color: #777;
 }
 
-.expertise-viewer {
+
+/* ОБЛАСТЬ PDF */
+
+.pdf-container {
 width: 100%;
 
-height: 1000px;
+display: flex;
+justify-content: center;
 
-border: none;
+background: #111;
+}
+
+#pdf-canvas {
+display: block;
+
+width: 100%;
+height: auto;
 
 background: #fff;
-
-display: block;
 }
+
+
+/* УПРАВЛЕНИЕ PDF */
+
+.pdf-controls {
+display: flex;
+
+justify-content: center;
+align-items: center;
+
+gap: 20px;
+
+margin-top: 20px;
+}
+
+.pdf-button {
+min-width: 44px;
+height: 44px;
+
+padding: 0 16px;
+
+border: 1px solid #444;
+
+background: transparent;
+
+color: #fff;
+
+font-size: 16px;
+
+cursor: pointer;
+}
+
+.pdf-button:hover {
+background: #fff;
+color: #000;
+}
+
+.pdf-button:disabled {
+opacity: 0.3;
+
+cursor: default;
+}
+
+.pdf-page-number {
+color: #777;
+
+font-size: 14px;
+}
+
+
+/* СКАЧИВАНИЕ */
 
 .expertise-download {
 display: inline-block;
 
-margin-top: 20px;
+margin-top: 25px;
 
 padding: 12px 24px;
 
@@ -208,24 +279,24 @@ color: #fff;
 
 text-decoration: none;
 
-transition: background 0.2s ease,
-color 0.2s ease;
+transition:
+background 0.2s,
+color 0.2s;
 }
 
 .expertise-download:hover {
 background: #fff;
+
 color: #000;
 }
 
-
-/* СКРЫТЫЕ ЭЛЕМЕНТЫ */
 
 .hidden {
 display: none;
 }
 
 
-/* ТЕЛЕФОН */
+/* МОБИЛЬНАЯ ВЕРСИЯ */
 
 @media (max-width: 600px) {
 
@@ -235,6 +306,7 @@ padding: 25px 15px 60px;
 
 .photo-container {
 width: 100%;
+
 height: 60vh;
 }
 
@@ -243,7 +315,6 @@ width: 42px;
 height: 42px;
 
 font-size: 25px;
-line-height: 42px;
 }
 
 .arrow-left {
@@ -259,21 +330,15 @@ margin-bottom: 25px;
 }
 
 .description {
+padding: 0 10px;
+
 font-size: 16px;
 
 line-height: 1.65;
-
-padding: 0 10px;
-
-margin-bottom: 45px;
 }
 
-.expertise {
-width: 100%;
-}
-
-.expertise-viewer {
-height: 700px;
+.pdf-controls {
+gap: 12px;
 }
 
 }
@@ -323,7 +388,7 @@ id="next">
 </div>
 
 
-<!-- НОМЕР ФОТО -->
+<!-- СЧЁТЧИК ФОТО -->
 
 <div
 class="photo-counter"
@@ -354,9 +419,9 @@ id="description">
 </main>
 
 
-<!-- ЭКСПЕРТИЗА -->
+<!-- ЭКСПЕРТНОЕ ЗАКЛЮЧЕНИЕ -->
 
-<div
+<section
 class="expertise hidden"
 id="expertise">
 
@@ -368,11 +433,49 @@ id="expertise">
 </div>
 
 
-<iframe
-id="expertise-viewer"
-src="">
-</iframe>
+<div class="pdf-container">
 
+<canvas id="pdf-canvas"></canvas>
+
+</div>
+
+
+<!-- УПРАВЛЕНИЕ СТРАНИЦАМИ PDF -->
+
+<div class="pdf-controls">
+
+
+<button
+class="pdf-button"
+id="pdf-prev">
+
+‹
+
+</button>
+
+
+<div
+class="pdf-page-number"
+id="pdf-page-number">
+
+1 / 1
+
+</div>
+
+
+<button
+class="pdf-button"
+id="pdf-next">
+
+›
+
+</button>
+
+
+</div>
+
+
+<!-- СКАЧИВАНИЕ -->
 
 <a
 id="expertise-download"
@@ -385,13 +488,25 @@ download>
 </a>
 
 
-</div>
+</section>
 
 
 </div>
 
 
-<script>
+<script type="module">
+
+
+/*
+* PDF.JS
+*/
+
+import * as pdfjsLib
+from "./pdfjs/pdf.mjs";
+
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"./pdfjs/pdf.worker.mjs";
 
 
 /*
@@ -420,6 +535,15 @@ let objectFolder = "";
 
 
 /*
+* PDF
+*/
+
+let pdfDocument = null;
+
+let pdfPage = 1;
+
+
+/*
 * ЗАГРУЗКА ПРЕДМЕТА
 */
 
@@ -428,7 +552,8 @@ async function loadObject() {
 
 if (!objectId) {
 
-document.getElementById("title").textContent =
+document.getElementById("title")
+.textContent =
 "Предмет не указан";
 
 return;
@@ -440,7 +565,8 @@ try {
 
 
 /*
-* 1. Загружаем catalog.json
+* 1.
+* Загружаем catalog.json
 */
 
 const catalogResponse =
@@ -461,7 +587,8 @@ await catalogResponse.json();
 
 
 /*
-* 2. Находим папку предмета
+* 2.
+* Находим папку предмета
 */
 
 objectFolder =
@@ -478,12 +605,13 @@ throw new Error(
 
 
 /*
-* 3. Загружаем info.json
+* 3.
+* Загружаем info.json
 */
 
 const infoResponse =
 await fetch(
-`objects/${objectFolder}/info.json`
+`objects/${encodeURIComponent(objectFolder)}/info.json`
 );
 
 
@@ -501,7 +629,8 @@ await infoResponse.json();
 
 
 /*
-* 4. НАЗВАНИЕ ВКЛАДКИ
+* 4.
+* Название вкладки
 */
 
 document.title =
@@ -510,33 +639,40 @@ data.title ||
 
 
 /*
-* 5. НОМЕР ПРЕДМЕТА
+* 5.
+* Номер
 */
 
-document.getElementById("number").textContent =
+document.getElementById("number")
+.textContent =
 data.catalognumber
 ? `№ ${data.catalognumber}`
 : "";
 
 
 /*
-* 6. НАЗВАНИЕ
+* 6.
+* Название
 */
 
-document.getElementById("title").textContent =
+document.getElementById("title")
+.textContent =
 data.title || "";
 
 
 /*
-* 7. ОПИСАНИЕ
+* 7.
+* Описание
 */
 
-document.getElementById("description").textContent =
+document.getElementById("description")
+.textContent =
 data.description || "";
 
 
 /*
-* 8. ФОТОГРАФИИ
+* 8.
+* ФОТО
 */
 
 photos =
@@ -549,53 +685,45 @@ if (photos.length > 0) {
 showPhoto(0);
 
 
-/*
-* Если фотография одна —
-* стрелки не нужны
-*/
-
 if (photos.length === 1) {
 
 document.getElementById("prev")
-.style.display = "none";
+.style.display =
+"none";
 
 document.getElementById("next")
-.style.display = "none";
+.style.display =
+"none";
 
 }
+
 
 } else {
 
 
-/*
-* Нет фотографий —
-* скрываем галерею
-*/
-
 document.getElementById("gallery")
-.classList.add("hidden");
+.classList
+.add("hidden");
 
 
 document.getElementById("counter")
-.classList.add("hidden");
+.classList
+.add("hidden");
 
 }
 
 
 /*
-* 9. ЭКСПЕРТИЗА
+* 9.
+* ЭКСПЕРТИЗА
 */
 
 if (data.expertise) {
 
 
 const expertise =
-document.getElementById("expertise");
-
-
-const viewer =
 document.getElementById(
-"expertise-viewer"
+"expertise"
 );
 
 
@@ -605,36 +733,31 @@ document.getElementById(
 );
 
 
-/*
-* Путь к PDF
-*/
-
 const file =
-`objects/${objectFolder}/${data.expertise}`;
-
-
-/*
-* Показываем PDF
-* прямо на странице
-*/
-
-viewer.src = file;
+`objects/${encodeURIComponent(objectFolder)}/${encodeURIComponent(data.expertise)}`;
 
 
 /*
 * Ссылка на скачивание
 */
 
-download.href = file;
+download.href =
+file;
 
 
 /*
 * Показываем блок
 */
 
-expertise.classList.remove(
-"hidden"
-);
+expertise.classList
+.remove("hidden");
+
+
+/*
+* Загружаем PDF
+*/
+
+await loadPDF(file);
 
 }
 
@@ -647,7 +770,8 @@ catch (error) {
 console.error(error);
 
 
-document.getElementById("title").textContent =
+document.getElementById("title")
+.textContent =
 "Не удалось загрузить предмет.";
 
 }
@@ -656,7 +780,7 @@ document.getElementById("title").textContent =
 
 
 /*
-* ПОКАЗ ФОТО
+* ФОТО
 */
 
 function showPhoto(index) {
@@ -675,7 +799,7 @@ document.getElementById("photo");
 
 
 photo.src =
-`objects/${objectFolder}/${photos[currentPhoto]}`;
+`objects/${encodeURIComponent(objectFolder)}/${encodeURIComponent(photos[currentPhoto])}`;
 
 
 photo.alt =
@@ -691,7 +815,7 @@ document.getElementById("counter")
 
 
 /*
-* ЛЕВАЯ СТРЕЛКА
+* ЛЕВАЯ СТРЕЛКА ФОТО
 */
 
 document.getElementById("prev")
@@ -724,7 +848,7 @@ showPhoto(next);
 
 
 /*
-* ПРАВАЯ СТРЕЛКА
+* ПРАВАЯ СТРЕЛКА ФОТО
 */
 
 document.getElementById("next")
@@ -750,6 +874,321 @@ next = 0;
 
 
 showPhoto(next);
+
+}
+);
+
+
+/*
+* ЗАГРУЗКА PDF
+*/
+
+async function loadPDF(file) {
+
+
+try {
+
+
+pdfDocument =
+await pdfjsLib.getDocument(file)
+.promise;
+
+
+pdfPage = 1;
+
+
+await renderPDFPage(pdfPage);
+
+
+updatePDFControls();
+
+
+}
+
+catch (error) {
+
+
+console.error(
+"Ошибка загрузки PDF:",
+error
+);
+
+}
+
+}
+
+
+/*
+* ОТРИСОВКА СТРАНИЦЫ PDF
+*/
+
+async function renderPDFPage(pageNumber) {
+
+
+if (!pdfDocument) {
+return;
+}
+
+
+const page =
+await pdfDocument
+.getPage(pageNumber);
+
+
+const canvas =
+document.getElementById(
+"pdf-canvas"
+);
+
+
+const context =
+canvas.getContext("2d");
+
+
+/*
+* Получаем размер страницы
+*/
+
+const baseViewport =
+page.getViewport({
+scale: 1
+});
+
+
+/*
+* Ширина контейнера
+*/
+
+const container =
+document.querySelector(
+".pdf-container"
+);
+
+
+const containerWidth =
+container.clientWidth;
+
+
+/*
+* Масштабируем PDF
+* ровно по ширине
+*/
+
+const scale =
+containerWidth /
+baseViewport.width;
+
+
+const viewport =
+page.getViewport({
+scale: scale
+});
+
+
+/*
+* Устанавливаем размер canvas
+*/
+
+const outputScale =
+window.devicePixelRatio || 1;
+
+
+canvas.width =
+Math.floor(
+viewport.width *
+outputScale
+);
+
+
+canvas.height =
+Math.floor(
+viewport.height *
+outputScale
+);
+
+
+canvas.style.width =
+Math.floor(
+viewport.width
+) + "px";
+
+
+canvas.style.height =
+Math.floor(
+viewport.height
+) + "px";
+
+
+/*
+* Рендерим страницу
+*/
+
+const renderContext = {
+
+canvasContext:
+context,
+
+viewport:
+viewport,
+
+transform:
+outputScale !== 1
+? [
+outputScale,
+0,
+0,
+outputScale,
+0,
+0
+]
+: null
+
+};
+
+
+await page.render(
+renderContext
+).promise;
+
+}
+
+
+/*
+* ОБНОВЛЕНИЕ КНОПОК PDF
+*/
+
+function updatePDFControls() {
+
+
+if (!pdfDocument) {
+return;
+}
+
+
+document.getElementById(
+"pdf-page-number"
+).textContent =
+`${pdfPage} / ${pdfDocument.numPages}`;
+
+
+document.getElementById(
+"pdf-prev"
+).disabled =
+pdfPage <= 1;
+
+
+document.getElementById(
+"pdf-next"
+).disabled =
+pdfPage >= pdfDocument.numPages;
+
+}
+
+
+/*
+* ПРЕДЫДУЩАЯ СТРАНИЦА PDF
+*/
+
+document.getElementById("pdf-prev")
+.addEventListener(
+"click",
+async () => {
+
+
+if (!pdfDocument) {
+return;
+}
+
+
+if (pdfPage <= 1) {
+return;
+}
+
+
+pdfPage--;
+
+
+await renderPDFPage(
+pdfPage
+);
+
+
+updatePDFControls();
+
+}
+);
+
+
+/*
+* СЛЕДУЮЩАЯ СТРАНИЦА PDF
+*/
+
+document.getElementById("pdf-next")
+.addEventListener(
+"click",
+async () => {
+
+
+if (!pdfDocument) {
+return;
+}
+
+
+if (
+pdfPage >=
+pdfDocument.numPages
+) {
+return;
+}
+
+
+pdfPage++;
+
+
+await renderPDFPage(
+pdfPage
+);
+
+
+updatePDFControls();
+
+}
+);
+
+
+/*
+* ПЕРЕРИСОВКА PDF
+* при изменении размера окна
+*/
+
+let resizeTimer;
+
+
+window.addEventListener(
+"resize",
+() => {
+
+
+clearTimeout(
+resizeTimer
+);
+
+
+resizeTimer =
+setTimeout(
+() => {
+
+if (pdfDocument) {
+
+renderPDFPage(
+pdfPage
+);
+
+}
+
+},
+200
+);
 
 }
 );
