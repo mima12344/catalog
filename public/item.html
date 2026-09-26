@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Каталог</title>
+<title>Страница предмета</title>
 
 <style>
 * {
 box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 margin: 0;
 padding: 0;
 background: #000;
@@ -30,6 +31,8 @@ margin: 0 auto;
 padding: 50px 30px 80px;
 text-align: center;
 }
+
+/* ФОТОГАЛЕРЕЯ */
 
 .gallery {
 position: relative;
@@ -61,6 +64,8 @@ height: auto;
 object-fit: contain;
 display: block;
 }
+
+/* СТРЕЛКИ */
 
 .arrow {
 position: absolute;
@@ -95,6 +100,8 @@ left: 10px;
 right: 10px;
 }
 
+/* СЧЁТЧИК ФОТО */
+
 .photo-counter {
 margin: 15px 0 45px;
 
@@ -102,6 +109,8 @@ color: #777;
 
 font-size: 13px;
 }
+
+/* ТЕКСТ */
 
 .content {
 max-width: 760px;
@@ -139,8 +148,10 @@ color: #ddd;
 padding: 0 20px;
 }
 
+/* ЭКСПЕРТИЗА */
+
 .expertise {
-max-width: 680px;
+max-width: 900px;
 
 margin: 0 auto;
 
@@ -150,7 +161,7 @@ border-top: 1px solid #222;
 }
 
 .expertise-title {
-margin-bottom: 18px;
+margin-bottom: 25px;
 
 font-size: 13px;
 
@@ -161,26 +172,22 @@ text-transform: uppercase;
 color: #777;
 }
 
-.expertise a {
-display: inline-block;
+.expertise-viewer {
+width: 100%;
+height: 800px;
 
-padding: 12px 22px;
+border: none;
 
-border: 1px solid #444;
-
-color: #fff;
-
-text-decoration: none;
-}
-
-.expertise a:hover {
 background: #fff;
-color: #000;
+
+display: block;
 }
 
 .hidden {
 display: none;
 }
+
+/* МОБИЛЬНАЯ ВЕРСИЯ */
 
 @media (max-width: 600px) {
 
@@ -219,6 +226,10 @@ line-height: 1.65;
 
 padding: 0 10px;
 }
+
+.expertise-viewer {
+height: 600px;
+}
 }
 </style>
 </head>
@@ -226,6 +237,8 @@ padding: 0 10px;
 <body>
 
 <div class="page">
+
+<!-- ФОТО -->
 
 <div class="gallery" id="gallery">
 
@@ -253,11 +266,15 @@ id="next">
 </div>
 
 
+<!-- СЧЁТЧИК -->
+
 <div
 class="photo-counter"
 id="counter">
 </div>
 
+
+<!-- ИНФОРМАЦИЯ -->
 
 <main class="content">
 
@@ -276,23 +293,20 @@ id="description">
 </div>
 
 
+<!-- ЭКСПЕРТИЗА -->
+
 <div
 class="expertise hidden"
 id="expertise">
 
 <div class="expertise-title">
-Экспертиза
+Экспертное заключение
 </div>
 
-<a
-id="expertise-link"
-href=""
-target="_blank"
-download>
-
-Открыть экспертное заключение
-
-</a>
+<iframe
+id="expertise-viewer"
+src="">
+</iframe>
 
 </div>
 
@@ -302,6 +316,8 @@ download>
 
 
 <script>
+
+/* Получаем номер предмета из URL */
 
 const params =
 new URLSearchParams(window.location.search);
@@ -316,6 +332,10 @@ let currentPhoto = 0;
 
 let objectFolder = "";
 
+
+/*
+* ЗАГРУЗКА ПРЕДМЕТА
+*/
 
 async function loadObject() {
 
@@ -352,7 +372,7 @@ await catalogResponse.json();
 
 
 /*
-* 2. Находим папку по номеру предмета
+* 2. Находим папку предмета
 */
 
 objectFolder =
@@ -418,7 +438,7 @@ data.title || "";
 
 
 /*
-* 7. Полное описание
+* 7. Описание
 */
 
 document.getElementById("description").textContent =
@@ -426,7 +446,7 @@ data.description || "";
 
 
 /*
-* 8. Фотографии
+* 8. ФОТОГРАФИИ
 */
 
 photos =
@@ -437,6 +457,11 @@ if (photos.length > 0) {
 
 showPhoto(0);
 
+
+/*
+* Если фотография только одна,
+* стрелки не нужны
+*/
 
 if (photos.length === 1) {
 
@@ -450,6 +475,11 @@ document.getElementById("next")
 
 } else {
 
+/*
+* Если фотографий нет,
+* галерея полностью скрывается
+*/
+
 document.getElementById("gallery")
 .classList.add("hidden");
 
@@ -460,7 +490,7 @@ document.getElementById("counter")
 
 
 /*
-* 9. Экспертиза
+* 9. ЭКСПЕРТИЗА
 */
 
 if (data.expertise) {
@@ -469,11 +499,11 @@ const expertise =
 document.getElementById("expertise");
 
 
-const link =
-document.getElementById("expertise-link");
+const viewer =
+document.getElementById("expertise-viewer");
 
 
-link.href =
+viewer.src =
 `objects/${objectFolder}/${data.expertise}`;
 
 
@@ -496,7 +526,7 @@ document.getElementById("title").textContent =
 
 
 /*
-* Показ фотографии
+* ПОКАЗ ФОТОГРАФИИ
 */
 
 function showPhoto(index) {
@@ -528,7 +558,7 @@ document.getElementById("counter").textContent =
 
 
 /*
-* Левая стрелка
+* ЛЕВАЯ СТРЕЛКА
 */
 
 document.getElementById("prev")
@@ -557,7 +587,7 @@ showPhoto(next);
 
 
 /*
-* Правая стрелка
+* ПРАВАЯ СТРЕЛКА
 */
 
 document.getElementById("next")
@@ -585,7 +615,7 @@ showPhoto(next);
 
 
 /*
-* Запускаем загрузку
+* ЗАПУСК
 */
 
 loadObject();
