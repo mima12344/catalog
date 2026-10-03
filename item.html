@@ -311,7 +311,7 @@ let objectFolder = "";
 
 
 /*
- * GitHub
+ * Данные GitHub
  */
 
 const GITHUB_OWNER = "mima12344";
@@ -413,46 +413,17 @@ async function loadObject() {
 
 
         /*
-         * АВТОМАТИЧЕСКИЙ ПОИСК ФОТОГРАФИЙ
+         * Ищем фотографии
          */
 
         await loadPhotos();
 
 
         /*
-         * ЭКСПЕРТИЗА
+         * Ищем экспертизу
          */
 
-        if (data.expertise) {
-
-            const expertise =
-                document.getElementById("expertise");
-
-            const viewer =
-                document.getElementById("pdf-viewer");
-
-            const download =
-                document.getElementById(
-                    "expertise-download"
-                );
-
-
-            const file =
-                `objects/${objectFolder}/${data.expertise}`;
-
-
-            viewer.src =
-                file + "#view=FitH";
-
-
-            download.href =
-                file;
-
-
-            expertise.classList.remove(
-                "hidden"
-            );
-        }
+        await loadExpertise();
 
     }
 
@@ -469,8 +440,7 @@ async function loadObject() {
 
 
 /*
- * Получаем список файлов папки
- * через GitHub API
+ * Автоматический поиск фотографий
  */
 
 async function loadPhotos() {
@@ -490,7 +460,7 @@ async function loadPhotos() {
     if (!response.ok) {
 
         throw new Error(
-            "Не удалось получить список фотографий"
+            "Не удалось получить список файлов"
         );
     }
 
@@ -500,8 +470,11 @@ async function loadPhotos() {
 
 
     /*
-     * Оставляем только изображения
-     * с именами photo-01, photo-02 и т.д.
+     * Оставляем изображения
+     * photo-01.jpg
+     * photo-02.jpg
+     * photo-10.jpg
+     * и т.д.
      */
 
     photos =
@@ -513,29 +486,21 @@ async function loadPhotos() {
                     return false;
                 }
 
-                const match =
-                    file.name.match(
-                        /^photo-(\d+)\.(jpg|jpeg|png|webp|gif)$/i
-                    );
-
-                return !!match;
+                return /^photo-\d+\.(jpg|jpeg|png|webp|gif)$/i
+                    .test(file.name);
             })
 
             .sort((a, b) => {
 
                 const numberA =
                     parseInt(
-                        a.name.match(
-                            /^photo-(\d+)/i
-                        )[1],
+                        a.name.match(/^photo-(\d+)/i)[1],
                         10
                     );
 
                 const numberB =
                     parseInt(
-                        b.name.match(
-                            /^photo-(\d+)/i
-                        )[1],
+                        b.name.match(/^photo-(\d+)/i)[1],
                         10
                     );
 
@@ -546,7 +511,7 @@ async function loadPhotos() {
 
 
     /*
-     * Если фотографии найдены
+     * Показываем галерею
      */
 
     if (photos.length > 0) {
@@ -573,6 +538,110 @@ async function loadPhotos() {
         document.getElementById("counter")
             .classList.add("hidden");
     }
+}
+
+
+/*
+ * Автоматический поиск экспертизы
+ */
+
+async function loadExpertise() {
+
+    const apiUrl =
+        `https://api.github.com/repos/` +
+        `${GITHUB_OWNER}/` +
+        `${GITHUB_REPOSITORY}/contents/objects/` +
+        `${encodeURIComponent(objectFolder)}` +
+        `?ref=${GITHUB_BRANCH}`;
+
+
+    const response =
+        await fetch(apiUrl);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Не удалось получить список файлов"
+        );
+    }
+
+
+    const files =
+        await response.json();
+
+
+    /*
+     * Ищем:
+     *
+     * expertise-001.pdf
+     * expertise.pdf
+     * expertise-anything.pdf
+     *
+     * Берём первый найденный PDF.
+     */
+
+    const expertiseFile =
+        files.find(file => {
+
+            if (file.type !== "file") {
+                return false;
+            }
+
+            return /^expertise.*\.pdf$/i
+                .test(file.name);
+        });
+
+
+    /*
+     * Если экспертизы нет —
+     * ничего не показываем.
+     */
+
+    if (!expertiseFile) {
+        return;
+    }
+
+
+    const expertise =
+        document.getElementById("expertise");
+
+    const viewer =
+        document.getElementById("pdf-viewer");
+
+    const download =
+        document.getElementById(
+            "expertise-download"
+        );
+
+
+    const file =
+        `objects/${objectFolder}/${expertiseFile.name}`;
+
+
+    /*
+     * PDF с масштабированием по ширине
+     */
+
+    viewer.src =
+        file + "#view=FitH";
+
+
+    /*
+     * Скачать PDF
+     */
+
+    download.href =
+        file;
+
+
+    /*
+     * Показываем блок
+     */
+
+    expertise.classList.remove(
+        "hidden"
+    );
 }
 
 
