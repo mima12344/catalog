@@ -8,222 +8,224 @@
 
 <style>
 * {
-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html, body {
-margin: 0;
-padding: 0;
-background: #000;
-color: #fff;
-font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-min-height: 100vh;
+    min-height: 100vh;
 }
 
 .page {
-width: 100%;
-max-width: 1300px;
-margin: 0 auto;
-padding: 50px 30px 100px;
-text-align: center;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 50px 30px 100px;
+    text-align: center;
 }
 
 /* ФОТО */
 
 .gallery {
-position: relative;
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .photo-container {
-width: min(1000px, 90vw);
-height: min(700px, 72vh);
+    width: min(1000px, 90vw);
+    height: min(700px, 72vh);
 
-display: flex;
-align-items: center;
-justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-overflow: hidden;
+    overflow: hidden;
 }
 
 .photo-container img {
-max-width: 100%;
-max-height: 100%;
-width: auto;
-height: auto;
-object-fit: contain;
-display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
 }
 
 /* СТРЕЛКИ */
 
 .arrow {
-position: absolute;
-top: 50%;
-transform: translateY(-50%);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 
-width: 52px;
-height: 52px;
+    width: 52px;
+    height: 52px;
 
-border: none;
-border-radius: 50%;
+    border: none;
+    border-radius: 50%;
 
-background: rgba(255,255,255,0.08);
-color: #fff;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
 
-font-size: 32px;
-cursor: pointer;
+    font-size: 32px;
+    cursor: pointer;
+
+    z-index: 2;
 }
 
 .arrow:hover {
-background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.2);
 }
 
 .arrow-left {
-left: 10px;
+    left: 10px;
 }
 
 .arrow-right {
-right: 10px;
+    right: 10px;
 }
 
 .photo-counter {
-margin: 15px 0 50px;
-color: #777;
-font-size: 13px;
+    margin: 15px 0 50px;
+    color: #777;
+    font-size: 13px;
 }
 
 /* ТЕКСТ */
 
 .content {
-max-width: 800px;
-margin: 0 auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .number {
-color: #777;
-font-size: 14px;
-margin-bottom: 12px;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 12px;
 }
 
 h1 {
-margin: 0 0 35px;
+    margin: 0 0 35px;
 
-font-size: clamp(26px, 4vw, 44px);
-font-weight: 400;
-line-height: 1.15;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 400;
+    line-height: 1.15;
 }
 
 .description {
-max-width: 700px;
-margin: 0 auto 60px;
+    max-width: 700px;
+    margin: 0 auto 60px;
 
-padding: 0 20px;
+    padding: 0 20px;
 
-color: #ddd;
-font-size: 17px;
-line-height: 1.7;
+    color: #ddd;
+    font-size: 17px;
+    line-height: 1.7;
 }
 
 /* ЭКСПЕРТИЗА */
 
 .expertise {
-width: 100%;
-margin: 0 auto;
+    width: 100%;
+    margin: 0 auto;
 
-padding-top: 40px;
+    padding-top: 40px;
 
-border-top: 1px solid #222;
+    border-top: 1px solid #222;
 }
 
 .expertise-title {
-margin-bottom: 30px;
+    margin-bottom: 30px;
 
-color: #777;
+    color: #777;
 
-font-size: 13px;
-letter-spacing: 0.12em;
-text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
 }
 
 .pdf-viewer {
-width: 100%;
-height: 1100px;
+    width: 100%;
+    height: 1100px;
 
-display: block;
+    display: block;
 
-border: none;
+    border: none;
 
-background: #fff;
+    background: #fff;
 }
 
 .expertise-download {
-display: inline-block;
+    display: inline-block;
 
-margin-top: 25px;
+    margin-top: 25px;
 
-padding: 12px 24px;
+    padding: 12px 24px;
 
-border: 1px solid #444;
+    border: 1px solid #444;
 
-color: #fff;
-text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .expertise-download:hover {
-background: #fff;
-color: #000;
+    background: #fff;
+    color: #000;
 }
 
 .hidden {
-display: none;
+    display: none;
 }
 
 @media (max-width: 600px) {
 
-.page {
-padding: 25px 15px 60px;
-}
+    .page {
+        padding: 25px 15px 60px;
+    }
 
-.photo-container {
-width: 100%;
-height: 60vh;
-}
+    .photo-container {
+        width: 100%;
+        height: 60vh;
+    }
 
-.arrow {
-width: 42px;
-height: 42px;
-font-size: 25px;
-}
+    .arrow {
+        width: 42px;
+        height: 42px;
+        font-size: 25px;
+    }
 
-.arrow-left {
-left: 0;
-}
+    .arrow-left {
+        left: 0;
+    }
 
-.arrow-right {
-right: 0;
-}
+    .arrow-right {
+        right: 0;
+    }
 
-h1 {
-margin-bottom: 25px;
-}
+    h1 {
+        margin-bottom: 25px;
+    }
 
-.description {
-padding: 0 10px;
-font-size: 16px;
-line-height: 1.65;
-}
+    .description {
+        padding: 0 10px;
+        font-size: 16px;
+        line-height: 1.65;
+    }
 
-.pdf-viewer {
-height: 800px;
-}
+    .pdf-viewer {
+        height: 800px;
+    }
 }
 </style>
 </head>
@@ -232,65 +234,65 @@ height: 800px;
 
 <div class="page">
 
-<!-- ФОТОГАЛЕРЕЯ -->
+    <!-- ФОТОГАЛЕРЕЯ -->
 
-<div class="gallery" id="gallery">
+    <div class="gallery" id="gallery">
 
-<button class="arrow arrow-left" id="prev">
-‹
-</button>
+        <button class="arrow arrow-left" id="prev">
+            ‹
+        </button>
 
-<div class="photo-container">
-<img id="photo" src="" alt="">
-</div>
+        <div class="photo-container">
+            <img id="photo" src="" alt="">
+        </div>
 
-<button class="arrow arrow-right" id="next">
-›
-</button>
+        <button class="arrow arrow-right" id="next">
+            ›
+        </button>
 
-</div>
+    </div>
 
-<div class="photo-counter" id="counter"></div>
-
-
-<!-- ИНФОРМАЦИЯ -->
-
-<main class="content">
-
-<div class="number" id="number"></div>
-
-<h1 id="title"></h1>
-
-<div class="description" id="description"></div>
-
-</main>
+    <div class="photo-counter" id="counter"></div>
 
 
-<!-- ЭКСПЕРТИЗА -->
+    <!-- ИНФОРМАЦИЯ -->
 
-<section class="expertise hidden" id="expertise">
+    <main class="content">
 
-<div class="expertise-title">
-Экспертное заключение
-</div>
+        <div class="number" id="number"></div>
 
-<iframe
-id="pdf-viewer"
-class="pdf-viewer"
-src="">
-</iframe>
+        <h1 id="title"></h1>
 
-<a
-id="expertise-download"
-class="expertise-download"
-href=""
-download>
+        <div class="description" id="description"></div>
 
-Скачать экспертное заключение
+    </main>
 
-</a>
 
-</section>
+    <!-- ЭКСПЕРТИЗА -->
+
+    <section class="expertise hidden" id="expertise">
+
+        <div class="expertise-title">
+            Экспертное заключение
+        </div>
+
+        <iframe
+            id="pdf-viewer"
+            class="pdf-viewer"
+            src="">
+        </iframe>
+
+        <a
+            id="expertise-download"
+            class="expertise-download"
+            href=""
+            download>
+
+            Скачать экспертное заключение
+
+        </a>
+
+    </section>
 
 </div>
 
@@ -298,250 +300,362 @@ download>
 <script>
 
 const params =
-new URLSearchParams(window.location.search);
+    new URLSearchParams(window.location.search);
 
 const objectId =
-params.get("object");
+    params.get("object");
 
 let photos = [];
 let currentPhoto = 0;
 let objectFolder = "";
 
 
-async function loadObject() {
+/*
+ * GitHub
+ */
 
-if (!objectId) {
-document.getElementById("title").textContent =
-"Предмет не указан";
-return;
-}
-
-try {
-
-/* catalog.json */
-
-const catalogResponse =
-await fetch("catalog.json");
-
-if (!catalogResponse.ok) {
-throw new Error(
-"Не удалось загрузить catalog.json"
-);
-}
-
-const catalog =
-await catalogResponse.json();
-
-
-/* Папка предмета */
-
-objectFolder =
-catalog[objectId];
-
-if (!objectFolder) {
-throw new Error(
-"Предмет не найден в catalog.json"
-);
-}
-
-
-/* info.json */
-
-const infoResponse =
-await fetch(
-`objects/${objectFolder}/info.json`
-);
-
-if (!infoResponse.ok) {
-throw new Error(
-"Не удалось загрузить info.json"
-);
-}
-
-const data =
-await infoResponse.json();
-
-
-/* Название вкладки */
-
-document.title =
-data.title ||
-"Страница предмета";
-
-
-/* Номер */
-
-document.getElementById("number")
-.textContent =
-data.catalognumber
-? `№ ${data.catalognumber}`
-: "";
-
-
-/* Название */
-
-document.getElementById("title")
-.textContent =
-data.title || "";
-
-
-/* Описание */
-
-document.getElementById("description")
-.textContent =
-data.description || "";
-
-
-/* ФОТО */
-
-photos =
-data.photos || [];
-
-
-if (photos.length > 0) {
-
-showPhoto(0);
-
-if (photos.length === 1) {
-
-document.getElementById("prev")
-.style.display = "none";
-
-document.getElementById("next")
-.style.display = "none";
-}
-
-} else {
-
-document.getElementById("gallery")
-.classList.add("hidden");
-
-document.getElementById("counter")
-.classList.add("hidden");
-}
-
-
-/* ЭКСПЕРТИЗА */
-
-if (data.expertise) {
-
-const expertise =
-document.getElementById("expertise");
-
-const viewer =
-document.getElementById("pdf-viewer");
-
-const download =
-document.getElementById(
-"expertise-download"
-);
-
-
-const file =
-`objects/${objectFolder}/${data.expertise}`;
+const GITHUB_OWNER = "mima12344";
+const GITHUB_REPOSITORY = "catalog";
+const GITHUB_BRANCH = "main";
 
 
 /*
-* PDF открывается сразу
-* с масштабированием по ширине
-*/
+ * Загрузка предмета
+ */
 
-viewer.src =
-file + "#view=FitH";
+async function loadObject() {
+
+    if (!objectId) {
+
+        document.getElementById("title").textContent =
+            "Предмет не указан";
+
+        return;
+    }
+
+    try {
+
+        /* catalog.json */
+
+        const catalogResponse =
+            await fetch("catalog.json");
+
+        if (!catalogResponse.ok) {
+
+            throw new Error(
+                "Не удалось загрузить catalog.json"
+            );
+        }
+
+        const catalog =
+            await catalogResponse.json();
 
 
-/* Скачивание */
+        /* Папка предмета */
 
-download.href = file;
+        objectFolder =
+            catalog[objectId];
+
+        if (!objectFolder) {
+
+            throw new Error(
+                "Предмет не найден в catalog.json"
+            );
+        }
 
 
-/* Показываем блок */
+        /* info.json */
 
-expertise.classList.remove(
-"hidden"
-);
+        const infoResponse =
+            await fetch(
+                `objects/${objectFolder}/info.json`
+            );
+
+        if (!infoResponse.ok) {
+
+            throw new Error(
+                "Не удалось загрузить info.json"
+            );
+        }
+
+        const data =
+            await infoResponse.json();
+
+
+        /* Название вкладки */
+
+        document.title =
+            data.title ||
+            "Страница предмета";
+
+
+        /* Номер */
+
+        document.getElementById("number")
+            .textContent =
+            data.catalognumber
+                ? `№ ${data.catalognumber}`
+                : "";
+
+
+        /* Название */
+
+        document.getElementById("title")
+            .textContent =
+            data.title || "";
+
+
+        /* Описание */
+
+        document.getElementById("description")
+            .textContent =
+            data.description || "";
+
+
+        /*
+         * АВТОМАТИЧЕСКИЙ ПОИСК ФОТОГРАФИЙ
+         */
+
+        await loadPhotos();
+
+
+        /*
+         * ЭКСПЕРТИЗА
+         */
+
+        if (data.expertise) {
+
+            const expertise =
+                document.getElementById("expertise");
+
+            const viewer =
+                document.getElementById("pdf-viewer");
+
+            const download =
+                document.getElementById(
+                    "expertise-download"
+                );
+
+
+            const file =
+                `objects/${objectFolder}/${data.expertise}`;
+
+
+            viewer.src =
+                file + "#view=FitH";
+
+
+            download.href =
+                file;
+
+
+            expertise.classList.remove(
+                "hidden"
+            );
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById("title")
+            .textContent =
+            "Не удалось загрузить предмет.";
+
+    }
 }
 
+
+/*
+ * Получаем список файлов папки
+ * через GitHub API
+ */
+
+async function loadPhotos() {
+
+    const apiUrl =
+        `https://api.github.com/repos/` +
+        `${GITHUB_OWNER}/` +
+        `${GITHUB_REPOSITORY}/contents/objects/` +
+        `${encodeURIComponent(objectFolder)}` +
+        `?ref=${GITHUB_BRANCH}`;
+
+
+    const response =
+        await fetch(apiUrl);
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Не удалось получить список фотографий"
+        );
+    }
+
+
+    const files =
+        await response.json();
+
+
+    /*
+     * Оставляем только изображения
+     * с именами photo-01, photo-02 и т.д.
+     */
+
+    photos =
+        files
+
+            .filter(file => {
+
+                if (file.type !== "file") {
+                    return false;
+                }
+
+                const match =
+                    file.name.match(
+                        /^photo-(\d+)\.(jpg|jpeg|png|webp|gif)$/i
+                    );
+
+                return !!match;
+            })
+
+            .sort((a, b) => {
+
+                const numberA =
+                    parseInt(
+                        a.name.match(
+                            /^photo-(\d+)/i
+                        )[1],
+                        10
+                    );
+
+                const numberB =
+                    parseInt(
+                        b.name.match(
+                            /^photo-(\d+)/i
+                        )[1],
+                        10
+                    );
+
+                return numberA - numberB;
+            })
+
+            .map(file => file.name);
+
+
+    /*
+     * Если фотографии найдены
+     */
+
+    if (photos.length > 0) {
+
+        showPhoto(0);
+
+
+        if (photos.length === 1) {
+
+            document.getElementById("prev")
+                .style.display = "none";
+
+            document.getElementById("next")
+                .style.display = "none";
+        }
+
+    }
+
+    else {
+
+        document.getElementById("gallery")
+            .classList.add("hidden");
+
+        document.getElementById("counter")
+            .classList.add("hidden");
+    }
 }
 
-catch (error) {
 
-console.error(error);
-
-document.getElementById("title")
-.textContent =
-"Не удалось загрузить предмет.";
-}
-}
-
-
-/* Показ фотографии */
+/*
+ * Показ фотографии
+ */
 
 function showPhoto(index) {
 
-if (photos.length === 0) {
-return;
+    if (photos.length === 0) {
+        return;
+    }
+
+
+    currentPhoto = index;
+
+
+    const photo =
+        document.getElementById("photo");
+
+
+    photo.src =
+        `objects/${objectFolder}/${photos[currentPhoto]}`;
+
+
+    photo.alt =
+        document.getElementById("title")
+            .textContent;
+
+
+    document.getElementById("counter")
+        .textContent =
+        `${currentPhoto + 1} / ${photos.length}`;
 }
 
-currentPhoto = index;
 
-const photo =
-document.getElementById("photo");
-
-photo.src =
-`objects/${objectFolder}/${photos[currentPhoto]}`;
-
-photo.alt =
-document.getElementById("title")
-.textContent;
-
-document.getElementById("counter")
-.textContent =
-`${currentPhoto + 1} / ${photos.length}`;
-}
-
-
-/* Левая стрелка */
+/*
+ * Левая стрелка
+ */
 
 document.getElementById("prev")
-.addEventListener("click", () => {
+    .addEventListener("click", () => {
 
-if (photos.length === 0) {
-return;
-}
+        if (photos.length === 0) {
+            return;
+        }
 
-let next =
-currentPhoto - 1;
+        let next =
+            currentPhoto - 1;
 
-if (next < 0) {
-next = photos.length - 1;
-}
+        if (next < 0) {
+            next = photos.length - 1;
+        }
 
-showPhoto(next);
-});
+        showPhoto(next);
+    });
 
 
-/* Правая стрелка */
+/*
+ * Правая стрелка
+ */
 
 document.getElementById("next")
-.addEventListener("click", () => {
+    .addEventListener("click", () => {
 
-if (photos.length === 0) {
-return;
-}
+        if (photos.length === 0) {
+            return;
+        }
 
-let next =
-currentPhoto + 1;
+        let next =
+            currentPhoto + 1;
 
-if (next >= photos.length) {
-next = 0;
-}
+        if (next >= photos.length) {
+            next = 0;
+        }
 
-showPhoto(next);
-});
+        showPhoto(next);
+    });
 
 
-/* Запуск */
+/*
+ * Запуск
+ */
 
 loadObject();
 
