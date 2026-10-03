@@ -43,15 +43,18 @@ body {
     line-height: 1.15;
 }
 
+
 /* СЕТКА */
 
 .objects-grid {
     display: grid;
 
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 
     gap: 35px 24px;
 }
+
 
 /* КАРТОЧКА */
 
@@ -65,6 +68,7 @@ body {
 
     cursor: pointer;
 }
+
 
 /* ФОТО */
 
@@ -97,6 +101,7 @@ body {
     transform: scale(1.045);
 }
 
+
 /* НАЗВАНИЕ */
 
 .card-title {
@@ -108,6 +113,7 @@ body {
     color: #fff;
 }
 
+
 /* НОМЕР */
 
 .card-number {
@@ -117,6 +123,7 @@ body {
 
     font-size: 12px;
 }
+
 
 /* ЗАГРУЗКА */
 
@@ -138,6 +145,7 @@ body {
     padding: 80px 0;
 }
 
+
 /* ПЛАНШЕТ */
 
 @media (max-width: 1000px) {
@@ -148,6 +156,7 @@ body {
     }
 
 }
+
 
 /* ТЕЛЕФОН */
 
@@ -175,7 +184,8 @@ body {
 
 }
 
-/* СОВСЕМ УЗКИЙ ЭКРАН */
+
+/* УЗКИЙ ТЕЛЕФОН */
 
 @media (max-width: 450px) {
 
@@ -192,11 +202,14 @@ body {
 <div class="page">
 
     <header class="header">
+
         <h1
             class="category-title"
             id="category-title">
         </h1>
+
     </header>
+
 
     <main
         class="objects-grid"
@@ -216,6 +229,15 @@ body {
 
 
 <script>
+
+/*
+ * ПОЛУЧАЕМ КАТЕГОРИЮ ИЗ URL
+ *
+ * Например:
+ *
+ * category.html?category=Катана
+ *
+ */
 
 const params =
     new URLSearchParams(
@@ -240,10 +262,13 @@ const title =
 
 
 /*
- * Проверяем категорию
+ * Если категория не указана
  */
 
 if (!category) {
+
+    document.title =
+        "Категория";
 
     title.textContent =
         "Категория не указана";
@@ -261,7 +286,19 @@ async function loadCategory() {
 
     try {
 
+        /*
+         * Заголовок страницы
+         */
+
         title.textContent =
+            category;
+
+
+        /*
+         * Название вкладки браузера
+         */
+
+        document.title =
             category;
 
 
@@ -270,7 +307,9 @@ async function loadCategory() {
          */
 
         const catalogResponse =
-            await fetch("catalog.json");
+            await fetch(
+                "catalog.json"
+            );
 
 
         if (!catalogResponse.ok) {
@@ -278,6 +317,7 @@ async function loadCategory() {
             throw new Error(
                 "Не удалось загрузить catalog.json"
             );
+
         }
 
 
@@ -290,7 +330,9 @@ async function loadCategory() {
          */
 
         const objects =
-            Object.entries(catalog);
+            Object.entries(
+                catalog
+            );
 
 
         const categoryObjects = [];
@@ -332,9 +374,13 @@ async function loadCategory() {
                 ) {
 
                     categoryObjects.push({
+
                         id: objectId,
+
                         folder: folder,
+
                         data: data
+
                     });
 
                 }
@@ -354,7 +400,7 @@ async function loadCategory() {
 
 
         /*
-         * Если ничего нет
+         * Если предметов нет
          */
 
         if (
@@ -363,29 +409,41 @@ async function loadCategory() {
 
             grid.innerHTML = "";
 
+
             const message =
                 document.createElement(
                     "div"
                 );
 
+
             message.className =
                 "error";
+
 
             message.textContent =
                 "В этой категории пока нет предметов.";
 
-            grid.appendChild(message);
+
+            grid.appendChild(
+                message
+            );
+
 
             return;
+
         }
+
+
+        /*
+         * Очищаем загрузку
+         */
+
+        grid.innerHTML = "";
 
 
         /*
          * Создаём карточки
          */
-
-        grid.innerHTML = "";
-
 
         for (
             const object
@@ -402,22 +460,31 @@ async function loadCategory() {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         grid.innerHTML = "";
+
 
         const message =
             document.createElement(
                 "div"
             );
 
+
         message.className =
             "error";
+
 
         message.textContent =
             "Не удалось загрузить категорию.";
 
-        grid.appendChild(message);
+
+        grid.appendChild(
+            message
+        );
 
     }
 
@@ -425,10 +492,12 @@ async function loadCategory() {
 
 
 /*
- * Создание карточки
+ * СОЗДАНИЕ КАРТОЧКИ
  */
 
-async function createCard(object) {
+async function createCard(
+    object
+) {
 
     const card =
         document.createElement(
@@ -440,13 +509,18 @@ async function createCard(object) {
         "object-card";
 
 
+    /*
+     * Переход на страницу предмета
+     */
+
     card.href =
-        `item.html?object=${encodeURIComponent(object.id)}`;
+        `item.html?object=${encodeURIComponent(
+            object.id
+        )}`;
 
 
     /*
      * Получаем первую фотографию
-     * через GitHub API
      */
 
     const image =
@@ -456,7 +530,7 @@ async function createCard(object) {
 
 
     /*
-     * Картинка
+     * Контейнер фотографии
      */
 
     const imageContainer =
@@ -468,6 +542,10 @@ async function createCard(object) {
     imageContainer.className =
         "card-image";
 
+
+    /*
+     * Если фотография найдена
+     */
 
     if (image) {
 
@@ -485,6 +563,10 @@ async function createCard(object) {
             object.data.title || "";
 
 
+        /*
+         * Ленивое загружание
+         */
+
         img.loading =
             "lazy";
 
@@ -497,7 +579,7 @@ async function createCard(object) {
 
 
     /*
-     * Название
+     * Название предмета
      */
 
     const cardTitle =
@@ -515,7 +597,7 @@ async function createCard(object) {
 
 
     /*
-     * Номер
+     * Номер предмета
      */
 
     const cardNumber =
@@ -546,23 +628,31 @@ async function createCard(object) {
         imageContainer
     );
 
+
     card.appendChild(
         cardTitle
     );
+
 
     card.appendChild(
         cardNumber
     );
 
 
+    /*
+     * Добавляем карточку
+     * в конец сетки
+     */
+
     grid.appendChild(
         card
     );
+
 }
 
 
 /*
- * Получаем первую фотографию
+ * ПОЛУЧЕНИЕ ПЕРВОЙ ФОТОГРАФИИ
  */
 
 async function getFirstPhoto(
@@ -579,11 +669,15 @@ async function getFirstPhoto(
     try {
 
         const response =
-            await fetch(apiUrl);
+            await fetch(
+                apiUrl
+            );
 
 
         if (!response.ok) {
+
             return null;
+
         }
 
 
@@ -591,45 +685,71 @@ async function getFirstPhoto(
             await response.json();
 
 
+        /*
+         * Находим все фотографии
+         */
+
         const photos =
             files
 
-                .filter(file => {
+                .filter(
+                    file => {
 
-                    return (
-                        file.type === "file" &&
-                        /^photo-\d+\.(jpg|jpeg|png|webp|gif)$/i
-                            .test(file.name)
-                    );
+                        return (
 
-                })
+                            file.type ===
+                            "file"
 
-                .sort((a, b) => {
+                            &&
 
-                    const aNumber =
-                        parseInt(
-                            a.name.match(
-                                /^photo-(\d+)/i
-                            )[1],
-                            10
+                            /^photo-\d+\.(jpg|jpeg|png|webp|gif)$/i
+                                .test(
+                                    file.name
+                                )
+
                         );
 
+                    }
+                )
 
-                    const bNumber =
-                        parseInt(
-                            b.name.match(
-                                /^photo-(\d+)/i
-                            )[1],
-                            10
+
+                /*
+                 * Сортируем по номеру
+                 */
+
+                .sort(
+                    (a, b) => {
+
+                        const aNumber =
+                            parseInt(
+                                a.name.match(
+                                    /^photo-(\d+)/i
+                                )[1],
+                                10
+                            );
+
+
+                        const bNumber =
+                            parseInt(
+                                b.name.match(
+                                    /^photo-(\d+)/i
+                                )[1],
+                                10
+                            );
+
+
+                        return (
+                            aNumber -
+                            bNumber
                         );
 
+                    }
+                );
 
-                    return (
-                        aNumber - bNumber
-                    );
 
-                });
-
+        /*
+         * Возвращаем первую фотографию
+         */
 
         if (
             photos.length > 0
@@ -646,7 +766,10 @@ async function getFirstPhoto(
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         return null;
 
@@ -656,7 +779,7 @@ async function getFirstPhoto(
 
 
 /*
- * Запуск
+ * ЗАПУСК
  */
 
 if (category) {
