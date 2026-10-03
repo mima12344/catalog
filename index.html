@@ -1,720 +1,334 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Каталог</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-
-    background: #000;
-    color: #fff;
-
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    min-height: 100vh;
-}
-
-
-/* ОСНОВНАЯ СТРАНИЦА */
-
-.page {
-    width: 100%;
-    max-width: 1000px;
-
-    margin: 0 auto;
-
-    padding: 60px 30px 100px;
-}
-
-
-/* ВВОДНАЯ ИНФОРМАЦИЯ */
-
-.introduction {
-    min-height: 320px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-}
-
-.introduction-content {
-    width: 100%;
-    max-width: 750px;
-}
-
-
-/* КАТАЛОГ */
-
-.catalog {
-    width: 100%;
-
-    padding-top: 20px;
-}
-
-
-/* ЗАГОЛОВОК */
-
-.catalog-title {
-    margin: 0 0 45px;
-
-    text-align: center;
-
-    font-size: 20px;
-
-    font-weight: 400;
-
-    line-height: 1.2;
-
-    color: #777;
-}
-
-
-/* СЕТКА КАТЕГОРИЙ */
-
-.categories {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    column-gap: 80px;
-
-    row-gap: 38px;
-
-    align-items: start;
-}
-
-
-/* КАТЕГОРИЯ */
-
-.category {
-    width: 100%;
-
-    text-align: center;
-}
-
-
-/* НАЗВАНИЕ КАТЕГОРИИ */
-
-.category-link {
-    display: inline-block;
-
-    color: #fff;
-
-    text-decoration: none;
-
-    font-size: 23px;
-
-    line-height: 1.3;
-
-    font-weight: 400;
-
-    transition:
-        opacity 0.2s ease;
-}
-
-.category-link:hover {
-    opacity: 0.6;
-}
-
-
-/* ПОДКАТЕГОРИИ */
-
-.subcategories {
-    margin-top: 10px;
-
-    margin-left: 45px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    text-align: left;
-}
-
-
-.subcategory-link {
-    position: relative;
-
-    display: inline-block;
-
-    padding: 3px 0;
-
-    color: #777;
-
-    text-decoration: none;
-
-    font-size: 15px;
-
-    line-height: 1.4;
-
-    transition:
-        color 0.2s ease;
-}
-
-
-.subcategory-link::before {
-    content: "—";
-
-    position: absolute;
-
-    left: -20px;
-
-    color: #444;
-}
-
-
-.subcategory-link:hover {
-    color: #fff;
-}
-
-
-/* ЗАГРУЗКА */
-
-.loading {
-    grid-column: 1 / -1;
-
-    color: #555;
-
-    font-size: 14px;
-
-    text-align: center;
-
-    padding: 40px 0;
-}
-
-
-/* ОШИБКА */
-
-.error {
-    grid-column: 1 / -1;
-
-    color: #777;
-
-    font-size: 14px;
-
-    text-align: center;
-
-    padding: 40px 0;
-}
-
-
-/* МОБИЛЬНЫЕ */
-
-@media (max-width: 650px) {
-
-    .page {
-        padding:
-            30px 20px 70px;
-    }
-
-
-    .introduction {
-        min-height: 240px;
-    }
-
-
-    .catalog {
-        padding-top: 10px;
-    }
-
-
-    .catalog-title {
-        margin-bottom: 35px;
-
-        font-size: 18px;
-    }
-
-
-    .categories {
-        grid-template-columns: 1fr;
-
-        column-gap: 0;
-
-        row-gap: 32px;
-    }
-
-
-    .category-link {
-        font-size: 21px;
-    }
-
-
-    .subcategories {
-        margin-left: 35px;
-    }
-
-
-    .subcategory-link {
-        font-size: 15px;
-    }
-
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Каталог</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 30px 80px;
+        }
+
+        /* Место под приветствие и вводную информацию */
+
+        .introduction {
+            min-height: 320px;
+        }
+
+        /* Каталог */
+
+        .catalog-section {
+            width: 100%;
+        }
+
+        .catalog-heading {
+            margin: 0 0 45px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 400;
+            color: #777;
+        }
+
+        /* Две колонки */
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 80px;
+            row-gap: 38px;
+        }
+
+        .category {
+            text-align: left;
+        }
+
+        .category-title {
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            font-size: 23px;
+            line-height: 1.3;
+            font-weight: 400;
+            transition: opacity 0.2s ease;
+        }
+
+        .category-title:hover {
+            opacity: 0.65;
+        }
+
+        /* Подкатегории */
+
+        .subcategories {
+            margin-top: 10px;
+            margin-left: 45px;
+        }
+
+        .subcategory {
+            display: block;
+            position: relative;
+            color: #777;
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 1.6;
+            font-weight: 400;
+            transition: color 0.2s ease;
+        }
+
+        .subcategory::before {
+            content: "—";
+            position: absolute;
+            left: -18px;
+            color: #555;
+        }
+
+        .subcategory:hover {
+            color: #fff;
+        }
+
+        /* Телефон */
+
+        @media (max-width: 650px) {
+            .page {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .introduction {
+                min-height: 220px;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+                row-gap: 35px;
+            }
+
+            .catalog-heading {
+                margin-bottom: 35px;
+            }
+
+            .category-title {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="page">
 
-
     <!--
-        ПУСТОЕ МЕСТО ПОД ПРИВЕТСТВИЕ
-        И ВВОДНУЮ ИНФОРМАЦИЮ
+        Здесь позже можно разместить приветствие
+        и другую вводную информацию.
+        Сейчас блок намеренно оставлен пустым.
     -->
+    <section class="introduction"></section>
 
-    <section class="introduction">
 
-        <div
-            class="introduction-content"
-            id="introduction-content">
-        </div>
+    <!-- Каталог -->
+    <section class="catalog-section">
+
+        <h1 class="catalog-heading">Каталог</h1>
+
+        <div id="categories" class="categories"></div>
 
     </section>
-
-
-    <!-- КАТАЛОГ -->
-
-    <main class="catalog">
-
-        <h1 class="catalog-title">
-            Каталог
-        </h1>
-
-
-        <div
-            class="categories"
-            id="categories">
-
-            <div class="loading">
-                Загрузка...
-            </div>
-
-        </div>
-
-    </main>
 
 </div>
 
 
 <script>
-
-/*
- * Загрузка каталога
- */
-
-async function loadCatalog() {
-
-    const categoriesContainer =
-        document.getElementById(
-            "categories"
-        );
+    const catalogContainer = document.getElementById("categories");
 
 
-    try {
+    async function loadCatalog() {
 
-        /*
-         * catalog.json
-         */
+        try {
 
-        const catalogResponse =
-            await fetch(
-                "catalog.json"
-            );
+            /* Загружаем основной каталог */
+            const catalogResponse = await fetch("catalog.json");
 
-
-        if (!catalogResponse.ok) {
-
-            throw new Error(
-                "Не удалось загрузить catalog.json"
-            );
-
-        }
-
-
-        const catalog =
-            await catalogResponse.json();
-
-
-        /*
-         * Получаем все предметы
-         */
-
-        const objects =
-            Object.entries(
-                catalog
-            );
-
-
-        /*
-         * Карта категорий
-         */
-
-        const categoryMap =
-            new Map();
-
-
-        /*
-         * Загружаем info.json
-         * каждого предмета
-         */
-
-        for (
-            const [objectId, folder]
-            of objects
-        ) {
-
-            try {
-
-                const infoResponse =
-                    await fetch(
-                        `objects/${folder}/info.json`
-                    );
-
-
-                if (!infoResponse.ok) {
-                    continue;
-                }
-
-
-                const data =
-                    await infoResponse.json();
-
-
-                /*
-                 * Категория
-                 */
-
-                const category =
-                    typeof data.category === "string"
-                        ? data.category.trim()
-                        : "";
-
-
-                /*
-                 * Подкатегория
-                 */
-
-                const subcategory =
-                    typeof data.subcategory === "string"
-                        ? data.subcategory.trim()
-                        : "";
-
-
-                /*
-                 * Без категории
-                 * предмет не добавляем
-                 */
-
-                if (!category) {
-                    continue;
-                }
-
-
-                /*
-                 * Создаём категорию
-                 */
-
-                if (
-                    !categoryMap.has(
-                        category
-                    )
-                ) {
-
-                    categoryMap.set(
-                        category,
-                        new Set()
-                    );
-
-                }
-
-
-                /*
-                 * Добавляем подкатегорию
-                 */
-
-                if (subcategory) {
-
-                    categoryMap
-                        .get(category)
-                        .add(subcategory);
-
-                }
-
+            if (!catalogResponse.ok) {
+                throw new Error("Не удалось загрузить catalog.json");
             }
 
-            catch (error) {
-
-                console.error(
-                    `Ошибка предмета ${objectId}:`,
-                    error
-                );
-
-            }
-
-        }
+            const catalog = await catalogResponse.json();
 
 
-        /*
-         * Нет категорий
-         */
+            /*
+                Собираем структуру:
 
-        if (
-            categoryMap.size === 0
-        ) {
+                Категория
+                    → Подкатегория
+                    → Подкатегория
 
-            categoriesContainer.innerHTML =
-                `
-                <div class="error">
-                    Категории пока отсутствуют.
-                </div>
-                `;
-
-            return;
-        }
+                Используем Set, чтобы одинаковые
+                подкатегории не повторялись.
+            */
+            const categories = new Map();
 
 
-        /*
-         * Сортируем категории
-         * по алфавиту
-         */
+            for (const [catalogNumber, folder] of Object.entries(catalog)) {
 
-        const sortedCategories =
-            Array.from(
-                categoryMap.entries()
-            )
-            .sort(
-                ([categoryA], [categoryB]) =>
-                    categoryA.localeCompare(
-                        categoryB,
-                        "ru",
-                        {
-                            sensitivity: "base"
-                        }
-                    )
-            );
+                try {
 
+                    const infoResponse = await fetch(
+                        `objects/${encodeURIComponent(folder)}/info.json`
+                    );
 
-        /*
-         * Очищаем загрузку
-         */
-
-        categoriesContainer.innerHTML =
-            "";
-
-
-        /*
-         * Добавляем категории
-         *
-         * CSS Grid сам располагает:
-         *
-         * 1  2
-         * 3  4
-         * 5  6
-         *
-         * то есть слева направо.
-         */
-
-        for (
-            const [
-                category,
-                subcategories
-            ]
-            of sortedCategories
-        ) {
-
-            createCategory(
-                category,
-                subcategories,
-                categoriesContainer
-            );
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            error
-        );
-
-
-        categoriesContainer.innerHTML =
-            `
-            <div class="error">
-                Не удалось загрузить каталог.
-            </div>
-            `;
-
-    }
-
-}
-
-
-/*
- * Создание категории
- */
-
-function createCategory(
-    category,
-    subcategories,
-    container
-) {
-
-    const categoryElement =
-        document.createElement(
-            "section"
-        );
-
-
-    categoryElement.className =
-        "category";
-
-
-    /*
-     * Ссылка категории
-     */
-
-    const categoryLink =
-        document.createElement(
-            "a"
-        );
-
-
-    categoryLink.className =
-        "category-link";
-
-
-    categoryLink.textContent =
-        category;
-
-
-    categoryLink.href =
-        `category.html?category=${encodeURIComponent(
-            category
-        )}`;
-
-
-    categoryElement.appendChild(
-        categoryLink
-    );
-
-
-    /*
-     * Сортировка подкатегорий
-     */
-
-    const sortedSubcategories =
-        Array.from(
-            subcategories
-        )
-        .sort(
-            (a, b) =>
-                a.localeCompare(
-                    b,
-                    "ru",
-                    {
-                        sensitivity: "base"
+                    if (!infoResponse.ok) {
+                        continue;
                     }
-                )
-        );
+
+                    const data = await infoResponse.json();
+
+                    const category = data.category;
+
+                    if (!category) {
+                        continue;
+                    }
 
 
-    /*
-     * Подкатегории
-     */
-
-    if (
-        sortedSubcategories.length > 0
-    ) {
-
-        const subcategoriesElement =
-            document.createElement(
-                "div"
-            );
+                    if (!categories.has(category)) {
+                        categories.set(category, new Set());
+                    }
 
 
-        subcategoriesElement.className =
-            "subcategories";
+                    if (data.subcategory) {
+                        categories
+                            .get(category)
+                            .add(data.subcategory);
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        `Ошибка загрузки объекта ${catalogNumber}:`,
+                        error
+                    );
+
+                }
+            }
 
 
-        for (
-            const subcategory
-            of sortedSubcategories
-        ) {
-
-            const subcategoryLink =
-                document.createElement(
-                    "a"
+            /*
+                Сортируем категории
+                по алфавиту.
+            */
+            const sortedCategories = [...categories.entries()]
+                .sort((a, b) =>
+                    a[0].localeCompare(b[0], "ru")
                 );
 
 
-            subcategoryLink.className =
-                "subcategory-link";
+            /*
+                Создаём элементы каталога.
+            */
+            for (const [category, subcategories] of sortedCategories) {
+
+                const categoryBlock = document.createElement("div");
+                categoryBlock.className = "category";
 
 
-            subcategoryLink.textContent =
-                subcategory;
+                /* Название категории */
+
+                const categoryLink = document.createElement("a");
+
+                categoryLink.className = "category-title";
+
+                categoryLink.href =
+                    `category.html?category=${encodeURIComponent(category)}`;
+
+                categoryLink.textContent = category;
 
 
-            subcategoryLink.href =
-                `category.html?category=${encodeURIComponent(
-                    category
-                )}&subcategory=${encodeURIComponent(
-                    subcategory
-                )}`;
+                categoryBlock.appendChild(categoryLink);
 
 
-            subcategoriesElement.appendChild(
-                subcategoryLink
-            );
+                /*
+                    Подкатегории
+                */
 
+                const sortedSubcategories = [...subcategories]
+                    .sort((a, b) =>
+                        a.localeCompare(b, "ru")
+                    );
+
+
+                if (sortedSubcategories.length > 0) {
+
+                    const subcategoriesBlock =
+                        document.createElement("div");
+
+                    subcategoriesBlock.className =
+                        "subcategories";
+
+
+                    for (const subcategory of sortedSubcategories) {
+
+                        const subcategoryLink =
+                            document.createElement("a");
+
+                        subcategoryLink.className =
+                            "subcategory";
+
+                        subcategoryLink.href =
+                            `category.html?category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcategory)}`;
+
+                        subcategoryLink.textContent =
+                            subcategory;
+
+
+                        subcategoriesBlock.appendChild(
+                            subcategoryLink
+                        );
+                    }
+
+
+                    categoryBlock.appendChild(
+                        subcategoriesBlock
+                    );
+                }
+
+
+                catalogContainer.appendChild(
+                    categoryBlock
+                );
+            }
+
+        } catch (error) {
+
+            console.error("Ошибка загрузки каталога:", error);
+
+            catalogContainer.innerHTML =
+                "<p>Не удалось загрузить каталог.</p>";
         }
-
-
-        categoryElement.appendChild(
-            subcategoriesElement
-        );
-
     }
 
 
-    /*
-     * Добавляем категорию
-     */
-
-    container.appendChild(
-        categoryElement
-    );
-
-}
-
-
-/*
- * Запуск
- */
-
-loadCatalog();
-
+    loadCatalog();
 </script>
 
 </body>
