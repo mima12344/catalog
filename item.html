@@ -7,6 +7,7 @@
 <title>Страница предмета</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -30,6 +31,7 @@ body {
     padding: 50px 30px 100px;
     text-align: center;
 }
+
 
 /* ФОТО */
 
@@ -61,6 +63,7 @@ body {
     object-fit: contain;
     display: block;
 }
+
 
 /* СТРЕЛКИ */
 
@@ -102,6 +105,7 @@ body {
     font-size: 13px;
 }
 
+
 /* ТЕКСТ */
 
 .content {
@@ -132,7 +136,10 @@ h1 {
     color: #ddd;
     font-size: 17px;
     line-height: 1.7;
+
+    white-space: pre-line;
 }
+
 
 /* ЭКСПЕРТИЗА */
 
@@ -188,6 +195,7 @@ h1 {
     display: none;
 }
 
+
 @media (max-width: 600px) {
 
     .page {
@@ -227,12 +235,14 @@ h1 {
         height: 800px;
     }
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="page">
+
 
     <!-- ФОТОГАЛЕРЕЯ -->
 
@@ -471,6 +481,7 @@ async function loadPhotos() {
 
     /*
      * Оставляем изображения
+     *
      * photo-01.jpg
      * photo-02.jpg
      * photo-10.jpg
