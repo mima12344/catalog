@@ -38,6 +38,7 @@
 
         .back {
             display: inline-block;
+
             margin-bottom: 55px;
 
             color: #777;
@@ -79,25 +80,41 @@
 
             width: 100%;
 
-            /*
-             * Оставляем свободное место
-             * для стрелок по бокам.
-             */
             padding: 0 65px;
 
             margin: 0 auto 65px;
         }
 
+        /*
+         * Это именно область фотографии.
+         * Она имеет ограниченную высоту,
+         * поэтому огромная фотография
+         * не растягивает страницу.
+         */
+
         .gallery-frame {
+            position: relative;
+
             width: 100%;
+            height: 65vh;
+
+            min-height: 400px;
+            max-height: 700px;
+
             overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #000;
         }
 
         .gallery-image {
             display: block;
 
             width: 100%;
-            max-height: 72vh;
+            height: 100%;
 
             object-fit: contain;
 
@@ -105,12 +122,28 @@
 
             cursor: zoom-in;
 
+            transform-origin: center center;
+
+            transform: scale(1);
+
             opacity: 1;
-            transform: translateX(0);
 
             transition:
-                opacity 0.28s ease,
+                opacity 0.25s ease,
                 transform 0.35s ease;
+        }
+
+        /*
+         * Когда фотография увеличена,
+         * transition убираем, чтобы
+         * лупа следовала за кликом нормально.
+         */
+
+        .gallery-image.zoomed {
+            cursor: zoom-out;
+
+            transition:
+                opacity 0.25s ease;
         }
 
         .gallery-image.fade-out {
@@ -118,8 +151,13 @@
         }
 
 
+        /* =========================
+           Стрелки
+           ========================= */
+
         /*
-         * Стрелки находятся ЗА пределами фотографии.
+         * Стрелки находятся за пределами
+         * самой фотографии.
          */
 
         .gallery-button {
@@ -135,7 +173,7 @@
 
             padding: 0;
 
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.28);
             border-radius: 50%;
 
             background: rgba(255, 255, 255, 0.12);
@@ -163,7 +201,9 @@
         }
 
         .gallery-button:active {
-            transform: translateY(-50%) scale(0.94);
+            transform:
+                translateY(-50%)
+                scale(0.94);
         }
 
         .gallery-prev {
@@ -190,8 +230,13 @@
            Полное описание
            ========================= */
 
+        /*
+         * Блок сам находится по центру,
+         * но текст внутри выровнен влево.
+         */
+
         .description {
-            max-width: 1100px;
+            max-width: 720px;
 
             margin: 0 auto 70px;
 
@@ -205,16 +250,9 @@
             text-align: left;
 
             /*
-             * Сохраняет \n\n из info.json.
+             * Сохраняем \n\n из info.json.
              */
             white-space: pre-line;
-
-            /*
-             * На компьютере — две колонки.
-             * Браузер сам распределяет текст.
-             */
-            column-count: 2;
-            column-gap: 70px;
         }
 
 
@@ -269,89 +307,6 @@
 
 
         /* =========================
-           Увеличенное фото
-           ========================= */
-
-        .photo-lightbox {
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 1000;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            padding: 40px;
-
-            background: rgba(0, 0, 0, 0.94);
-
-            opacity: 0;
-            visibility: hidden;
-
-            transition:
-                opacity 0.25s ease,
-                visibility 0.25s ease;
-        }
-
-        .photo-lightbox.open {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .photo-lightbox-image {
-            max-width: 95vw;
-            max-height: 92vh;
-
-            object-fit: contain;
-
-            cursor: zoom-out;
-
-            user-select: none;
-            -webkit-user-select: none;
-
-            /*
-             * Позволяет pinch-to-zoom
-             * на телефоне.
-             */
-            touch-action: pinch-zoom;
-        }
-
-        .lightbox-close {
-            position: fixed;
-
-            top: 20px;
-            right: 25px;
-
-            z-index: 1001;
-
-            width: 42px;
-            height: 42px;
-
-            padding: 0;
-
-            border: 0;
-
-            background: transparent;
-
-            color: #fff;
-
-            font-size: 32px;
-            line-height: 42px;
-
-            cursor: pointer;
-
-            opacity: 0.7;
-        }
-
-        .lightbox-close:hover {
-            opacity: 1;
-        }
-
-
-        /* =========================
            Ошибка
            ========================= */
 
@@ -379,11 +334,13 @@
                     70px;
             }
 
+
             .back {
                 margin-bottom: 38px;
 
                 font-size: 14px;
             }
+
 
             .title {
                 margin-bottom: 30px;
@@ -395,18 +352,24 @@
 
 
             /*
-             * На телефоне пространство под
-             * стрелки делаем меньше.
+             * На телефоне область фотографии
+             * становится ниже.
              */
+
             .gallery {
                 padding: 0 48px;
 
                 margin-bottom: 50px;
             }
 
-            .gallery-image {
-                max-height: 65vh;
+
+            .gallery-frame {
+                height: 52vh;
+
+                min-height: 280px;
+                max-height: 520px;
             }
+
 
             .gallery-button {
                 width: 40px;
@@ -415,6 +378,7 @@
                 font-size: 25px;
                 line-height: 35px;
             }
+
 
             .gallery-prev {
                 left: 2px;
@@ -426,8 +390,9 @@
 
 
             /*
-             * На телефоне одна колонка.
+             * Текст остаётся одной колонкой.
              */
+
             .description {
                 padding: 0 5px;
 
@@ -435,21 +400,12 @@
 
                 line-height: 1.7;
 
-                column-count: 1;
+                text-align: left;
             }
+
 
             .expertise {
                 padding: 0 5px;
-            }
-
-
-            .photo-lightbox {
-                padding: 15px;
-            }
-
-            .lightbox-close {
-                top: 10px;
-                right: 12px;
             }
         }
     </style>
@@ -579,35 +535,6 @@
 </div>
 
 
-<!-- =========================
-     Увеличенное изображение
-     ========================= -->
-
-<div
-    id="photoLightbox"
-    class="photo-lightbox"
->
-
-    <button
-        id="lightboxClose"
-        class="lightbox-close"
-        type="button"
-        aria-label="Закрыть"
-    >
-        ×
-    </button>
-
-
-    <img
-        id="lightboxImage"
-        class="photo-lightbox-image"
-        src=""
-        alt=""
-    >
-
-</div>
-
-
 <script>
 
     const objectNumber =
@@ -622,6 +549,12 @@
 
     const galleryElement =
         document.getElementById("gallery");
+
+
+    const galleryFrame =
+        document.querySelector(
+            ".gallery-frame"
+        );
 
 
     const galleryImage =
@@ -660,33 +593,18 @@
         document.getElementById("error");
 
 
-    /*
-     * Lightbox
-     */
-
-    const photoLightbox =
-        document.getElementById(
-            "photoLightbox"
-        );
-
-
-    const lightboxImage =
-        document.getElementById(
-            "lightboxImage"
-        );
-
-
-    const lightboxClose =
-        document.getElementById(
-            "lightboxClose"
-        );
-
-
     let photos = [];
 
     let currentPhoto = 0;
 
     let changingPhoto = false;
+
+
+    /*
+     * Состояние увеличения.
+     */
+
+    let isZoomed = false;
 
 
     /* =========================
@@ -801,18 +719,12 @@
                     }
 
                 } catch (error) {
-
                     /*
                      * Файл отсутствует.
                      */
                 }
             }
 
-
-            /*
-             * Если следующей фотографии нет,
-             * дальше искать бессмысленно.
-             */
 
             if (!foundPhoto) {
                 break;
@@ -868,7 +780,6 @@
                 }
 
             } catch (error) {
-
                 /*
                  * Проверяем следующий вариант.
                  */
@@ -881,10 +792,166 @@
 
 
     /* =========================
+       Сброс увеличения
+       ========================= */
+
+    function resetZoom() {
+
+        isZoomed = false;
+
+        galleryImage.classList.remove(
+            "zoomed"
+        );
+
+        galleryImage.style.transform =
+            "scale(1)";
+
+        galleryImage.style.transformOrigin =
+            "center center";
+
+        galleryFrame.style.cursor =
+            "";
+    }
+
+
+    /* =========================
+       Увеличение вокруг курсора
+       ========================= */
+
+    function zoomAtPoint(clientX, clientY) {
+
+        /*
+         * Если уже увеличено —
+         * следующий клик возвращает
+         * обычный масштаб.
+         */
+
+        if (isZoomed) {
+
+            resetZoom();
+
+            return;
+        }
+
+
+        const rect =
+            galleryFrame.getBoundingClientRect();
+
+
+        const x =
+            clientX - rect.left;
+
+
+        const y =
+            clientY - rect.top;
+
+
+        /*
+         * Точка увеличения в процентах
+         * относительно области фотографии.
+         */
+
+        const originX =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    (x / rect.width) * 100
+                )
+            );
+
+
+        const originY =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    (y / rect.height) * 100
+                )
+            );
+
+
+        galleryImage.style.transformOrigin =
+            `${originX}% ${originY}%`;
+
+
+        galleryImage.style.transform =
+            "scale(2.2)";
+
+
+        galleryImage.classList.add(
+            "zoomed"
+        );
+
+
+        galleryFrame.style.cursor =
+            "zoom-out";
+
+
+        isZoomed = true;
+    }
+
+
+    /*
+     * Клик мышью по фотографии.
+     */
+
+    galleryImage.addEventListener(
+        "click",
+        event => {
+
+            zoomAtPoint(
+                event.clientX,
+                event.clientY
+            );
+        }
+    );
+
+
+    /*
+     * На телефоне тап по фотографии
+     * работает точно так же.
+     */
+
+    galleryImage.addEventListener(
+        "touchend",
+        event => {
+
+            /*
+             * Если это был обычный тап,
+             * используем координату пальца.
+             */
+
+            if (
+                event.changedTouches.length !== 1
+            ) {
+                return;
+            }
+
+
+            const touch =
+                event.changedTouches[0];
+
+
+            zoomAtPoint(
+                touch.clientX,
+                touch.clientY
+            );
+        },
+        {
+            passive: true
+        }
+    );
+
+
+    /* =========================
        Обновление галереи
        ========================= */
 
     function updateGallery() {
+
+        resetZoom();
+
 
         if (photos.length === 0) {
 
@@ -947,6 +1014,9 @@
         changingPhoto = true;
 
 
+        resetZoom();
+
+
         galleryImage.classList.add(
             "fade-out"
         );
@@ -981,11 +1051,6 @@
                 };
 
 
-            /*
-             * Запасной вариант для изображения,
-             * которое уже находится в кэше.
-             */
-
             setTimeout(() => {
 
                 galleryImage.classList.remove(
@@ -1018,15 +1083,26 @@
 
     let touchStartX = 0;
 
-    let touchEndX = 0;
+    let touchStartY = 0;
 
 
-    galleryElement.addEventListener(
+    galleryImage.addEventListener(
         "touchstart",
         event => {
 
+            if (
+                event.touches.length !== 1
+            ) {
+                return;
+            }
+
+
             touchStartX =
-                event.changedTouches[0].screenX;
+                event.touches[0].screenX;
+
+
+            touchStartY =
+                event.touches[0].screenY;
 
         },
         {
@@ -1035,26 +1111,46 @@
     );
 
 
-    galleryElement.addEventListener(
+    galleryImage.addEventListener(
         "touchend",
         event => {
 
-            touchEndX =
-                event.changedTouches[0].screenX;
-
-
-            const difference =
-                touchEndX - touchStartX;
-
-
             if (
-                Math.abs(difference) < 50
+                event.changedTouches.length !== 1
             ) {
                 return;
             }
 
 
-            if (difference > 0) {
+            const touch =
+                event.changedTouches[0];
+
+
+            const differenceX =
+                touch.screenX -
+                touchStartX;
+
+
+            const differenceY =
+                touch.screenY -
+                touchStartY;
+
+
+            /*
+             * Если палец реально двигался —
+             * это свайп, а не увеличение.
+             */
+
+            if (
+                Math.abs(differenceX) < 50 ||
+                Math.abs(differenceX) <
+                Math.abs(differenceY)
+            ) {
+                return;
+            }
+
+
+            if (differenceX > 0) {
 
                 changePhoto(-1);
 
@@ -1062,7 +1158,6 @@
 
                 changePhoto(1);
             }
-
         },
         {
             passive: true
@@ -1071,93 +1166,28 @@
 
 
     /* =========================
-       Увеличение фотографии
+       Клавиатура
        ========================= */
-
-    function openLightbox() {
-
-        if (!galleryImage.src) {
-            return;
-        }
-
-
-        lightboxImage.src =
-            galleryImage.src;
-
-
-        lightboxImage.alt =
-            galleryImage.alt;
-
-
-        photoLightbox.classList.add(
-            "open"
-        );
-
-
-        document.body.style.overflow =
-            "hidden";
-    }
-
-
-    function closeLightbox() {
-
-        photoLightbox.classList.remove(
-            "open"
-        );
-
-
-        document.body.style.overflow =
-            "";
-    }
-
-
-    galleryImage.addEventListener(
-        "click",
-        openLightbox
-    );
-
-
-    lightboxClose.addEventListener(
-        "click",
-        closeLightbox
-    );
-
-
-    /*
-     * Клик по тёмному фону закрывает фото.
-     */
-
-    photoLightbox.addEventListener(
-        "click",
-        event => {
-
-            if (
-                event.target ===
-                photoLightbox
-            ) {
-
-                closeLightbox();
-            }
-        }
-    );
-
-
-    /*
-     * Esc закрывает увеличенное фото.
-     */
 
     document.addEventListener(
         "keydown",
         event => {
 
-            if (
-                event.key === "Escape" &&
-                photoLightbox.classList.contains(
-                    "open"
-                )
-            ) {
+            if (event.key === "ArrowLeft") {
 
-                closeLightbox();
+                changePhoto(-1);
+            }
+
+
+            if (event.key === "ArrowRight") {
+
+                changePhoto(1);
+            }
+
+
+            if (event.key === "Escape") {
+
+                resetZoom();
             }
         }
     );
@@ -1230,9 +1260,7 @@
 
         /*
          * Экспертное заключение.
-         *
-         * Если PDF нет,
-         * весь раздел остаётся скрытым.
+         * Если PDF нет — раздел скрыт.
          */
 
         const expertise =
