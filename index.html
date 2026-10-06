@@ -15,9 +15,14 @@
         body {
             margin: 0;
             padding: 0;
+
             background: #000;
             color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
         }
 
         body {
@@ -27,17 +32,18 @@
         .page {
             width: 100%;
             max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 30px 80px;
-        }
 
-        /* Место под приветствие и вводную информацию */
+            margin: 0 auto;
+
+            padding:
+                0
+                30px
+                80px;
+        }
 
         .introduction {
             min-height: 320px;
         }
-
-        /* Каталог */
 
         .catalog-section {
             width: 100%;
@@ -45,17 +51,24 @@
 
         .catalog-heading {
             margin: 0 0 45px;
+
             text-align: center;
+
             font-size: 20px;
             font-weight: 400;
+
             color: #777;
         }
 
-        /* Две колонки */
-
         .categories {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
             column-gap: 80px;
             row-gap: 38px;
         }
@@ -66,40 +79,55 @@
 
         .category-title {
             display: inline-block;
+
             color: #fff;
+
             text-decoration: none;
+
             font-size: 23px;
             line-height: 1.3;
+
             font-weight: 400;
-            transition: opacity 0.2s ease;
+
+            transition:
+                opacity 0.2s ease;
         }
 
         .category-title:hover {
             opacity: 0.65;
         }
 
-        /* Подкатегории */
-
         .subcategories {
             margin-top: 10px;
+
             margin-left: 45px;
         }
 
         .subcategory {
             display: block;
+
             position: relative;
+
             color: #777;
+
             text-decoration: none;
+
             font-size: 15px;
             line-height: 1.6;
+
             font-weight: 400;
-            transition: color 0.2s ease;
+
+            transition:
+                color 0.2s ease;
         }
 
         .subcategory::before {
             content: "—";
+
             position: absolute;
+
             left: -18px;
+
             color: #555;
         }
 
@@ -107,9 +135,11 @@
             color: #fff;
         }
 
+
         /* Телефон */
 
         @media (max-width: 650px) {
+
             .page {
                 padding-left: 25px;
                 padding-right: 25px;
@@ -121,6 +151,7 @@
 
             .categories {
                 grid-template-columns: 1fr;
+
                 row-gap: 35px;
             }
 
@@ -135,24 +166,25 @@
     </style>
 </head>
 
+
 <body>
 
 <div class="page">
 
-    <!--
-        Здесь позже можно разместить приветствие
-        и другую вводную информацию.
-        Сейчас блок намеренно оставлен пустым.
-    -->
     <section class="introduction"></section>
 
 
-    <!-- Каталог -->
     <section class="catalog-section">
 
-        <h1 class="catalog-heading">Каталог</h1>
+        <h1 class="catalog-heading">
+            Каталог
+        </h1>
 
-        <div id="categories" class="categories"></div>
+
+        <div
+            id="categories"
+            class="categories"
+        ></div>
 
     </section>
 
@@ -160,66 +192,104 @@
 
 
 <script>
-    const catalogContainer = document.getElementById("categories");
+
+    const catalogContainer =
+        document.getElementById(
+            "categories"
+        );
 
 
     async function loadCatalog() {
 
         try {
 
-            /* Загружаем основной каталог */
-            const catalogResponse = await fetch("catalog.json");
+            const catalogResponse =
+                await fetch(
+                    "catalog.json",
+                    {
+                        cache: "no-store"
+                    }
+                );
+
 
             if (!catalogResponse.ok) {
-                throw new Error("Не удалось загрузить catalog.json");
+
+                throw new Error(
+                    "Не удалось загрузить catalog.json"
+                );
             }
 
-            const catalog = await catalogResponse.json();
+
+            const catalog =
+                await catalogResponse.json();
+
+
+            const categories =
+                new Map();
 
 
             /*
-                Собираем структуру:
+             * Собираем категории
+             * и подкатегории.
+             */
 
-                Категория
-                    → Подкатегория
-                    → Подкатегория
-
-                Используем Set, чтобы одинаковые
-                подкатегории не повторялись.
-            */
-            const categories = new Map();
-
-
-            for (const [catalogNumber, folder] of Object.entries(catalog)) {
+            for (
+                const [
+                    catalogNumber,
+                    folder
+                ]
+                of Object.entries(catalog)
+            ) {
 
                 try {
 
-                    const infoResponse = await fetch(
-                        `objects/${encodeURIComponent(folder)}/info.json`
-                    );
+                    const infoResponse =
+                        await fetch(
+                            `objects/${encodeURIComponent(folder)}/info.json`,
+                            {
+                                cache: "no-store"
+                            }
+                        );
+
 
                     if (!infoResponse.ok) {
                         continue;
                     }
 
-                    const data = await infoResponse.json();
 
-                    const category = data.category;
+                    const data =
+                        await infoResponse.json();
+
+
+                    const category =
+                        data.category;
+
 
                     if (!category) {
                         continue;
                     }
 
 
-                    if (!categories.has(category)) {
-                        categories.set(category, new Set());
+                    if (
+                        !categories.has(
+                            category
+                        )
+                    ) {
+
+                        categories.set(
+                            category,
+                            new Set()
+                        );
                     }
 
 
                     if (data.subcategory) {
+
                         categories
                             .get(category)
-                            .add(data.subcategory);
+                            .add(
+                                data.subcategory
+                            );
                     }
 
                 } catch (error) {
@@ -228,74 +298,157 @@
                         `Ошибка загрузки объекта ${catalogNumber}:`,
                         error
                     );
-
                 }
             }
 
 
             /*
-                Сортируем категории
-                по алфавиту.
-            */
-            const sortedCategories = [...categories.entries()]
-                .sort((a, b) =>
-                    a[0].localeCompare(b[0], "ru")
+             * =========================
+             * ВСЕ ПРЕДМЕТЫ
+             * =========================
+             */
+
+            const allObjects =
+                document.createElement(
+                    "div"
                 );
 
 
+            allObjects.className =
+                "category";
+
+
+            const allObjectsLink =
+                document.createElement(
+                    "a"
+                );
+
+
+            allObjectsLink.className =
+                "category-title";
+
+
+            allObjectsLink.href =
+                "category.html";
+
+
+            allObjectsLink.textContent =
+                "Все предметы";
+
+
+            allObjects.appendChild(
+                allObjectsLink
+            );
+
+
+            catalogContainer.appendChild(
+                allObjects
+            );
+
+
             /*
-                Создаём элементы каталога.
-            */
-            for (const [category, subcategories] of sortedCategories) {
+             * =========================
+             * ОБЫЧНЫЕ КАТЕГОРИИ
+             * =========================
+             */
 
-                const categoryBlock = document.createElement("div");
-                categoryBlock.className = "category";
+            const sortedCategories =
+                [
+                    ...categories.entries()
+                ].sort(
+                    (a, b) =>
+                        a[0].localeCompare(
+                            b[0],
+                            "ru"
+                        )
+                );
 
 
-                /* Название категории */
+            for (
+                const [
+                    category,
+                    subcategories
+                ]
+                of sortedCategories
+            ) {
 
-                const categoryLink = document.createElement("a");
+                const categoryBlock =
+                    document.createElement(
+                        "div"
+                    );
 
-                categoryLink.className = "category-title";
+
+                categoryBlock.className =
+                    "category";
+
+
+                const categoryLink =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                categoryLink.className =
+                    "category-title";
+
 
                 categoryLink.href =
                     `category.html?category=${encodeURIComponent(category)}`;
 
-                categoryLink.textContent = category;
+
+                categoryLink.textContent =
+                    category;
 
 
-                categoryBlock.appendChild(categoryLink);
+                categoryBlock.appendChild(
+                    categoryLink
+                );
 
 
-                /*
-                    Подкатегории
-                */
-
-                const sortedSubcategories = [...subcategories]
-                    .sort((a, b) =>
-                        a.localeCompare(b, "ru")
+                const sortedSubcategories =
+                    [
+                        ...subcategories
+                    ].sort(
+                        (a, b) =>
+                            a.localeCompare(
+                                b,
+                                "ru"
+                            )
                     );
 
 
-                if (sortedSubcategories.length > 0) {
+                if (
+                    sortedSubcategories.length > 0
+                ) {
 
                     const subcategoriesBlock =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
+
 
                     subcategoriesBlock.className =
                         "subcategories";
 
 
-                    for (const subcategory of sortedSubcategories) {
+                    for (
+                        const subcategory
+                        of sortedSubcategories
+                    ) {
 
                         const subcategoryLink =
-                            document.createElement("a");
+                            document.createElement(
+                                "a"
+                            );
+
 
                         subcategoryLink.className =
                             "subcategory";
 
+
                         subcategoryLink.href =
                             `category.html?category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcategory)}`;
+
 
                         subcategoryLink.textContent =
                             subcategory;
@@ -320,7 +473,11 @@
 
         } catch (error) {
 
-            console.error("Ошибка загрузки каталога:", error);
+            console.error(
+                "Ошибка загрузки каталога:",
+                error
+            );
+
 
             catalogContainer.innerHTML =
                 "<p>Не удалось загрузить каталог.</p>";
@@ -329,6 +486,7 @@
 
 
     loadCatalog();
+
 </script>
 
 </body>
