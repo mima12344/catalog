@@ -31,14 +31,20 @@
             padding: 45px 30px 100px;
         }
 
-        /* Кнопка назад */
+
+        /* =========================
+           Кнопка назад
+           ========================= */
 
         .back {
             display: inline-block;
             margin-bottom: 55px;
+
             color: #777;
             text-decoration: none;
+
             font-size: 14px;
+
             transition: color 0.2s ease;
         }
 
@@ -46,22 +52,39 @@
             color: #fff;
         }
 
-        /* Название */
+
+        /* =========================
+           Название
+           ========================= */
 
         .title {
             max-width: 850px;
+
             margin: 0 auto 45px;
+
             text-align: center;
+
             font-size: 34px;
             line-height: 1.3;
             font-weight: 400;
         }
 
-        /* Галерея */
+
+        /* =========================
+           Галерея
+           ========================= */
 
         .gallery {
             position: relative;
+
             width: 100%;
+
+            /*
+             * Оставляем свободное место
+             * для стрелок по бокам.
+             */
+            padding: 0 65px;
+
             margin: 0 auto 65px;
         }
 
@@ -72,10 +95,15 @@
 
         .gallery-image {
             display: block;
+
             width: 100%;
             max-height: 72vh;
+
             object-fit: contain;
+
             margin: 0 auto;
+
+            cursor: zoom-in;
 
             opacity: 1;
             transform: translateX(0);
@@ -89,59 +117,84 @@
             opacity: 0;
         }
 
+
+        /*
+         * Стрелки находятся ЗА пределами фотографии.
+         */
+
         .gallery-button {
             position: absolute;
+
             top: 50%;
             transform: translateY(-50%);
 
-            width: 46px;
-            height: 46px;
+            z-index: 5;
+
+            width: 48px;
+            height: 48px;
 
             padding: 0;
-            border: none;
+
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 50%;
 
-            background: rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.12);
+
             color: #fff;
 
-            font-size: 28px;
-            line-height: 46px;
+            font-size: 31px;
+            line-height: 43px;
+
             text-align: center;
 
             cursor: pointer;
 
-            opacity: 0.75;
+            opacity: 0.9;
 
             transition:
                 background 0.2s ease,
-                opacity 0.2s ease;
+                opacity 0.2s ease,
+                transform 0.2s ease;
         }
 
         .gallery-button:hover {
-            background: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.25);
             opacity: 1;
         }
 
+        .gallery-button:active {
+            transform: translateY(-50%) scale(0.94);
+        }
+
         .gallery-prev {
-            left: 15px;
+            left: 5px;
         }
 
         .gallery-next {
-            right: 15px;
+            right: 5px;
         }
+
 
         .photo-counter {
             margin-top: 12px;
+
             text-align: center;
+
             color: #666;
+
             font-size: 13px;
         }
 
-        /* Описание */
+
+        /* =========================
+           Полное описание
+           ========================= */
 
         .description {
-            max-width: 720px;
+            max-width: 1100px;
+
             margin: 0 auto 70px;
+
             padding: 0 20px;
 
             color: #ddd;
@@ -149,21 +202,31 @@
             font-size: 17px;
             line-height: 1.75;
 
-            text-align: center;
+            text-align: left;
 
             /*
-             * ВАЖНО:
-             * сохраняет \n\n из info.json
-             * и превращает их в реальные абзацы.
+             * Сохраняет \n\n из info.json.
              */
             white-space: pre-line;
+
+            /*
+             * На компьютере — две колонки.
+             * Браузер сам распределяет текст.
+             */
+            column-count: 2;
+            column-gap: 70px;
         }
 
-        /* Экспертное заключение */
+
+        /* =========================
+           Экспертное заключение
+           ========================= */
 
         .expertise {
             max-width: 720px;
+
             margin: 0 auto;
+
             padding: 0 20px;
 
             text-align: center;
@@ -180,8 +243,11 @@
 
         .expertise-links {
             display: flex;
+
             justify-content: center;
+
             gap: 25px;
+
             flex-wrap: wrap;
         }
 
@@ -189,6 +255,7 @@
             display: inline-block;
 
             color: #fff;
+
             text-decoration: none;
 
             font-size: 15px;
@@ -200,7 +267,93 @@
             opacity: 0.6;
         }
 
-        /* Ошибка */
+
+        /* =========================
+           Увеличенное фото
+           ========================= */
+
+        .photo-lightbox {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 40px;
+
+            background: rgba(0, 0, 0, 0.94);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease;
+        }
+
+        .photo-lightbox.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .photo-lightbox-image {
+            max-width: 95vw;
+            max-height: 92vh;
+
+            object-fit: contain;
+
+            cursor: zoom-out;
+
+            user-select: none;
+            -webkit-user-select: none;
+
+            /*
+             * Позволяет pinch-to-zoom
+             * на телефоне.
+             */
+            touch-action: pinch-zoom;
+        }
+
+        .lightbox-close {
+            position: fixed;
+
+            top: 20px;
+            right: 25px;
+
+            z-index: 1001;
+
+            width: 42px;
+            height: 42px;
+
+            padding: 0;
+
+            border: 0;
+
+            background: transparent;
+
+            color: #fff;
+
+            font-size: 32px;
+            line-height: 42px;
+
+            cursor: pointer;
+
+            opacity: 0.7;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+
+
+        /* =========================
+           Ошибка
+           ========================= */
 
         .error {
             padding-top: 100px;
@@ -208,19 +361,27 @@
             text-align: center;
 
             color: #777;
+
             font-size: 17px;
         }
 
-        /* Телефон */
+
+        /* =========================
+           Телефон
+           ========================= */
 
         @media (max-width: 650px) {
 
             .page {
-                padding: 30px 18px 70px;
+                padding:
+                    30px
+                    18px
+                    70px;
             }
 
             .back {
                 margin-bottom: 38px;
+
                 font-size: 14px;
             }
 
@@ -228,10 +389,18 @@
                 margin-bottom: 30px;
 
                 font-size: 27px;
+
                 line-height: 1.3;
             }
 
+
+            /*
+             * На телефоне пространство под
+             * стрелки делаем меньше.
+             */
             .gallery {
+                padding: 0 48px;
+
                 margin-bottom: 50px;
             }
 
@@ -240,46 +409,72 @@
             }
 
             .gallery-button {
-                width: 38px;
-                height: 38px;
+                width: 40px;
+                height: 40px;
 
-                font-size: 23px;
-                line-height: 38px;
+                font-size: 25px;
+                line-height: 35px;
             }
 
             .gallery-prev {
-                left: 5px;
+                left: 2px;
             }
 
             .gallery-next {
-                right: 5px;
+                right: 2px;
             }
 
+
+            /*
+             * На телефоне одна колонка.
+             */
             .description {
                 padding: 0 5px;
 
                 font-size: 16px;
+
                 line-height: 1.7;
+
+                column-count: 1;
             }
 
             .expertise {
                 padding: 0 5px;
             }
+
+
+            .photo-lightbox {
+                padding: 15px;
+            }
+
+            .lightbox-close {
+                top: 10px;
+                right: 12px;
+            }
         }
     </style>
 </head>
+
 
 <body>
 
 <div class="page">
 
-    <a href="index.html" class="back">
+    <a
+        href="index.html"
+        class="back"
+    >
         ← Каталог
     </a>
 
+
     <main id="content">
 
-        <h1 id="title" class="title"></h1>
+        <h1
+            id="title"
+            class="title"
+        ></h1>
+
 
         <section
             id="gallery"
@@ -298,6 +493,7 @@
 
             </div>
 
+
             <button
                 id="prevButton"
                 class="gallery-button gallery-prev"
@@ -307,6 +503,7 @@
                 ‹
             </button>
 
+
             <button
                 id="nextButton"
                 class="gallery-button gallery-next"
@@ -315,6 +512,7 @@
             >
                 ›
             </button>
+
 
             <div
                 id="photoCounter"
@@ -340,6 +538,7 @@
                 Экспертное заключение
             </h2>
 
+
             <div class="expertise-links">
 
                 <a
@@ -351,6 +550,7 @@
                 >
                     Открыть
                 </a>
+
 
                 <a
                     id="expertiseDownload"
@@ -379,44 +579,107 @@
 </div>
 
 
+<!-- =========================
+     Увеличенное изображение
+     ========================= -->
+
+<div
+    id="photoLightbox"
+    class="photo-lightbox"
+>
+
+    <button
+        id="lightboxClose"
+        class="lightbox-close"
+        type="button"
+        aria-label="Закрыть"
+    >
+        ×
+    </button>
+
+
+    <img
+        id="lightboxImage"
+        class="photo-lightbox-image"
+        src=""
+        alt=""
+    >
+
+</div>
+
+
 <script>
 
     const objectNumber =
-        new URLSearchParams(window.location.search).get("object");
+        new URLSearchParams(
+            window.location.search
+        ).get("object");
 
 
     const titleElement =
         document.getElementById("title");
 
+
     const galleryElement =
         document.getElementById("gallery");
+
 
     const galleryImage =
         document.getElementById("galleryImage");
 
+
     const photoCounter =
         document.getElementById("photoCounter");
+
 
     const prevButton =
         document.getElementById("prevButton");
 
+
     const nextButton =
         document.getElementById("nextButton");
+
 
     const descriptionElement =
         document.getElementById("description");
 
+
     const expertiseElement =
         document.getElementById("expertise");
+
 
     const expertiseOpen =
         document.getElementById("expertiseOpen");
 
+
     const expertiseDownload =
         document.getElementById("expertiseDownload");
 
+
     const errorElement =
         document.getElementById("error");
+
+
+    /*
+     * Lightbox
+     */
+
+    const photoLightbox =
+        document.getElementById(
+            "photoLightbox"
+        );
+
+
+    const lightboxImage =
+        document.getElementById(
+            "lightboxImage"
+        );
+
+
+    const lightboxClose =
+        document.getElementById(
+            "lightboxClose"
+        );
 
 
     let photos = [];
@@ -425,6 +688,10 @@
 
     let changingPhoto = false;
 
+
+    /* =========================
+       Загрузка каталога
+       ========================= */
 
     async function loadCatalog() {
 
@@ -436,15 +703,22 @@
                 }
             );
 
+
         if (!response.ok) {
+
             throw new Error(
                 "Не удалось загрузить catalog.json"
             );
         }
 
+
         return await response.json();
     }
 
+
+    /* =========================
+       Загрузка info.json
+       ========================= */
 
     async function loadInfo(folder) {
 
@@ -456,19 +730,27 @@
                 }
             );
 
+
         if (!response.ok) {
+
             throw new Error(
                 "Не удалось загрузить info.json"
             );
         }
 
+
         return await response.json();
     }
 
 
+    /* =========================
+       Поиск фотографий
+       ========================= */
+
     async function findPhotos(folder) {
 
         const found = [];
+
 
         const extensions = [
             "jpg",
@@ -484,10 +766,14 @@
             const number =
                 String(i).padStart(2, "0");
 
+
             let foundPhoto = false;
 
 
-            for (const extension of extensions) {
+            for (
+                const extension
+                of extensions
+            ) {
 
                 const url =
                     `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
@@ -515,10 +801,18 @@
                     }
 
                 } catch (error) {
-                    // Файл отсутствует.
+
+                    /*
+                     * Файл отсутствует.
+                     */
                 }
             }
 
+
+            /*
+             * Если следующей фотографии нет,
+             * дальше искать бессмысленно.
+             */
 
             if (!foundPhoto) {
                 break;
@@ -530,16 +824,27 @@
     }
 
 
+    /* =========================
+       Поиск экспертного заключения
+       ========================= */
+
     async function findExpertise(folder) {
 
         const possibleNames = [
+
             "expertise-001.pdf",
+
             "expertise-002.pdf",
+
             "expertise.pdf"
+
         ];
 
 
-        for (const name of possibleNames) {
+        for (
+            const name
+            of possibleNames
+        ) {
 
             const url =
                 `objects/${encodeURIComponent(folder)}/${name}`;
@@ -558,11 +863,15 @@
 
 
                 if (response.ok) {
+
                     return url;
                 }
 
             } catch (error) {
-                // Проверяем следующий вариант.
+
+                /*
+                 * Проверяем следующий вариант.
+                 */
             }
         }
 
@@ -570,6 +879,10 @@
         return null;
     }
 
+
+    /* =========================
+       Обновление галереи
+       ========================= */
 
     function updateGallery() {
 
@@ -588,6 +901,7 @@
 
         galleryImage.src =
             photos[currentPhoto];
+
 
         galleryImage.alt =
             titleElement.textContent;
@@ -615,6 +929,10 @@
         }
     }
 
+
+    /* =========================
+       Перелистывание
+       ========================= */
 
     function changePhoto(direction) {
 
@@ -652,19 +970,20 @@
                 `${currentPhoto + 1} / ${photos.length}`;
 
 
-            galleryImage.onload = () => {
+            galleryImage.onload =
+                () => {
 
-                galleryImage.classList.remove(
-                    "fade-out"
-                );
+                    galleryImage.classList.remove(
+                        "fade-out"
+                    );
 
-                changingPhoto = false;
-            };
+                    changingPhoto = false;
+                };
 
 
             /*
-             * На случай, если браузер взял
-             * изображение из кэша.
+             * Запасной вариант для изображения,
+             * которое уже находится в кэше.
              */
 
             setTimeout(() => {
@@ -693,9 +1012,9 @@
     );
 
 
-    /*
-     * Перелистывание пальцем на телефоне.
-     */
+    /* =========================
+       Свайп на телефоне
+       ========================= */
 
     let touchStartX = 0;
 
@@ -708,6 +1027,7 @@
 
             touchStartX =
                 event.changedTouches[0].screenX;
+
         },
         {
             passive: true
@@ -727,16 +1047,22 @@
                 touchEndX - touchStartX;
 
 
-            if (Math.abs(difference) < 50) {
+            if (
+                Math.abs(difference) < 50
+            ) {
                 return;
             }
 
 
             if (difference > 0) {
+
                 changePhoto(-1);
+
             } else {
+
                 changePhoto(1);
             }
+
         },
         {
             passive: true
@@ -744,9 +1070,107 @@
     );
 
 
+    /* =========================
+       Увеличение фотографии
+       ========================= */
+
+    function openLightbox() {
+
+        if (!galleryImage.src) {
+            return;
+        }
+
+
+        lightboxImage.src =
+            galleryImage.src;
+
+
+        lightboxImage.alt =
+            galleryImage.alt;
+
+
+        photoLightbox.classList.add(
+            "open"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+    }
+
+
+    function closeLightbox() {
+
+        photoLightbox.classList.remove(
+            "open"
+        );
+
+
+        document.body.style.overflow =
+            "";
+    }
+
+
+    galleryImage.addEventListener(
+        "click",
+        openLightbox
+    );
+
+
+    lightboxClose.addEventListener(
+        "click",
+        closeLightbox
+    );
+
+
+    /*
+     * Клик по тёмному фону закрывает фото.
+     */
+
+    photoLightbox.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                photoLightbox
+            ) {
+
+                closeLightbox();
+            }
+        }
+    );
+
+
+    /*
+     * Esc закрывает увеличенное фото.
+     */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                photoLightbox.classList.contains(
+                    "open"
+                )
+            ) {
+
+                closeLightbox();
+            }
+        }
+    );
+
+
+    /* =========================
+       Загрузка предмета
+       ========================= */
+
     async function loadObject() {
 
         if (!objectNumber) {
+
             throw new Error(
                 "Не указан объект"
             );
@@ -774,10 +1198,9 @@
 
 
         /*
-         * Номер каталога здесь специально
-         * вообще не выводится.
+         * Номер каталога и категория
+         * специально НЕ показываются.
          */
-
 
         titleElement.textContent =
             data.title || "";
@@ -801,12 +1224,15 @@
 
         currentPhoto = 0;
 
+
         updateGallery();
 
 
         /*
          * Экспертное заключение.
-         * Если PDF нет — весь раздел скрывается.
+         *
+         * Если PDF нет,
+         * весь раздел остаётся скрытым.
          */
 
         const expertise =
@@ -825,10 +1251,13 @@
 
             expertiseDownload.href =
                 expertise;
-
         }
     }
 
+
+    /* =========================
+       Запуск
+       ========================= */
 
     loadObject()
         .catch(error => {
@@ -839,8 +1268,10 @@
             );
 
 
-            document.getElementById("content")
-                .style.display = "none";
+            document.getElementById(
+                "content"
+            ).style.display =
+                "none";
 
 
             errorElement.style.display =
