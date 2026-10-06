@@ -2,1401 +2,660 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Предмет</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
-
 
         html,
         body {
             margin: 0;
             padding: 0;
-
             background: #000;
             color: #fff;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
-
 
         body {
             min-height: 100vh;
         }
 
-
-        .page {
-            width: 100%;
-
-            max-width: 1100px;
-
+        .container {
+            width: min(1100px, calc(100% - 40px));
             margin: 0 auto;
-
-            padding:
-                45px
-                30px
-                100px;
+            padding: 40px 0 80px;
         }
-
-
-        /* =========================
-           Кнопка назад
-           ========================= */
 
         .back {
             display: inline-block;
-
-            margin-bottom: 55px;
-
-            color: #777;
-
+            margin-bottom: 45px;
+            color: #999;
             text-decoration: none;
-
-            font-size: 14px;
-
-            transition:
-                color 0.2s ease;
+            font-size: 15px;
+            transition: color 0.2s ease;
         }
-
 
         .back:hover {
             color: #fff;
         }
 
-
-        /* =========================
-           Название
-           ========================= */
-
-        .title {
+        h1 {
             max-width: 850px;
-
-            margin:
-                0
-                auto
-                45px;
-
-            text-align: center;
-
+            margin: 0 auto 45px;
             font-size: 34px;
-
-            line-height: 1.3;
-
+            line-height: 1.25;
             font-weight: 400;
+            text-align: center;
         }
-
-
-        /* =========================
-           Галерея
-           ========================= */
 
         .gallery {
             position: relative;
-
             width: 100%;
-
-            padding:
-                0
-                65px;
-
-            margin:
-                0
-                auto
-                65px;
+            padding: 0 65px;
+            margin-bottom: 55px;
         }
-
-
-        /*
-         * Фиксированная область фотографии.
-         * Большое изображение не растягивает
-         * страницу на весь экран.
-         */
 
         .gallery-frame {
             position: relative;
-
             width: 100%;
-
             height: 65vh;
-
             min-height: 400px;
-
             max-height: 700px;
 
-            overflow: hidden;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
 
+            overflow: hidden;
             background: #000;
         }
 
-
-        .gallery-image {
-            display: block;
-
+        .gallery-frame img {
             width: 100%;
             height: 100%;
-
             object-fit: contain;
-
-            margin: 0 auto;
+            display: block;
 
             cursor: zoom-in;
-
-            transform-origin:
-                center center;
-
-            transform:
-                scale(1);
-
-            opacity: 1;
+            user-select: none;
+            -webkit-user-drag: none;
 
             transition:
                 opacity 0.25s ease,
-                transform 0.35s ease;
+                transform 0.25s ease;
         }
 
-
-        .gallery-image.zoomed {
+        .gallery-frame.zoomed img {
             cursor: zoom-out;
-
-            transition:
-                opacity 0.25s ease;
         }
 
-
-        .gallery-image.fade-out {
-            opacity: 0;
-        }
-
-
-        /* =========================
-           Стрелки
-           ========================= */
-
-        .gallery-button {
+        .gallery-arrow {
             position: absolute;
-
             top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            z-index: 5;
+            transform: translateY(-50%);
 
             width: 48px;
             height: 48px;
 
-            padding: 0;
-
-            border:
-                1px solid
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.28
-                );
-
-            border-radius: 50%;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.12
-                );
-
+            border: 0;
+            background: transparent;
             color: #fff;
 
-            font-size: 31px;
-
-            line-height: 43px;
-
-            text-align: center;
+            font-size: 34px;
+            line-height: 1;
 
             cursor: pointer;
+            z-index: 5;
 
-            opacity: 0.9;
-
-            transition:
-                background 0.2s ease,
-                opacity 0.2s ease,
-                transform 0.2s ease;
+            opacity: 0.65;
+            transition: opacity 0.2s ease;
         }
 
-
-        .gallery-button:hover {
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.25
-                );
-
+        .gallery-arrow:hover {
             opacity: 1;
         }
 
-
-        .gallery-button:active {
-            transform:
-                translateY(-50%)
-                scale(0.94);
-        }
-
-
-        .gallery-prev {
+        .gallery-arrow.prev {
             left: 5px;
         }
 
-
-        .gallery-next {
+        .gallery-arrow.next {
             right: 5px;
         }
 
-
-        .photo-counter {
-            margin-top: 12px;
-
-            text-align: center;
-
-            color: #666;
-
-            font-size: 13px;
-        }
-
-
-        /* =========================
-           Полное описание
-           ========================= */
-
         .description {
             max-width: 720px;
-
-            margin:
-                0
-                auto
-                70px;
-
-            padding:
-                0
-                20px;
-
-            color: #ddd;
-
-            font-size: 17px;
-
-            line-height: 1.75;
+            margin: 0 auto 70px;
+            padding: 0 20px;
 
             text-align: left;
-
-            /*
-             * Сохраняем \n\n
-             * из info.json.
-             */
-
             white-space: pre-line;
+
+            font-size: 17px;
+            line-height: 1.75;
         }
-
-
-        /* =========================
-           Экспертное заключение
-           ========================= */
 
         .expertise {
             max-width: 720px;
-
             margin: 0 auto;
 
-            padding:
-                0
-                20px;
-
-            text-align: center;
+            padding: 30px 20px 0;
+            border-top: 1px solid #222;
         }
-
 
         .expertise-title {
-            margin:
-                0
-                0
-                20px;
-
-            color: #777;
-
-            font-size: 15px;
-
-            font-weight: 400;
+            margin-bottom: 20px;
+            font-size: 18px;
         }
-
 
         .expertise-links {
             display: flex;
-
-            justify-content: center;
-
             gap: 25px;
-
             flex-wrap: wrap;
         }
 
-
-        .expertise-link {
-            display: inline-block;
-
-            color: #fff;
-
+        .expertise-links a {
+            color: #aaa;
             text-decoration: none;
-
             font-size: 15px;
-
-            transition:
-                opacity 0.2s ease;
+            transition: color 0.2s ease;
         }
 
-
-        .expertise-link:hover {
-            opacity: 0.6;
+        .expertise-links a:hover {
+            color: #fff;
         }
 
-
-        /* =========================
-           Ошибка
-           ========================= */
-
-        .error {
-            padding-top: 100px;
-
-            text-align: center;
-
-            color: #777;
-
-            font-size: 17px;
+        .hidden {
+            display: none;
         }
 
-
-        /* =========================
-           Телефон
-           ========================= */
-
-        @media (max-width: 650px) {
-
-            .page {
-                padding:
-                    30px
-                    18px
-                    70px;
+        @media (max-width: 700px) {
+            .container {
+                width: calc(100% - 28px);
+                padding-top: 28px;
             }
-
 
             .back {
-                margin-bottom: 38px;
-
-                font-size: 14px;
+                margin-bottom: 35px;
             }
 
-
-            .title {
+            h1 {
                 margin-bottom: 30px;
-
                 font-size: 27px;
-
-                line-height: 1.3;
             }
-
 
             .gallery {
-                padding:
-                    0
-                    48px;
-
-                margin-bottom: 50px;
+                padding: 0 48px;
+                margin-bottom: 40px;
             }
-
 
             .gallery-frame {
                 height: 52vh;
-
                 min-height: 280px;
-
                 max-height: 520px;
             }
 
-
-            .gallery-button {
+            .gallery-arrow {
                 width: 40px;
                 height: 40px;
-
-                font-size: 25px;
-
-                line-height: 35px;
+                font-size: 28px;
             }
 
-
-            .gallery-prev {
+            .gallery-arrow.prev {
                 left: 2px;
             }
 
-
-            .gallery-next {
+            .gallery-arrow.next {
                 right: 2px;
             }
 
-
             .description {
-                padding:
-                    0
-                    5px;
-
+                padding: 0 10px;
+                margin-bottom: 50px;
                 font-size: 16px;
-
                 line-height: 1.7;
-
-                text-align: left;
             }
-
 
             .expertise {
-                padding:
-                    0
-                    5px;
+                padding-left: 10px;
+                padding-right: 10px;
             }
         }
-
     </style>
 </head>
 
-
 <body>
 
-<div class="page">
+<div class="container">
 
+    <a href="index.html" class="back" id="back-link">← Категория</a>
 
-    <a
-        href="index.html"
-        class="back"
-    >
-        ← Каталог
-    </a>
+    <h1 id="title"></h1>
 
+    <div id="gallery" class="gallery hidden">
 
-    <main id="content">
-
-
-        <h1
-            id="title"
-            class="title"
-        ></h1>
-
-
-        <section
-            id="gallery"
-            class="gallery"
-            style="display: none;"
+        <button
+            class="gallery-arrow prev"
+            id="prev"
+            type="button"
+            aria-label="Предыдущее фото"
         >
+            ‹
+        </button>
 
+        <div class="gallery-frame" id="gallery-frame">
+            <img id="main-image" alt="">
+        </div>
 
-            <div
-                class="gallery-frame"
-            >
-
-
-                <img
-                    id="galleryImage"
-                    class="gallery-image"
-                    src=""
-                    alt=""
-                >
-
-
-            </div>
-
-
-            <button
-                id="prevButton"
-                class="gallery-button gallery-prev"
-                type="button"
-                aria-label="Предыдущая фотография"
-            >
-                ‹
-            </button>
-
-
-            <button
-                id="nextButton"
-                class="gallery-button gallery-next"
-                type="button"
-                aria-label="Следующая фотография"
-            >
-                ›
-            </button>
-
-
-            <div
-                id="photoCounter"
-                class="photo-counter"
-            ></div>
-
-
-        </section>
-
-
-        <div
-            id="description"
-            class="description"
-        ></div>
-
-
-        <section
-            id="expertise"
-            class="expertise"
-            style="display: none;"
+        <button
+            class="gallery-arrow next"
+            id="next"
+            type="button"
+            aria-label="Следующее фото"
         >
+            ›
+        </button>
 
-
-            <h2 class="expertise-title">
-                Экспертное заключение
-            </h2>
-
-
-            <div
-                class="expertise-links"
-            >
-
-
-                <a
-                    id="expertiseOpen"
-                    class="expertise-link"
-                    href=""
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Открыть
-                </a>
-
-
-                <a
-                    id="expertiseDownload"
-                    class="expertise-link"
-                    href=""
-                    download
-                >
-                    Скачать
-                </a>
-
-
-            </div>
-
-
-        </section>
-
-
-    </main>
-
-
-    <div
-        id="error"
-        class="error"
-        style="display: none;"
-    >
-        Не удалось загрузить предмет.
     </div>
 
+    <div id="description" class="description"></div>
+
+    <div id="expertise" class="expertise hidden">
+
+        <div class="expertise-title">
+            Заключение эксперта
+        </div>
+
+        <div class="expertise-links">
+
+            <a
+                id="expertise-open"
+                href="#"
+                target="_blank"
+                rel="noopener"
+            >
+                Открыть
+            </a>
+
+            <a
+                id="expertise-download"
+                href="#"
+                download
+            >
+                Скачать
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 
-
 <script>
+    const titleElement = document.getElementById('title');
+    const descriptionElement =
+        document.getElementById('description');
 
-    const objectNumber =
-        new URLSearchParams(
-            window.location.search
-        ).get("object");
+    const backLink =
+        document.getElementById('back-link');
 
-
-    const titleElement =
-        document.getElementById(
-            "title"
-        );
-
-
-    const galleryElement =
-        document.getElementById(
-            "gallery"
-        );
-
+    const gallery =
+        document.getElementById('gallery');
 
     const galleryFrame =
-        document.querySelector(
-            ".gallery-frame"
-        );
+        document.getElementById('gallery-frame');
 
-
-    const galleryImage =
-        document.getElementById(
-            "galleryImage"
-        );
-
-
-    const photoCounter =
-        document.getElementById(
-            "photoCounter"
-        );
-
+    const mainImage =
+        document.getElementById('main-image');
 
     const prevButton =
-        document.getElementById(
-            "prevButton"
-        );
-
+        document.getElementById('prev');
 
     const nextButton =
-        document.getElementById(
-            "nextButton"
-        );
+        document.getElementById('next');
 
-
-    const descriptionElement =
-        document.getElementById(
-            "description"
-        );
-
-
-    const expertiseElement =
-        document.getElementById(
-            "expertise"
-        );
-
+    const expertise =
+        document.getElementById('expertise');
 
     const expertiseOpen =
-        document.getElementById(
-            "expertiseOpen"
-        );
-
+        document.getElementById('expertise-open');
 
     const expertiseDownload =
-        document.getElementById(
-            "expertiseDownload"
-        );
+        document.getElementById('expertise-download');
 
+    const params =
+        new URLSearchParams(window.location.search);
 
-    const errorElement =
-        document.getElementById(
-            "error"
-        );
-
+    const objectNumber =
+        params.get('object');
 
     let photos = [];
-
     let currentPhoto = 0;
 
-    let changingPhoto = false;
+    let touchStartX = 0;
+    let touchStartY = 0;
 
-    let isZoomed = false;
+    async function fileExists(url) {
+        try {
+            const response = await fetch(url, {
+                method: 'HEAD',
+                cache: 'no-store'
+            });
 
-
-    /* =========================
-       Загрузка catalog.json
-       ========================= */
-
-    async function loadCatalog() {
-
-        const response =
-            await fetch(
-                "catalog.json",
-                {
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Не удалось загрузить catalog.json"
-            );
+            return response.ok;
+        } catch {
+            return false;
         }
-
-
-        return await response.json();
     }
-
-
-    /* =========================
-       Загрузка info.json
-       ========================= */
-
-    async function loadInfo(folder) {
-
-        const response =
-            await fetch(
-                `objects/${encodeURIComponent(folder)}/info.json`,
-                {
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Не удалось загрузить info.json"
-            );
-        }
-
-
-        return await response.json();
-    }
-
-
-    /* =========================
-       Поиск фотографий
-       ========================= */
 
     async function findPhotos(folder) {
-
-        const found = [];
-
-
         const extensions = [
-            "jpg",
-            "jpeg",
-            "png",
-            "webp",
-            "gif"
+            'jpg',
+            'jpeg',
+            'png',
+            'webp',
+            'gif'
         ];
 
+        const result = [];
 
-        for (
-            let i = 1;
-            i <= 100;
-            i++
-        ) {
-
+        for (let i = 1; i <= 100; i++) {
             const number =
-                String(i).padStart(
-                    2,
-                    "0"
-                );
+                String(i).padStart(2, '0');
 
+            let found = false;
 
-            let foundPhoto = false;
-
-
-            for (
-                const extension
-                of extensions
-            ) {
-
+            for (const extension of extensions) {
                 const url =
                     `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
 
-
-                try {
-
-                    const response =
-                        await fetch(
-                            url,
-                            {
-                                method: "HEAD",
-                                cache: "no-store"
-                            }
-                        );
-
-
-                    if (response.ok) {
-
-                        found.push(url);
-
-                        foundPhoto = true;
-
-                        break;
-                    }
-
-                } catch (error) {
-                    /*
-                     * Файл отсутствует.
-                     */
+                if (await fileExists(url)) {
+                    result.push(url);
+                    found = true;
+                    break;
                 }
             }
 
-
-            if (!foundPhoto) {
-                break;
+            if (!found && i > 1) {
+                continue;
             }
         }
 
-
-        return found;
+        return result;
     }
 
-
-    /* =========================
-       Поиск экспертизы
-       ========================= */
-
     async function findExpertise(folder) {
-
-        const possibleNames = [
-
-            "expertise-001.pdf",
-
-            "expertise-002.pdf",
-
-            "expertise.pdf"
-
+        const filenames = [
+            'expertise-001.pdf',
+            'expertise-002.pdf',
+            'expertise.pdf'
         ];
 
-
-        for (
-            const name
-            of possibleNames
-        ) {
-
+        for (const filename of filenames) {
             const url =
-                `objects/${encodeURIComponent(folder)}/${name}`;
+                `objects/${encodeURIComponent(folder)}/${filename}`;
 
-
-            try {
-
-                const response =
-                    await fetch(
-                        url,
-                        {
-                            method: "HEAD",
-                            cache: "no-store"
-                        }
-                    );
-
-
-                if (response.ok) {
-
-                    return url;
-                }
-
-            } catch (error) {
-                /*
-                 * Проверяем следующий вариант.
-                 */
+            if (await fileExists(url)) {
+                return url;
             }
         }
-
 
         return null;
     }
 
-
-    /* =========================
-       Сброс увеличения
-       ========================= */
-
-    function resetZoom() {
-
-        isZoomed = false;
-
-
-        galleryImage.classList.remove(
-            "zoomed"
-        );
-
-
-        galleryImage.style.transform =
-            "scale(1)";
-
-
-        galleryImage.style.transformOrigin =
-            "center center";
-
-
-        galleryFrame.style.cursor =
-            "";
-    }
-
-
-    /* =========================
-       Лупа
-       ========================= */
-
-    function zoomAtPoint(
-        clientX,
-        clientY
-    ) {
-
-        /*
-         * Повторный клик возвращает
-         * обычный размер.
-         */
-
-        if (isZoomed) {
-
-            resetZoom();
-
+    function showPhoto(index, animate = true) {
+        if (!photos.length) {
             return;
         }
 
+        currentPhoto =
+            (index + photos.length) % photos.length;
+
+        galleryFrame.classList.remove('zoomed');
+
+        if (animate) {
+            mainImage.style.opacity = '0';
+
+            setTimeout(() => {
+                mainImage.src = photos[currentPhoto];
+                mainImage.style.opacity = '1';
+            }, 120);
+        } else {
+            mainImage.src = photos[currentPhoto];
+            mainImage.style.opacity = '1';
+        }
+    }
+
+    function updateArrows() {
+        const shouldShow =
+            photos.length > 1;
+
+        prevButton.style.display =
+            shouldShow ? 'block' : 'none';
+
+        nextButton.style.display =
+            shouldShow ? 'block' : 'none';
+    }
+
+    function resetZoom() {
+        galleryFrame.classList.remove('zoomed');
+
+        mainImage.style.transform =
+            'scale(1)';
+
+        mainImage.style.transformOrigin =
+            'center center';
+    }
+
+    function toggleZoom(event) {
+        if (!photos.length) {
+            return;
+        }
+
+        if (galleryFrame.classList.contains('zoomed')) {
+            resetZoom();
+            return;
+        }
 
         const rect =
             galleryFrame.getBoundingClientRect();
 
-
         const x =
-            clientX - rect.left;
-
+            ((event.clientX - rect.left) / rect.width) * 100;
 
         const y =
-            clientY - rect.top;
+            ((event.clientY - rect.top) / rect.height) * 100;
 
+        mainImage.style.transformOrigin =
+            `${x}% ${y}%`;
 
-        const originX =
-            Math.max(
-                0,
-                Math.min(
-                    100,
-                    (x / rect.width) * 100
-                )
-            );
+        mainImage.style.transform =
+            'scale(2.2)';
 
-
-        const originY =
-            Math.max(
-                0,
-                Math.min(
-                    100,
-                    (y / rect.height) * 100
-                )
-            );
-
-
-        galleryImage.style.transformOrigin =
-            `${originX}% ${originY}%`;
-
-
-        galleryImage.style.transform =
-            "scale(2.2)";
-
-
-        galleryImage.classList.add(
-            "zoomed"
-        );
-
-
-        galleryFrame.style.cursor =
-            "zoom-out";
-
-
-        isZoomed = true;
+        galleryFrame.classList.add('zoomed');
     }
 
+    prevButton.addEventListener('click', () => {
+        showPhoto(currentPhoto - 1);
+    });
 
-    galleryImage.addEventListener(
-        "click",
-        event => {
+    nextButton.addEventListener('click', () => {
+        showPhoto(currentPhoto + 1);
+    });
 
-            zoomAtPoint(
-                event.clientX,
-                event.clientY
-            );
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+            showPhoto(currentPhoto - 1);
         }
-    );
 
+        if (event.key === 'ArrowRight') {
+            showPhoto(currentPhoto + 1);
+        }
 
-    /* =========================
-       Обновление галереи
-       ========================= */
+        if (event.key === 'Escape') {
+            resetZoom();
+        }
+    });
 
-    function updateGallery() {
+    mainImage.addEventListener('click', (event) => {
+        toggleZoom(event);
+    });
 
-        resetZoom();
-
-
-        if (photos.length === 0) {
-
-            galleryElement.style.display =
-                "none";
-
+    mainImage.addEventListener('touchstart', (event) => {
+        if (event.touches.length !== 1) {
             return;
         }
 
+        touchStartX =
+            event.touches[0].clientX;
 
-        galleryElement.style.display =
-            "block";
+        touchStartY =
+            event.touches[0].clientY;
+    }, {
+        passive: true
+    });
 
-
-        galleryImage.src =
-            photos[currentPhoto];
-
-
-        galleryImage.alt =
-            titleElement.textContent;
-
-
-        photoCounter.textContent =
-            `${currentPhoto + 1} / ${photos.length}`;
-
-
-        if (
-            photos.length <= 1
-        ) {
-
-            prevButton.style.display =
-                "none";
-
-
-            nextButton.style.display =
-                "none";
-
-        } else {
-
-            prevButton.style.display =
-                "block";
-
-
-            nextButton.style.display =
-                "block";
-        }
-    }
-
-
-    /* =========================
-       Перелистывание
-       ========================= */
-
-    function changePhoto(direction) {
-
-        if (
-            photos.length <= 1 ||
-            changingPhoto
-        ) {
+    mainImage.addEventListener('touchend', (event) => {
+        if (event.changedTouches.length !== 1) {
             return;
         }
 
+        const touch =
+            event.changedTouches[0];
 
-        changingPhoto = true;
+        const deltaX =
+            touch.clientX - touchStartX;
 
+        const deltaY =
+            touch.clientY - touchStartY;
 
-        resetZoom();
+        if (Math.abs(deltaX) < 50) {
+            return;
+        }
 
+        if (
+            Math.abs(deltaX) >
+            Math.abs(deltaY)
+        ) {
+            if (deltaX < 0) {
+                showPhoto(currentPhoto + 1);
+            } else {
+                showPhoto(currentPhoto - 1);
+            }
+        }
+    }, {
+        passive: true
+    });
 
-        galleryImage.classList.add(
-            "fade-out"
-        );
+    async function loadItem() {
+        try {
+            const catalogResponse =
+                await fetch('catalog.json', {
+                    cache: 'no-store'
+                });
 
+            const catalog =
+                await catalogResponse.json();
 
-        setTimeout(() => {
+            const folder =
+                catalog[objectNumber];
 
-            currentPhoto =
-                (
-                    currentPhoto +
-                    direction +
-                    photos.length
-                ) % photos.length;
+            if (!folder) {
+                throw new Error(
+                    'Предмет не найден'
+                );
+            }
 
-
-            galleryImage.src =
-                photos[currentPhoto];
-
-
-            photoCounter.textContent =
-                `${currentPhoto + 1} / ${photos.length}`;
-
-
-            galleryImage.onload =
-                () => {
-
-                    galleryImage.classList.remove(
-                        "fade-out"
-                    );
-
-
-                    changingPhoto =
-                        false;
-                };
-
-
-            setTimeout(() => {
-
-                galleryImage.classList.remove(
-                    "fade-out"
+            const infoResponse =
+                await fetch(
+                    `objects/${encodeURIComponent(folder)}/info.json`,
+                    { cache: 'no-store' }
                 );
 
-
-                changingPhoto =
-                    false;
-
-            }, 400);
-
-        }, 220);
-    }
-
-
-    prevButton.addEventListener(
-        "click",
-        () =>
-            changePhoto(-1)
-    );
-
-
-    nextButton.addEventListener(
-        "click",
-        () =>
-            changePhoto(1)
-    );
-
-
-    /* =========================
-       Свайп на телефоне
-       ========================= */
-
-    let touchStartX = 0;
-
-    let touchStartY = 0;
-
-
-    galleryImage.addEventListener(
-        "touchstart",
-        event => {
-
-            if (
-                event.touches.length !== 1
-            ) {
-                return;
+            if (!infoResponse.ok) {
+                throw new Error(
+                    'Не удалось загрузить info.json'
+                );
             }
 
+            const data =
+                await infoResponse.json();
 
-            touchStartX =
-                event.touches[0].screenX;
+            titleElement.textContent =
+                data.title || '';
 
+            descriptionElement.textContent =
+                data.description || '';
 
-            touchStartY =
-                event.touches[0].screenY;
+            /*
+             * Возврат в категорию.
+             *
+             * Если у предмета есть подкатегория,
+             * возвращаем именно в неё.
+             * Если подкатегория отсутствует или равна "-",
+             * возвращаем в категорию.
+             */
 
-        },
-        {
-            passive: true
-        }
-    );
+            if (data.category) {
+                let backUrl =
+                    `category.html?category=${encodeURIComponent(data.category)}`;
 
+                if (
+                    data.subcategory &&
+                    data.subcategory !== '-'
+                ) {
+                    backUrl +=
+                        `&subcategory=${encodeURIComponent(data.subcategory)}`;
+                }
 
-    galleryImage.addEventListener(
-        "touchend",
-        event => {
-
-            if (
-                event.changedTouches.length !== 1
-            ) {
-                return;
-            }
-
-
-            const touch =
-                event.changedTouches[0];
-
-
-            const differenceX =
-                touch.screenX -
-                touchStartX;
-
-
-            const differenceY =
-                touch.screenY -
-                touchStartY;
-
-
-            if (
-                Math.abs(differenceX) < 50 ||
-                Math.abs(differenceX) <
-                Math.abs(differenceY)
-            ) {
-
-                return;
-            }
-
-
-            if (
-                differenceX > 0
-            ) {
-
-                changePhoto(-1);
-
+                backLink.href = backUrl;
+                backLink.textContent =
+                    '← Категория';
             } else {
-
-                changePhoto(1);
+                backLink.href = 'index.html';
+                backLink.textContent =
+                    '← Каталог';
             }
 
-        },
-        {
-            passive: true
-        }
-    );
+            photos =
+                await findPhotos(folder);
 
+            if (photos.length) {
+                gallery.classList.remove('hidden');
 
-    /* =========================
-       Клавиатура
-       ========================= */
+                showPhoto(0, false);
 
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key ===
-                "ArrowLeft"
-            ) {
-
-                changePhoto(-1);
+                updateArrows();
             }
 
+            const expertiseFile =
+                await findExpertise(folder);
 
-            if (
-                event.key ===
-                "ArrowRight"
-            ) {
+            if (expertiseFile) {
+                expertise.classList.remove('hidden');
 
-                changePhoto(1);
+                expertiseOpen.href =
+                    expertiseFile;
+
+                expertiseDownload.href =
+                    expertiseFile;
             }
 
+        } catch (error) {
+            console.error(error);
 
-            if (
-                event.key ===
-                "Escape"
-            ) {
+            titleElement.textContent =
+                'Предмет не найден';
 
-                resetZoom();
-            }
-        }
-    );
-
-
-    /* =========================
-       Загрузка предмета
-       ========================= */
-
-    async function loadObject() {
-
-        if (!objectNumber) {
-
-            throw new Error(
-                "Не указан объект"
-            );
-        }
-
-
-        const catalog =
-            await loadCatalog();
-
-
-        const folder =
-            catalog[objectNumber];
-
-
-        if (!folder) {
-
-            throw new Error(
-                "Объект отсутствует в catalog.json"
-            );
-        }
-
-
-        const data =
-            await loadInfo(folder);
-
-
-        /*
-         * Номер каталога и категория
-         * нигде не показываем.
-         */
-
-        titleElement.textContent =
-            data.title || "";
-
-
-        descriptionElement.textContent =
-            data.description || "";
-
-
-        document.title =
-            data.title ||
-            "Предмет";
-
-
-        photos =
-            await findPhotos(folder);
-
-
-        currentPhoto = 0;
-
-
-        updateGallery();
-
-
-        /*
-         * Если PDF существует —
-         * показываем раздел.
-         */
-
-        const expertise =
-            await findExpertise(
-                folder
-            );
-
-
-        if (expertise) {
-
-            expertiseElement.style.display =
-                "block";
-
-
-            expertiseOpen.href =
-                expertise;
-
-
-            expertiseDownload.href =
-                expertise;
+            descriptionElement.textContent =
+                '';
         }
     }
 
-
-    /* =========================
-       Запуск
-       ========================= */
-
-    loadObject()
-        .catch(error => {
-
-            console.error(
-                "Ошибка загрузки предмета:",
-                error
-            );
-
-
-            document.getElementById(
-                "content"
-            ).style.display =
-                "none";
-
-
-            errorElement.style.display =
-                "block";
-        });
-
+    loadItem();
 </script>
 
 </body>
