@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Предмет</title>
+    <title>Каталог</title>
 
     <style>
         * {
@@ -15,9 +15,14 @@
         body {
             margin: 0;
             padding: 0;
+
             background: #000;
             color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
         }
 
         body {
@@ -26,386 +31,136 @@
 
         .page {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1000px;
+
             margin: 0 auto;
-            padding: 45px 30px 100px;
+
+            padding:
+                0
+                30px
+                80px;
         }
 
-
-        /* =========================
-           Кнопка назад
-           ========================= */
-
-        .back {
-            display: inline-block;
-
-            margin-bottom: 55px;
-
-            color: #777;
-            text-decoration: none;
-
-            font-size: 14px;
-
-            transition: color 0.2s ease;
+        .introduction {
+            min-height: 320px;
         }
 
-        .back:hover {
-            color: #fff;
+        .catalog-section {
+            width: 100%;
         }
 
-
-        /* =========================
-           Название
-           ========================= */
-
-        .title {
-            max-width: 850px;
-
-            margin: 0 auto 45px;
+        .catalog-heading {
+            margin: 0 0 45px;
 
             text-align: center;
 
-            font-size: 34px;
-            line-height: 1.3;
+            font-size: 20px;
             font-weight: 400;
+
+            color: #777;
         }
 
+        .categories {
+            display: grid;
 
-        /* =========================
-           Галерея
-           ========================= */
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
 
-        .gallery {
-            position: relative;
-
-            width: 100%;
-
-            padding: 0 65px;
-
-            margin: 0 auto 65px;
+            column-gap: 80px;
+            row-gap: 38px;
         }
 
-        /*
-         * Это именно область фотографии.
-         * Она имеет ограниченную высоту,
-         * поэтому огромная фотография
-         * не растягивает страницу.
-         */
-
-        .gallery-frame {
-            position: relative;
-
-            width: 100%;
-            height: 65vh;
-
-            min-height: 400px;
-            max-height: 700px;
-
-            overflow: hidden;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: #000;
+        .category {
+            text-align: left;
         }
 
-        .gallery-image {
+        .category-title {
+            display: inline-block;
+
+            color: #fff;
+
+            text-decoration: none;
+
+            font-size: 23px;
+            line-height: 1.3;
+
+            font-weight: 400;
+
+            transition:
+                opacity 0.2s ease;
+        }
+
+        .category-title:hover {
+            opacity: 0.65;
+        }
+
+        .subcategories {
+            margin-top: 10px;
+
+            margin-left: 45px;
+        }
+
+        .subcategory {
             display: block;
 
-            width: 100%;
-            height: 100%;
-
-            object-fit: contain;
-
-            margin: 0 auto;
-
-            cursor: zoom-in;
-
-            transform-origin: center center;
-
-            transform: scale(1);
-
-            opacity: 1;
-
-            transition:
-                opacity 0.25s ease,
-                transform 0.35s ease;
-        }
-
-        /*
-         * Когда фотография увеличена,
-         * transition убираем, чтобы
-         * лупа следовала за кликом нормально.
-         */
-
-        .gallery-image.zoomed {
-            cursor: zoom-out;
-
-            transition:
-                opacity 0.25s ease;
-        }
-
-        .gallery-image.fade-out {
-            opacity: 0;
-        }
-
-
-        /* =========================
-           Стрелки
-           ========================= */
-
-        /*
-         * Стрелки находятся за пределами
-         * самой фотографии.
-         */
-
-        .gallery-button {
-            position: absolute;
-
-            top: 50%;
-            transform: translateY(-50%);
-
-            z-index: 5;
-
-            width: 48px;
-            height: 48px;
-
-            padding: 0;
-
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            border-radius: 50%;
-
-            background: rgba(255, 255, 255, 0.12);
-
-            color: #fff;
-
-            font-size: 31px;
-            line-height: 43px;
-
-            text-align: center;
-
-            cursor: pointer;
-
-            opacity: 0.9;
-
-            transition:
-                background 0.2s ease,
-                opacity 0.2s ease,
-                transform 0.2s ease;
-        }
-
-        .gallery-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            opacity: 1;
-        }
-
-        .gallery-button:active {
-            transform:
-                translateY(-50%)
-                scale(0.94);
-        }
-
-        .gallery-prev {
-            left: 5px;
-        }
-
-        .gallery-next {
-            right: 5px;
-        }
-
-
-        .photo-counter {
-            margin-top: 12px;
-
-            text-align: center;
-
-            color: #666;
-
-            font-size: 13px;
-        }
-
-
-        /* =========================
-           Полное описание
-           ========================= */
-
-        /*
-         * Блок сам находится по центру,
-         * но текст внутри выровнен влево.
-         */
-
-        .description {
-            max-width: 720px;
-
-            margin: 0 auto 70px;
-
-            padding: 0 20px;
-
-            color: #ddd;
-
-            font-size: 17px;
-            line-height: 1.75;
-
-            text-align: left;
-
-            /*
-             * Сохраняем \n\n из info.json.
-             */
-            white-space: pre-line;
-        }
-
-
-        /* =========================
-           Экспертное заключение
-           ========================= */
-
-        .expertise {
-            max-width: 720px;
-
-            margin: 0 auto;
-
-            padding: 0 20px;
-
-            text-align: center;
-        }
-
-        .expertise-title {
-            margin: 0 0 20px;
+            position: relative;
 
             color: #777;
-
-            font-size: 15px;
-            font-weight: 400;
-        }
-
-        .expertise-links {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 25px;
-
-            flex-wrap: wrap;
-        }
-
-        .expertise-link {
-            display: inline-block;
-
-            color: #fff;
 
             text-decoration: none;
 
             font-size: 15px;
+            line-height: 1.6;
 
-            transition: opacity 0.2s ease;
+            font-weight: 400;
+
+            transition:
+                color 0.2s ease;
         }
 
-        .expertise-link:hover {
-            opacity: 0.6;
+        .subcategory::before {
+            content: "—";
+
+            position: absolute;
+
+            left: -18px;
+
+            color: #555;
+        }
+
+        .subcategory:hover {
+            color: #fff;
         }
 
 
-        /* =========================
-           Ошибка
-           ========================= */
-
-        .error {
-            padding-top: 100px;
-
-            text-align: center;
-
-            color: #777;
-
-            font-size: 17px;
-        }
-
-
-        /* =========================
-           Телефон
-           ========================= */
+        /* Телефон */
 
         @media (max-width: 650px) {
 
             .page {
-                padding:
-                    30px
-                    18px
-                    70px;
+                padding-left: 25px;
+                padding-right: 25px;
             }
 
-
-            .back {
-                margin-bottom: 38px;
-
-                font-size: 14px;
+            .introduction {
+                min-height: 220px;
             }
 
+            .categories {
+                grid-template-columns: 1fr;
 
-            .title {
-                margin-bottom: 30px;
-
-                font-size: 27px;
-
-                line-height: 1.3;
+                row-gap: 35px;
             }
 
-
-            /*
-             * На телефоне область фотографии
-             * становится ниже.
-             */
-
-            .gallery {
-                padding: 0 48px;
-
-                margin-bottom: 50px;
+            .catalog-heading {
+                margin-bottom: 35px;
             }
 
-
-            .gallery-frame {
-                height: 52vh;
-
-                min-height: 280px;
-                max-height: 520px;
-            }
-
-
-            .gallery-button {
-                width: 40px;
-                height: 40px;
-
-                font-size: 25px;
-                line-height: 35px;
-            }
-
-
-            .gallery-prev {
-                left: 2px;
-            }
-
-            .gallery-next {
-                right: 2px;
-            }
-
-
-            /*
-             * Текст остаётся одной колонкой.
-             */
-
-            .description {
-                padding: 0 5px;
-
-                font-size: 16px;
-
-                line-height: 1.7;
-
-                text-align: left;
-            }
-
-
-            .expertise {
-                padding: 0 5px;
+            .category-title {
+                font-size: 22px;
             }
         }
     </style>
@@ -416,895 +171,321 @@
 
 <div class="page">
 
-    <a
-        href="index.html"
-        class="back"
-    >
-        ← Каталог
-    </a>
+    <section class="introduction"></section>
 
 
-    <main id="content">
+    <section class="catalog-section">
 
-        <h1
-            id="title"
-            class="title"
-        ></h1>
-
-
-        <section
-            id="gallery"
-            class="gallery"
-            style="display: none;"
-        >
-
-            <div class="gallery-frame">
-
-                <img
-                    id="galleryImage"
-                    class="gallery-image"
-                    src=""
-                    alt=""
-                >
-
-            </div>
-
-
-            <button
-                id="prevButton"
-                class="gallery-button gallery-prev"
-                type="button"
-                aria-label="Предыдущая фотография"
-            >
-                ‹
-            </button>
-
-
-            <button
-                id="nextButton"
-                class="gallery-button gallery-next"
-                type="button"
-                aria-label="Следующая фотография"
-            >
-                ›
-            </button>
-
-
-            <div
-                id="photoCounter"
-                class="photo-counter"
-            ></div>
-
-        </section>
+        <h1 class="catalog-heading">
+            Каталог
+        </h1>
 
 
         <div
-            id="description"
-            class="description"
+            id="categories"
+            class="categories"
         ></div>
 
-
-        <section
-            id="expertise"
-            class="expertise"
-            style="display: none;"
-        >
-
-            <h2 class="expertise-title">
-                Экспертное заключение
-            </h2>
-
-
-            <div class="expertise-links">
-
-                <a
-                    id="expertiseOpen"
-                    class="expertise-link"
-                    href=""
-                    target="_blank"
-                    rel="noopener"
-                >
-                    Открыть
-                </a>
-
-
-                <a
-                    id="expertiseDownload"
-                    class="expertise-link"
-                    href=""
-                    download
-                >
-                    Скачать
-                </a>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <div
-        id="error"
-        class="error"
-        style="display: none;"
-    >
-        Не удалось загрузить предмет.
-    </div>
+    </section>
 
 </div>
 
 
 <script>
 
-    const objectNumber =
-        new URLSearchParams(
-            window.location.search
-        ).get("object");
-
-
-    const titleElement =
-        document.getElementById("title");
-
-
-    const galleryElement =
-        document.getElementById("gallery");
-
-
-    const galleryFrame =
-        document.querySelector(
-            ".gallery-frame"
+    const catalogContainer =
+        document.getElementById(
+            "categories"
         );
 
 
-    const galleryImage =
-        document.getElementById("galleryImage");
-
-
-    const photoCounter =
-        document.getElementById("photoCounter");
-
-
-    const prevButton =
-        document.getElementById("prevButton");
-
-
-    const nextButton =
-        document.getElementById("nextButton");
-
-
-    const descriptionElement =
-        document.getElementById("description");
-
-
-    const expertiseElement =
-        document.getElementById("expertise");
-
-
-    const expertiseOpen =
-        document.getElementById("expertiseOpen");
-
-
-    const expertiseDownload =
-        document.getElementById("expertiseDownload");
-
-
-    const errorElement =
-        document.getElementById("error");
-
-
-    let photos = [];
-
-    let currentPhoto = 0;
-
-    let changingPhoto = false;
-
-
-    /*
-     * Состояние увеличения.
-     */
-
-    let isZoomed = false;
-
-
-    /* =========================
-       Загрузка каталога
-       ========================= */
-
     async function loadCatalog() {
 
-        const response =
-            await fetch(
-                "catalog.json",
-                {
-                    cache: "no-store"
-                }
-            );
+        try {
+
+            const catalogResponse =
+                await fetch(
+                    "catalog.json",
+                    {
+                        cache: "no-store"
+                    }
+                );
 
 
-        if (!response.ok) {
+            if (!catalogResponse.ok) {
 
-            throw new Error(
-                "Не удалось загрузить catalog.json"
-            );
-        }
-
-
-        return await response.json();
-    }
+                throw new Error(
+                    "Не удалось загрузить catalog.json"
+                );
+            }
 
 
-    /* =========================
-       Загрузка info.json
-       ========================= */
-
-    async function loadInfo(folder) {
-
-        const response =
-            await fetch(
-                `objects/${encodeURIComponent(folder)}/info.json`,
-                {
-                    cache: "no-store"
-                }
-            );
+            const catalog =
+                await catalogResponse.json();
 
 
-        if (!response.ok) {
-
-            throw new Error(
-                "Не удалось загрузить info.json"
-            );
-        }
+            const categories =
+                new Map();
 
 
-        return await response.json();
-    }
-
-
-    /* =========================
-       Поиск фотографий
-       ========================= */
-
-    async function findPhotos(folder) {
-
-        const found = [];
-
-
-        const extensions = [
-            "jpg",
-            "jpeg",
-            "png",
-            "webp",
-            "gif"
-        ];
-
-
-        for (let i = 1; i <= 100; i++) {
-
-            const number =
-                String(i).padStart(2, "0");
-
-
-            let foundPhoto = false;
-
+            /*
+             * Собираем категории
+             * и подкатегории.
+             */
 
             for (
-                const extension
-                of extensions
+                const [
+                    catalogNumber,
+                    folder
+                ]
+                of Object.entries(catalog)
             ) {
-
-                const url =
-                    `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
-
 
                 try {
 
-                    const response =
+                    const infoResponse =
                         await fetch(
-                            url,
+                            `objects/${encodeURIComponent(folder)}/info.json`,
                             {
-                                method: "HEAD",
                                 cache: "no-store"
                             }
                         );
 
 
-                    if (response.ok) {
+                    if (!infoResponse.ok) {
+                        continue;
+                    }
 
-                        found.push(url);
 
-                        foundPhoto = true;
+                    const data =
+                        await infoResponse.json();
 
-                        break;
+
+                    const category =
+                        data.category;
+
+
+                    if (!category) {
+                        continue;
+                    }
+
+
+                    if (
+                        !categories.has(
+                            category
+                        )
+                    ) {
+
+                        categories.set(
+                            category,
+                            new Set()
+                        );
+                    }
+
+
+                    if (data.subcategory) {
+
+                        categories
+                            .get(category)
+                            .add(
+                                data.subcategory
+                            );
                     }
 
                 } catch (error) {
-                    /*
-                     * Файл отсутствует.
-                     */
-                }
-            }
 
-
-            if (!foundPhoto) {
-                break;
-            }
-        }
-
-
-        return found;
-    }
-
-
-    /* =========================
-       Поиск экспертного заключения
-       ========================= */
-
-    async function findExpertise(folder) {
-
-        const possibleNames = [
-
-            "expertise-001.pdf",
-
-            "expertise-002.pdf",
-
-            "expertise.pdf"
-
-        ];
-
-
-        for (
-            const name
-            of possibleNames
-        ) {
-
-            const url =
-                `objects/${encodeURIComponent(folder)}/${name}`;
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        url,
-                        {
-                            method: "HEAD",
-                            cache: "no-store"
-                        }
+                    console.error(
+                        `Ошибка загрузки объекта ${catalogNumber}:`,
+                        error
                     );
-
-
-                if (response.ok) {
-
-                    return url;
                 }
-
-            } catch (error) {
-                /*
-                 * Проверяем следующий вариант.
-                 */
             }
-        }
 
-
-        return null;
-    }
-
-
-    /* =========================
-       Сброс увеличения
-       ========================= */
-
-    function resetZoom() {
-
-        isZoomed = false;
-
-        galleryImage.classList.remove(
-            "zoomed"
-        );
-
-        galleryImage.style.transform =
-            "scale(1)";
-
-        galleryImage.style.transformOrigin =
-            "center center";
-
-        galleryFrame.style.cursor =
-            "";
-    }
-
-
-    /* =========================
-       Увеличение вокруг курсора
-       ========================= */
-
-    function zoomAtPoint(clientX, clientY) {
-
-        /*
-         * Если уже увеличено —
-         * следующий клик возвращает
-         * обычный масштаб.
-         */
-
-        if (isZoomed) {
-
-            resetZoom();
-
-            return;
-        }
-
-
-        const rect =
-            galleryFrame.getBoundingClientRect();
-
-
-        const x =
-            clientX - rect.left;
-
-
-        const y =
-            clientY - rect.top;
-
-
-        /*
-         * Точка увеличения в процентах
-         * относительно области фотографии.
-         */
-
-        const originX =
-            Math.max(
-                0,
-                Math.min(
-                    100,
-                    (x / rect.width) * 100
-                )
-            );
-
-
-        const originY =
-            Math.max(
-                0,
-                Math.min(
-                    100,
-                    (y / rect.height) * 100
-                )
-            );
-
-
-        galleryImage.style.transformOrigin =
-            `${originX}% ${originY}%`;
-
-
-        galleryImage.style.transform =
-            "scale(2.2)";
-
-
-        galleryImage.classList.add(
-            "zoomed"
-        );
-
-
-        galleryFrame.style.cursor =
-            "zoom-out";
-
-
-        isZoomed = true;
-    }
-
-
-    /*
-     * Клик мышью по фотографии.
-     */
-
-    galleryImage.addEventListener(
-        "click",
-        event => {
-
-            zoomAtPoint(
-                event.clientX,
-                event.clientY
-            );
-        }
-    );
-
-
-    /*
-     * На телефоне тап по фотографии
-     * работает точно так же.
-     */
-
-    galleryImage.addEventListener(
-        "touchend",
-        event => {
 
             /*
-             * Если это был обычный тап,
-             * используем координату пальца.
+             * =========================
+             * ВСЕ ПРЕДМЕТЫ
+             * =========================
              */
 
-            if (
-                event.changedTouches.length !== 1
-            ) {
-                return;
-            }
-
-
-            const touch =
-                event.changedTouches[0];
-
-
-            zoomAtPoint(
-                touch.clientX,
-                touch.clientY
-            );
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    /* =========================
-       Обновление галереи
-       ========================= */
-
-    function updateGallery() {
-
-        resetZoom();
-
-
-        if (photos.length === 0) {
-
-            galleryElement.style.display =
-                "none";
-
-            return;
-        }
-
-
-        galleryElement.style.display =
-            "block";
-
-
-        galleryImage.src =
-            photos[currentPhoto];
-
-
-        galleryImage.alt =
-            titleElement.textContent;
-
-
-        photoCounter.textContent =
-            `${currentPhoto + 1} / ${photos.length}`;
-
-
-        if (photos.length <= 1) {
-
-            prevButton.style.display =
-                "none";
-
-            nextButton.style.display =
-                "none";
-
-        } else {
-
-            prevButton.style.display =
-                "block";
-
-            nextButton.style.display =
-                "block";
-        }
-    }
-
-
-    /* =========================
-       Перелистывание
-       ========================= */
-
-    function changePhoto(direction) {
-
-        if (
-            photos.length <= 1 ||
-            changingPhoto
-        ) {
-            return;
-        }
-
-
-        changingPhoto = true;
-
-
-        resetZoom();
-
-
-        galleryImage.classList.add(
-            "fade-out"
-        );
-
-
-        setTimeout(() => {
-
-            currentPhoto =
-                (
-                    currentPhoto +
-                    direction +
-                    photos.length
-                ) % photos.length;
-
-
-            galleryImage.src =
-                photos[currentPhoto];
-
-
-            photoCounter.textContent =
-                `${currentPhoto + 1} / ${photos.length}`;
-
-
-            galleryImage.onload =
-                () => {
-
-                    galleryImage.classList.remove(
-                        "fade-out"
-                    );
-
-                    changingPhoto = false;
-                };
-
-
-            setTimeout(() => {
-
-                galleryImage.classList.remove(
-                    "fade-out"
+            const allObjects =
+                document.createElement(
+                    "div"
                 );
 
-                changingPhoto = false;
 
-            }, 400);
-
-        }, 220);
-    }
+            allObjects.className =
+                "category";
 
 
-    prevButton.addEventListener(
-        "click",
-        () => changePhoto(-1)
-    );
+            const allObjectsLink =
+                document.createElement(
+                    "a"
+                );
 
 
-    nextButton.addEventListener(
-        "click",
-        () => changePhoto(1)
-    );
+            allObjectsLink.className =
+                "category-title";
 
 
-    /* =========================
-       Свайп на телефоне
-       ========================= */
-
-    let touchStartX = 0;
-
-    let touchStartY = 0;
+            allObjectsLink.href =
+                "category.html";
 
 
-    galleryImage.addEventListener(
-        "touchstart",
-        event => {
-
-            if (
-                event.touches.length !== 1
-            ) {
-                return;
-            }
+            allObjectsLink.textContent =
+                "Все предметы";
 
 
-            touchStartX =
-                event.touches[0].screenX;
+            allObjects.appendChild(
+                allObjectsLink
+            );
 
 
-            touchStartY =
-                event.touches[0].screenY;
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    galleryImage.addEventListener(
-        "touchend",
-        event => {
-
-            if (
-                event.changedTouches.length !== 1
-            ) {
-                return;
-            }
-
-
-            const touch =
-                event.changedTouches[0];
-
-
-            const differenceX =
-                touch.screenX -
-                touchStartX;
-
-
-            const differenceY =
-                touch.screenY -
-                touchStartY;
+            catalogContainer.appendChild(
+                allObjects
+            );
 
 
             /*
-             * Если палец реально двигался —
-             * это свайп, а не увеличение.
+             * =========================
+             * ОБЫЧНЫЕ КАТЕГОРИИ
+             * =========================
              */
 
-            if (
-                Math.abs(differenceX) < 50 ||
-                Math.abs(differenceX) <
-                Math.abs(differenceY)
+            const sortedCategories =
+                [
+                    ...categories.entries()
+                ].sort(
+                    (a, b) =>
+                        a[0].localeCompare(
+                            b[0],
+                            "ru"
+                        )
+                );
+
+
+            for (
+                const [
+                    category,
+                    subcategories
+                ]
+                of sortedCategories
             ) {
-                return;
+
+                const categoryBlock =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                categoryBlock.className =
+                    "category";
+
+
+                const categoryLink =
+                    document.createElement(
+                        "a"
+                    );
+
+
+                categoryLink.className =
+                    "category-title";
+
+
+                categoryLink.href =
+                    `category.html?category=${encodeURIComponent(category)}`;
+
+
+                categoryLink.textContent =
+                    category;
+
+
+                categoryBlock.appendChild(
+                    categoryLink
+                );
+
+
+                const sortedSubcategories =
+                    [
+                        ...subcategories
+                    ].sort(
+                        (a, b) =>
+                            a.localeCompare(
+                                b,
+                                "ru"
+                            )
+                    );
+
+
+                if (
+                    sortedSubcategories.length > 0
+                ) {
+
+                    const subcategoriesBlock =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    subcategoriesBlock.className =
+                        "subcategories";
+
+
+                    for (
+                        const subcategory
+                        of sortedSubcategories
+                    ) {
+
+                        const subcategoryLink =
+                            document.createElement(
+                                "a"
+                            );
+
+
+                        subcategoryLink.className =
+                            "subcategory";
+
+
+                        subcategoryLink.href =
+                            `category.html?category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcategory)}`;
+
+
+                        subcategoryLink.textContent =
+                            subcategory;
+
+
+                        subcategoriesBlock.appendChild(
+                            subcategoryLink
+                        );
+                    }
+
+
+                    categoryBlock.appendChild(
+                        subcategoriesBlock
+                    );
+                }
+
+
+                catalogContainer.appendChild(
+                    categoryBlock
+                );
             }
 
-
-            if (differenceX > 0) {
-
-                changePhoto(-1);
-
-            } else {
-
-                changePhoto(1);
-            }
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    /* =========================
-       Клавиатура
-       ========================= */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key === "ArrowLeft") {
-
-                changePhoto(-1);
-            }
-
-
-            if (event.key === "ArrowRight") {
-
-                changePhoto(1);
-            }
-
-
-            if (event.key === "Escape") {
-
-                resetZoom();
-            }
-        }
-    );
-
-
-    /* =========================
-       Загрузка предмета
-       ========================= */
-
-    async function loadObject() {
-
-        if (!objectNumber) {
-
-            throw new Error(
-                "Не указан объект"
-            );
-        }
-
-
-        const catalog =
-            await loadCatalog();
-
-
-        const folder =
-            catalog[objectNumber];
-
-
-        if (!folder) {
-
-            throw new Error(
-                "Объект отсутствует в catalog.json"
-            );
-        }
-
-
-        const data =
-            await loadInfo(folder);
-
-
-        /*
-         * Номер каталога и категория
-         * специально НЕ показываются.
-         */
-
-        titleElement.textContent =
-            data.title || "";
-
-
-        descriptionElement.textContent =
-            data.description || "";
-
-
-        document.title =
-            data.title || "Предмет";
-
-
-        /*
-         * Фотографии.
-         */
-
-        photos =
-            await findPhotos(folder);
-
-
-        currentPhoto = 0;
-
-
-        updateGallery();
-
-
-        /*
-         * Экспертное заключение.
-         * Если PDF нет — раздел скрыт.
-         */
-
-        const expertise =
-            await findExpertise(folder);
-
-
-        if (expertise) {
-
-            expertiseElement.style.display =
-                "block";
-
-
-            expertiseOpen.href =
-                expertise;
-
-
-            expertiseDownload.href =
-                expertise;
-        }
-    }
-
-
-    /* =========================
-       Запуск
-       ========================= */
-
-    loadObject()
-        .catch(error => {
+        } catch (error) {
 
             console.error(
-                "Ошибка загрузки предмета:",
+                "Ошибка загрузки каталога:",
                 error
             );
 
 
-            document.getElementById(
-                "content"
-            ).style.display =
-                "none";
+            catalogContainer.innerHTML =
+                "<p>Не удалось загрузить каталог.</p>";
+        }
+    }
 
 
-            errorElement.style.display =
-                "block";
-        });
+    loadCatalog();
 
 </script>
 
