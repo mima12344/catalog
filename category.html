@@ -2,12 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Категория</title>
+    <title>Каталог</title>
 
     <style>
 
@@ -38,6 +39,7 @@
 
         .page {
             width: 100%;
+
             max-width: 1200px;
 
             margin: 0 auto;
@@ -49,7 +51,9 @@
         }
 
 
-        /* Назад */
+        /* =========================
+           Назад
+           ========================= */
 
         .back {
             display: inline-block;
@@ -72,7 +76,9 @@
         }
 
 
-        /* Заголовок категории */
+        /* =========================
+           Заголовок
+           ========================= */
 
         .category-title {
             margin: 0 0 50px;
@@ -87,7 +93,9 @@
         }
 
 
-        /* Сетка */
+        /* =========================
+           Сетка предметов
+           ========================= */
 
         .objects {
             display: grid;
@@ -99,11 +107,14 @@
                 );
 
             column-gap: 24px;
+
             row-gap: 55px;
         }
 
 
-        /* Карточка */
+        /* =========================
+           Карточка
+           ========================= */
 
         .object {
             display: block;
@@ -114,7 +125,9 @@
         }
 
 
-        /* Фотография */
+        /* =========================
+           Фотография
+           ========================= */
 
         .photo-wrapper {
             width: 100%;
@@ -148,7 +161,9 @@
         }
 
 
-        /* Название */
+        /* =========================
+           Название
+           ========================= */
 
         .object-title {
             margin: 0 0 8px;
@@ -163,7 +178,9 @@
         }
 
 
-        /* Краткое описание */
+        /* =========================
+           Краткое описание
+           ========================= */
 
         .object-description {
             margin: 0;
@@ -177,13 +194,16 @@
             display: -webkit-box;
 
             -webkit-line-clamp: 3;
+
             -webkit-box-orient: vertical;
 
             overflow: hidden;
         }
 
 
-        /* Если ничего нет */
+        /* =========================
+           Пустой результат
+           ========================= */
 
         .empty {
             padding-top: 60px;
@@ -196,11 +216,14 @@
         }
 
 
-        /* Планшет */
+        /* =========================
+           Планшет
+           ========================= */
 
         @media (max-width: 900px) {
 
             .objects {
+
                 grid-template-columns:
                     repeat(
                         3,
@@ -210,11 +233,14 @@
         }
 
 
-        /* Телефон */
+        /* =========================
+           Телефон
+           ========================= */
 
         @media (max-width: 650px) {
 
             .page {
+
                 padding:
                     30px
                     18px
@@ -228,6 +254,7 @@
 
 
             .category-title {
+
                 margin-bottom: 35px;
 
                 font-size: 25px;
@@ -235,6 +262,7 @@
 
 
             .objects {
+
                 grid-template-columns:
                     repeat(
                         2,
@@ -242,6 +270,7 @@
                     );
 
                 column-gap: 14px;
+
                 row-gap: 38px;
             }
 
@@ -252,6 +281,7 @@
 
 
             .object-title {
+
                 font-size: 15px;
 
                 line-height: 1.35;
@@ -259,6 +289,7 @@
 
 
             .object-description {
+
                 font-size: 12px;
 
                 line-height: 1.45;
@@ -268,21 +299,26 @@
         }
 
 
-        /* Очень узкий экран */
+        /* =========================
+           Очень узкий телефон
+           ========================= */
 
         @media (max-width: 400px) {
 
             .objects {
+
                 grid-template-columns: 1fr;
             }
 
 
             .object-title {
+
                 font-size: 17px;
             }
 
 
             .object-description {
+
                 font-size: 13px;
             }
         }
@@ -294,6 +330,7 @@
 <body>
 
 <div class="page">
+
 
     <a
         href="index.html"
@@ -360,10 +397,9 @@
         );
 
 
-    /*
-     * Ищем первую фотографию объекта
-     * без GitHub API.
-     */
+    /* =========================
+       Поиск первой фотографии
+       ========================= */
 
     async function findFirstPhoto(folder) {
 
@@ -376,13 +412,23 @@
         ];
 
 
-        for (let i = 1; i <= 100; i++) {
+        for (
+            let i = 1;
+            i <= 100;
+            i++
+        ) {
 
             const number =
-                String(i).padStart(2, "0");
+                String(i).padStart(
+                    2,
+                    "0"
+                );
 
 
-            for (const extension of extensions) {
+            for (
+                const extension
+                of extensions
+            ) {
 
                 const url =
                     `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
@@ -401,11 +447,15 @@
 
 
                     if (response.ok) {
+
                         return url;
                     }
 
                 } catch (error) {
-                    // Проверяем следующий вариант.
+
+                    /*
+                     * Проверяем следующий файл.
+                     */
                 }
             }
         }
@@ -415,26 +465,47 @@
     }
 
 
+    /* =========================
+       Загрузка категории
+       ========================= */
+
     async function loadCategory() {
 
-        if (!category) {
+        /*
+         * Если категория не указана,
+         * это страница "Все предметы".
+         */
+
+        if (subcategory && !category) {
 
             throw new Error(
-                "Категория не указана"
+                "Подкатегория не может быть указана без категории"
             );
         }
 
 
-        categoryTitle.textContent =
-            subcategory
-                ? `${category} · ${subcategory}`
-                : category;
+        if (!category) {
+
+            categoryTitle.textContent =
+                "Все предметы";
 
 
-        document.title =
-            subcategory
-                ? `${category} · ${subcategory}`
-                : category;
+            document.title =
+                "Все предметы";
+
+        } else {
+
+            categoryTitle.textContent =
+                subcategory
+                    ? `${category} · ${subcategory}`
+                    : category;
+
+
+            document.title =
+                subcategory
+                    ? `${category} · ${subcategory}`
+                    : category;
+        }
 
 
         const catalogResponse =
@@ -462,11 +533,15 @@
 
 
         /*
-         * Загружаем информацию обо всех объектах.
+         * Загружаем info.json
+         * каждого объекта.
          */
 
         for (
-            const [catalogNumber, folder]
+            const [
+                catalogNumber,
+                folder
+            ]
             of Object.entries(catalog)
         ) {
 
@@ -490,27 +565,46 @@
                     await response.json();
 
 
+                /*
+                 * Если категория указана,
+                 * фильтруем по ней.
+                 *
+                 * Если нет —
+                 * оставляем все предметы.
+                 */
+
                 if (
-                    data.category !==
-                    category
+                    category &&
+                    data.category !== category
                 ) {
+
                     continue;
                 }
 
+
+                /*
+                 * Если указана подкатегория,
+                 * фильтруем и по ней.
+                 */
 
                 if (
                     subcategory &&
                     data.subcategory !==
                     subcategory
                 ) {
+
                     continue;
                 }
 
 
                 objects.push({
+
                     catalogNumber,
+
                     folder,
+
                     data
+
                 });
 
             } catch (error) {
@@ -524,43 +618,67 @@
 
 
         /*
-         * Сортировка по названию.
+         * =========================
+         * Сортировка по названию
+         * =========================
          */
 
         objects.sort(
             (a, b) =>
-                (a.data.title || "")
-                    .localeCompare(
-                        b.data.title || "",
-                        "ru",
-                        {
-                            sensitivity: "base"
-                        }
-                    )
+                (
+                    a.data.title || ""
+                ).localeCompare(
+                    b.data.title || "",
+                    "ru",
+                    {
+                        sensitivity:
+                            "base"
+                    }
+                )
         );
 
 
-        if (objects.length === 0) {
+        /*
+         * Если ничего нет.
+         */
+
+        if (
+            objects.length === 0
+        ) {
+
+            emptyElement.textContent =
+                category
+                    ? "В этой категории пока нет предметов."
+                    : "В каталоге пока нет предметов.";
+
 
             emptyElement.style.display =
                 "block";
+
 
             return;
         }
 
 
         /*
-         * Создаём карточки.
+         * =========================
+         * Карточки
+         * =========================
          */
 
-        for (const object of objects) {
+        for (
+            const object
+            of objects
+        ) {
 
             const data =
                 object.data;
 
 
             const link =
-                document.createElement("a");
+                document.createElement(
+                    "a"
+                );
 
 
             link.className =
@@ -576,7 +694,9 @@
              */
 
             const photoWrapper =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             photoWrapper.className =
@@ -584,7 +704,9 @@
 
 
             const photo =
-                document.createElement("img");
+                document.createElement(
+                    "img"
+                );
 
 
             photo.className =
@@ -612,6 +734,11 @@
 
             } else {
 
+                /*
+                 * Если фотографии нет,
+                 * оставляем тёмную область.
+                 */
+
                 photoWrapper.style.display =
                     "none";
             }
@@ -627,7 +754,9 @@
              */
 
             const title =
-                document.createElement("h2");
+                document.createElement(
+                    "h2"
+                );
 
 
             title.className =
@@ -643,7 +772,9 @@
              */
 
             const description =
-                document.createElement("p");
+                document.createElement(
+                    "p"
+                );
 
 
             description.className =
@@ -695,7 +826,7 @@
 
 
             emptyElement.textContent =
-                "Не удалось загрузить категорию.";
+                "Не удалось загрузить каталог.";
 
 
             emptyElement.style.display =
