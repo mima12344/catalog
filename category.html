@@ -2,837 +2,330 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
-
 
         html,
         body {
             margin: 0;
             padding: 0;
-
             background: #000;
             color: #fff;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
         }
-
 
         body {
             min-height: 100vh;
         }
 
-
-        .page {
-            width: 100%;
-
-            max-width: 1200px;
-
+        .container {
+            width: min(1400px, calc(100% - 40px));
             margin: 0 auto;
-
-            padding:
-                45px
-                30px
-                90px;
+            padding: 40px 0 80px;
         }
-
-
-        /* =========================
-           Назад
-           ========================= */
 
         .back {
             display: inline-block;
-
-            margin-bottom: 45px;
-
-            color: #777;
-
+            margin-bottom: 50px;
+            color: #999;
             text-decoration: none;
-
-            font-size: 14px;
-
-            transition:
-                color 0.2s ease;
+            font-size: 15px;
+            transition: color 0.2s ease;
         }
-
 
         .back:hover {
             color: #fff;
         }
 
-
-        /* =========================
-           Заголовок
-           ========================= */
-
-        .category-title {
+        h1 {
             margin: 0 0 50px;
-
-            text-align: center;
-
-            font-size: 28px;
-
+            font-size: 34px;
             font-weight: 400;
-
-            line-height: 1.3;
+            text-align: center;
         }
 
-
-        /* =========================
-           Сетка предметов
-           ========================= */
-
-        .objects {
+        .catalog {
             display: grid;
-
-            grid-template-columns:
-                repeat(
-                    4,
-                    minmax(0, 1fr)
-                );
-
-            column-gap: 24px;
-
-            row-gap: 55px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 50px 24px;
         }
 
-
-        /* =========================
-           Карточка
-           ========================= */
-
-        .object {
+        .card {
             display: block;
-
             color: #fff;
-
             text-decoration: none;
         }
 
-
-        /* =========================
-           Фотография
-           ========================= */
-
-        .photo-wrapper {
+        .card-image {
             width: 100%;
-
-            aspect-ratio: 4 / 3;
-
+            height: 320px;
+            background: #080808;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-
-            background: #111;
-
-            margin-bottom: 15px;
         }
 
-
-        .photo {
-            display: block;
-
+        .card-image img {
             width: 100%;
             height: 100%;
-
-            object-fit: cover;
-
-            transition:
-                transform 0.35s ease;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.3s ease;
         }
 
-
-        .object:hover .photo {
-            transform:
-                scale(1.035);
+        .card:hover .card-image img {
+            transform: scale(1.03);
         }
 
-
-        /* =========================
-           Название
-           ========================= */
-
-        .object-title {
-            margin: 0 0 8px;
-
-            color: #fff;
-
-            font-size: 17px;
-
-            line-height: 1.35;
-
-            font-weight: 400;
+        .card-title {
+            margin-top: 16px;
+            font-size: 18px;
+            line-height: 1.4;
         }
 
-
-        /* =========================
-           Краткое описание
-           ========================= */
-
-        .object-description {
-            margin: 0;
-
-            color: #777;
-
-            font-size: 13px;
-
+        .card-description {
+            margin-top: 8px;
+            color: #999;
+            font-size: 14px;
             line-height: 1.5;
-
-            display: -webkit-box;
-
-            -webkit-line-clamp: 3;
-
-            -webkit-box-orient: vertical;
-
-            overflow: hidden;
         }
-
-
-        /* =========================
-           Пустой результат
-           ========================= */
 
         .empty {
-            padding-top: 60px;
-
+            color: #777;
             text-align: center;
-
-            color: #666;
-
             font-size: 16px;
         }
 
-
-        /* =========================
-           Планшет
-           ========================= */
-
-        @media (max-width: 900px) {
-
-            .objects {
-
-                grid-template-columns:
-                    repeat(
-                        3,
-                        minmax(0, 1fr)
-                    );
+        @media (max-width: 1000px) {
+            .catalog {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
-
-        /* =========================
-           Телефон
-           ========================= */
-
-        @media (max-width: 650px) {
-
-            .page {
-
-                padding:
-                    30px
-                    18px
-                    70px;
+        @media (max-width: 700px) {
+            .container {
+                width: calc(100% - 28px);
+                padding-top: 28px;
             }
-
 
             .back {
                 margin-bottom: 35px;
             }
 
-
-            .category-title {
-
+            h1 {
                 margin-bottom: 35px;
-
-                font-size: 25px;
+                font-size: 27px;
             }
 
-
-            .objects {
-
-                grid-template-columns:
-                    repeat(
-                        2,
-                        minmax(0, 1fr)
-                    );
-
-                column-gap: 14px;
-
-                row-gap: 38px;
+            .catalog {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 35px 14px;
             }
 
-
-            .photo-wrapper {
-                margin-bottom: 11px;
+            .card-image {
+                height: 260px;
             }
 
-
-            .object-title {
-
-                font-size: 15px;
-
-                line-height: 1.35;
+            .card-title {
+                margin-top: 12px;
+                font-size: 16px;
             }
 
-
-            .object-description {
-
-                font-size: 12px;
-
-                line-height: 1.45;
-
-                -webkit-line-clamp: 3;
-            }
-        }
-
-
-        /* =========================
-           Очень узкий телефон
-           ========================= */
-
-        @media (max-width: 400px) {
-
-            .objects {
-
-                grid-template-columns: 1fr;
-            }
-
-
-            .object-title {
-
-                font-size: 17px;
-            }
-
-
-            .object-description {
-
+            .card-description {
                 font-size: 13px;
             }
         }
 
+        @media (max-width: 420px) {
+            .catalog {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 360px;
+            }
+        }
     </style>
 </head>
 
-
 <body>
 
-<div class="page">
+<div class="container">
 
+    <a href="index.html" class="back">← Каталог</a>
 
-    <a
-        href="index.html"
-        class="back"
-    >
-        ← Каталог
-    </a>
+    <h1 id="page-title">Все предметы</h1>
 
-
-    <h1
-        id="categoryTitle"
-        class="category-title"
-    ></h1>
-
-
-    <div
-        id="objects"
-        class="objects"
-    ></div>
-
-
-    <div
-        id="empty"
-        class="empty"
-        style="display: none;"
-    >
-        В этой категории пока нет предметов.
-    </div>
+    <div id="catalog" class="catalog"></div>
 
 </div>
 
-
 <script>
+    const catalogElement = document.getElementById('catalog');
+    const pageTitle = document.getElementById('page-title');
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+    const params = new URLSearchParams(window.location.search);
+    const selectedCategory = params.get('category');
+    const selectedSubcategory = params.get('subcategory');
 
+    async function fileExists(url) {
+        try {
+            const response = await fetch(url, {
+                method: 'HEAD',
+                cache: 'no-store'
+            });
 
-    const category =
-        params.get("category");
-
-
-    const subcategory =
-        params.get("subcategory");
-
-
-    const categoryTitle =
-        document.getElementById(
-            "categoryTitle"
-        );
-
-
-    const objectsContainer =
-        document.getElementById(
-            "objects"
-        );
-
-
-    const emptyElement =
-        document.getElementById(
-            "empty"
-        );
-
-
-    /* =========================
-       Поиск первой фотографии
-       ========================= */
+            return response.ok;
+        } catch {
+            return false;
+        }
+    }
 
     async function findFirstPhoto(folder) {
+        const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 
-        const extensions = [
-            "jpg",
-            "jpeg",
-            "png",
-            "webp",
-            "gif"
-        ];
+        for (let i = 1; i <= 100; i++) {
+            const number = String(i).padStart(2, '0');
 
+            for (const extension of extensions) {
+                const url = `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
 
-        for (
-            let i = 1;
-            i <= 100;
-            i++
-        ) {
-
-            const number =
-                String(i).padStart(
-                    2,
-                    "0"
-                );
-
-
-            for (
-                const extension
-                of extensions
-            ) {
-
-                const url =
-                    `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
-
-
-                try {
-
-                    const response =
-                        await fetch(
-                            url,
-                            {
-                                method: "HEAD",
-                                cache: "no-store"
-                            }
-                        );
-
-
-                    if (response.ok) {
-
-                        return url;
-                    }
-
-                } catch (error) {
-
-                    /*
-                     * Проверяем следующий файл.
-                     */
+                if (await fileExists(url)) {
+                    return url;
                 }
             }
         }
-
 
         return null;
     }
 
+    async function loadCatalog() {
+        try {
+            const catalogResponse = await fetch('catalog.json', {
+                cache: 'no-store'
+            });
 
-    /* =========================
-       Загрузка категории
-       ========================= */
+            const catalog = await catalogResponse.json();
 
-    async function loadCategory() {
+            const objects = [];
 
-        /*
-         * Если категория не указана,
-         * это страница "Все предметы".
-         */
-
-        if (subcategory && !category) {
-
-            throw new Error(
-                "Подкатегория не может быть указана без категории"
-            );
-        }
-
-
-        if (!category) {
-
-            categoryTitle.textContent =
-                "Все предметы";
-
-
-            document.title =
-                "Все предметы";
-
-        } else {
-
-            categoryTitle.textContent =
-                subcategory
-                    ? `${category} · ${subcategory}`
-                    : category;
-
-
-            document.title =
-                subcategory
-                    ? `${category} · ${subcategory}`
-                    : category;
-        }
-
-
-        const catalogResponse =
-            await fetch(
-                "catalog.json",
-                {
-                    cache: "no-store"
-                }
-            );
-
-
-        if (!catalogResponse.ok) {
-
-            throw new Error(
-                "Не удалось загрузить catalog.json"
-            );
-        }
-
-
-        const catalog =
-            await catalogResponse.json();
-
-
-        const objects = [];
-
-
-        /*
-         * Загружаем info.json
-         * каждого объекта.
-         */
-
-        for (
-            const [
-                catalogNumber,
-                folder
-            ]
-            of Object.entries(catalog)
-        ) {
-
-            try {
-
-                const response =
-                    await fetch(
+            for (const [catalogNumber, folder] of Object.entries(catalog)) {
+                try {
+                    const response = await fetch(
                         `objects/${encodeURIComponent(folder)}/info.json`,
-                        {
-                            cache: "no-store"
-                        }
+                        { cache: 'no-store' }
                     );
 
-
-                if (!response.ok) {
-                    continue;
-                }
-
-
-                const data =
-                    await response.json();
-
-
-                /*
-                 * Если категория указана,
-                 * фильтруем по ней.
-                 *
-                 * Если нет —
-                 * оставляем все предметы.
-                 */
-
-                if (
-                    category &&
-                    data.category !== category
-                ) {
-
-                    continue;
-                }
-
-
-                /*
-                 * Если указана подкатегория,
-                 * фильтруем и по ней.
-                 */
-
-                if (
-                    subcategory &&
-                    data.subcategory !==
-                    subcategory
-                ) {
-
-                    continue;
-                }
-
-
-                objects.push({
-
-                    catalogNumber,
-
-                    folder,
-
-                    data
-
-                });
-
-            } catch (error) {
-
-                console.error(
-                    `Ошибка объекта ${catalogNumber}:`,
-                    error
-                );
-            }
-        }
-
-
-        /*
-         * =========================
-         * Сортировка по названию
-         * =========================
-         */
-
-        objects.sort(
-            (a, b) =>
-                (
-                    a.data.title || ""
-                ).localeCompare(
-                    b.data.title || "",
-                    "ru",
-                    {
-                        sensitivity:
-                            "base"
+                    if (!response.ok) {
+                        continue;
                     }
+
+                    const data = await response.json();
+
+                    if (
+                        selectedCategory &&
+                        data.category !== selectedCategory
+                    ) {
+                        continue;
+                    }
+
+                    if (
+                        selectedSubcategory &&
+                        data.subcategory !== selectedSubcategory
+                    ) {
+                        continue;
+                    }
+
+                    objects.push({
+                        catalogNumber,
+                        folder,
+                        data
+                    });
+
+                } catch (error) {
+                    console.error(
+                        `Ошибка загрузки ${folder}/info.json`,
+                        error
+                    );
+                }
+            }
+
+            objects.sort((a, b) =>
+                (a.data.title || '').localeCompare(
+                    b.data.title || '',
+                    'ru'
                 )
-        );
+            );
 
-
-        /*
-         * Если ничего нет.
-         */
-
-        if (
-            objects.length === 0
-        ) {
-
-            emptyElement.textContent =
-                category
-                    ? "В этой категории пока нет предметов."
-                    : "В каталоге пока нет предметов.";
-
-
-            emptyElement.style.display =
-                "block";
-
-
-            return;
-        }
-
-
-        /*
-         * =========================
-         * Карточки
-         * =========================
-         */
-
-        for (
-            const object
-            of objects
-        ) {
-
-            const data =
-                object.data;
-
-
-            const link =
-                document.createElement(
-                    "a"
-                );
-
-
-            link.className =
-                "object";
-
-
-            link.href =
-                `item.html?object=${encodeURIComponent(object.catalogNumber)}`;
-
-
-            /*
-             * Фотография.
-             */
-
-            const photoWrapper =
-                document.createElement(
-                    "div"
-                );
-
-
-            photoWrapper.className =
-                "photo-wrapper";
-
-
-            const photo =
-                document.createElement(
-                    "img"
-                );
-
-
-            photo.className =
-                "photo";
-
-
-            photo.alt =
-                data.title || "";
-
-
-            photo.loading =
-                "lazy";
-
-
-            const firstPhoto =
-                await findFirstPhoto(
-                    object.folder
-                );
-
-
-            if (firstPhoto) {
-
-                photo.src =
-                    firstPhoto;
-
+            if (selectedSubcategory) {
+                pageTitle.textContent = selectedSubcategory;
+            } else if (selectedCategory) {
+                pageTitle.textContent = selectedCategory;
             } else {
-
-                /*
-                 * Если фотографии нет,
-                 * оставляем тёмную область.
-                 */
-
-                photoWrapper.style.display =
-                    "none";
+                pageTitle.textContent = 'Все предметы';
             }
 
-
-            photoWrapper.appendChild(
-                photo
-            );
-
-
-            /*
-             * Название.
-             */
-
-            const title =
-                document.createElement(
-                    "h2"
-                );
-
-
-            title.className =
-                "object-title";
-
-
-            title.textContent =
-                data.title || "";
-
-
-            /*
-             * Краткое описание.
-             */
-
-            const description =
-                document.createElement(
-                    "p"
-                );
-
-
-            description.className =
-                "object-description";
-
-
-            description.textContent =
-                data.shortDescription || "";
-
-
-            link.appendChild(
-                photoWrapper
-            );
-
-
-            link.appendChild(
-                title
-            );
-
-
-            if (
-                data.shortDescription
-            ) {
-
-                link.appendChild(
-                    description
-                );
+            if (objects.length === 0) {
+                catalogElement.innerHTML =
+                    '<div class="empty">Предметов пока нет.</div>';
+                return;
             }
 
+            for (const object of objects) {
+                const card = document.createElement('a');
 
-            objectsContainer.appendChild(
-                link
-            );
+                card.className = 'card';
+                card.href =
+                    `item.html?object=${encodeURIComponent(object.catalogNumber)}`;
+
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'card-image';
+
+                const image = document.createElement('img');
+
+                const photo = await findFirstPhoto(object.folder);
+
+                if (photo) {
+                    image.src = photo;
+                    image.alt = object.data.title || '';
+                    image.loading = 'lazy';
+                    imageContainer.appendChild(image);
+                }
+
+                const title = document.createElement('div');
+                title.className = 'card-title';
+                title.textContent = object.data.title || '';
+
+                card.appendChild(imageContainer);
+                card.appendChild(title);
+
+                if (object.data.shortDescription) {
+                    const description = document.createElement('div');
+                    description.className = 'card-description';
+                    description.textContent =
+                        object.data.shortDescription;
+
+                    card.appendChild(description);
+                }
+
+                catalogElement.appendChild(card);
+            }
+
+        } catch (error) {
+            console.error(error);
+
+            catalogElement.innerHTML =
+                '<div class="empty">Не удалось загрузить каталог.</div>';
         }
     }
 
-
-    loadCategory()
-        .catch(error => {
-
-            console.error(
-                "Ошибка загрузки категории:",
-                error
-            );
-
-
-            objectsContainer.innerHTML =
-                "";
-
-
-            emptyElement.textContent =
-                "Не удалось загрузить каталог.";
-
-
-            emptyElement.style.display =
-                "block";
-        });
-
+    loadCatalog();
 </script>
 
 </body>
