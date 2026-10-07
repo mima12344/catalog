@@ -1,331 +1,939 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Каталог</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Каталог</title>
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<style>
 
-        body {
-            min-height: 100vh;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .container {
-            width: min(1400px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 40px 0 80px;
-        }
+html,
+body {
 
-        .back {
-            display: inline-block;
-            margin-bottom: 50px;
-            color: #999;
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.2s ease;
-        }
+    margin: 0;
+    padding: 0;
 
-        .back:hover {
-            color: #fff;
-        }
+    background: #000;
+    color: #fff;
 
-        h1 {
-            margin: 0 0 50px;
-            font-size: 34px;
-            font-weight: 400;
-            text-align: center;
-        }
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
 
-        .catalog {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 50px 24px;
-        }
+body {
+    min-height: 100vh;
+}
 
-        .card {
-            display: block;
-            color: #fff;
-            text-decoration: none;
-        }
 
-        .card-image {
-            width: 100%;
-            height: 320px;
-            background: #080808;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+/* =========================
+   СТРАНИЦА
+========================= */
 
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            transition: transform 0.3s ease;
-        }
+.page {
 
-        .card:hover .card-image img {
-            transform: scale(1.03);
-        }
+    width: 100%;
 
-        .card-title {
-            margin-top: 16px;
-            font-size: 18px;
-            line-height: 1.4;
-        }
+    max-width: 1500px;
 
-        .card-description {
-            margin-top: 8px;
-            color: #999;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+    margin: 0 auto;
 
-        .empty {
-            color: #777;
-            text-align: center;
-            font-size: 16px;
-        }
+    padding:
+        35px
+        30px
+        100px;
+}
 
-        @media (max-width: 1000px) {
-            .catalog {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
 
-        @media (max-width: 700px) {
-            .container {
-                width: calc(100% - 28px);
-                padding-top: 28px;
-            }
+/* =========================
+   НАЗАД
+========================= */
 
-            .back {
-                margin-bottom: 35px;
-            }
+.back {
 
-            h1 {
-                margin-bottom: 35px;
-                font-size: 27px;
-            }
+    display: block;
 
-            .catalog {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 35px 14px;
-            }
+    width: fit-content;
 
-            .card-image {
-                height: 260px;
-            }
+    margin-bottom: 35px;
 
-            .card-title {
-                margin-top: 12px;
-                font-size: 16px;
-            }
+    color: #777;
 
-            .card-description {
-                font-size: 13px;
-            }
-        }
+    font-size: 14px;
 
-        @media (max-width: 420px) {
-            .catalog {
-                grid-template-columns: 1fr;
-            }
+    text-decoration: none;
 
-            .card-image {
-                height: 360px;
-            }
-        }
-    </style>
+    transition:
+        color 0.2s ease;
+}
+
+.back:hover {
+    color: #fff;
+}
+
+
+/* =========================
+   ЗАГОЛОВОК
+========================= */
+
+h1 {
+
+    margin: 0 0 45px;
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            42px
+        );
+
+    font-weight: 400;
+
+    line-height: 1.15;
+}
+
+
+/* =========================
+   СЕТКА
+========================= */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+
+/* =========================
+   КАРТОЧКА
+========================= */
+
+.card {
+
+    display: block;
+
+    min-width: 0;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    border: 1px solid #252525;
+
+    background: #050505;
+
+    padding: 10px;
+
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+.card:hover {
+
+    border-color: #555;
+
+    background: #080808;
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* =========================
+   ФОТО КАРТОЧКИ
+========================= */
+
+.card-image {
+
+    width: 100%;
+
+    height: 320px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #000;
+}
+
+
+.card-image img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition:
+        transform 0.35s ease;
+}
+
+
+.card:hover
+.card-image img {
+
+    transform:
+        scale(1.035);
+}
+
+
+/*
+ * Если фотография ещё грузится
+ */
+
+.card-loading {
+
+    color: #555;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* =========================
+   ТЕКСТ КАРТОЧКИ
+========================= */
+
+.card-info {
+
+    padding:
+        18px
+        8px
+        10px;
+}
+
+
+.card-title {
+
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 18px;
+
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+
+.card-description {
+
+    margin-top: 10px;
+
+    color: #888;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================
+   ЕСЛИ НЕТ ПРЕДМЕТОВ
+========================= */
+
+.empty {
+
+    color: #666;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ПЛАНШЕТ
+========================= */
+
+@media (max-width: 1100px) {
+
+    .grid {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .card-image {
+
+        height: 300px;
+    }
+}
+
+
+/* =========================
+   ТЕЛЕФОН
+========================= */
+
+@media (max-width: 700px) {
+
+    .page {
+
+        padding:
+            25px
+            15px
+            60px;
+    }
+
+
+    h1 {
+
+        margin-bottom: 30px;
+    }
+
+
+    .grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    .card {
+
+        padding: 7px;
+    }
+
+
+    .card-image {
+
+        height: 260px;
+    }
+
+
+    .card-info {
+
+        padding:
+            14px
+            5px
+            8px;
+    }
+
+
+    .card-title {
+
+        font-size: 16px;
+    }
+
+
+    .card-description {
+
+        font-size: 13px;
+
+        margin-top: 8px;
+    }
+}
+
+
+/* =========================
+   ОЧЕНЬ УЗКИЙ ТЕЛЕФОН
+========================= */
+
+@media (max-width: 420px) {
+
+    .grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 16px;
+    }
+
+
+    .card-image {
+
+        height: 360px;
+    }
+
+
+    .card-title {
+
+        font-size: 18px;
+    }
+
+
+    .card-description {
+
+        font-size: 14px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-<div class="container">
+<div class="page">
 
-    <a href="index.html" class="back">← Каталог</a>
 
-    <h1 id="page-title">Все предметы</h1>
+    <!-- НАЗАД -->
 
-    <div id="catalog" class="catalog"></div>
+    <a
+        class="back"
+        href="index.html">
+
+        ← Каталог
+
+    </a>
+
+
+    <!-- ЗАГОЛОВОК -->
+
+    <h1 id="title">
+        Все предметы
+    </h1>
+
+
+    <!-- ПРЕДМЕТЫ -->
+
+    <main
+        class="grid"
+        id="grid">
+    </main>
+
 
 </div>
 
+
 <script>
-    const catalogElement = document.getElementById('catalog');
-    const pageTitle = document.getElementById('page-title');
 
-    const params = new URLSearchParams(window.location.search);
-    const selectedCategory = params.get('category');
-    const selectedSubcategory = params.get('subcategory');
 
-    async function fileExists(url) {
-        try {
-            const response = await fetch(url, {
-                method: 'HEAD',
-                cache: 'no-store'
-            });
+/* =========================
+   ПАРАМЕТРЫ URL
+========================= */
 
-            return response.ok;
-        } catch {
-            return false;
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const category =
+    params.get("category");
+
+
+const subcategory =
+    params.get("subcategory");
+
+
+/* =========================
+   ЭЛЕМЕНТЫ
+========================= */
+
+const title =
+    document.getElementById(
+        "title"
+    );
+
+
+const grid =
+    document.getElementById(
+        "grid"
+    );
+
+
+/* =========================
+   ЗАГОЛОВОК
+========================= */
+
+if (category) {
+
+    title.textContent =
+        subcategory
+            ? subcategory
+            : category;
+
+} else {
+
+    title.textContent =
+        "Все предметы";
+}
+
+
+/* =========================
+   URL ФАЙЛОВ
+========================= */
+
+function fileUrl(
+    folder,
+    fileName
+) {
+
+    return (
+        "objects/" +
+        encodeURIComponent(folder) +
+        "/" +
+        encodeURIComponent(fileName)
+    );
+}
+
+
+/* =========================
+   ПОИСК ПЕРВОЙ ФОТОГРАФИИ
+========================= */
+
+function findFirstPhoto(
+    folder,
+    img
+) {
+
+    /*
+     * Сначала jpg — это основной
+     * формат каталога.
+     *
+     * Если его нет, пробуем
+     * остальные форматы.
+     */
+
+    const extensions = [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp",
+        "gif"
+    ];
+
+
+    let extensionIndex = 0;
+
+
+    function tryNext() {
+
+        if (
+            extensionIndex >=
+            extensions.length
+        ) {
+
+            img.parentElement.innerHTML =
+                '<div class="card-loading">Фотография отсутствует</div>';
+
+            return;
         }
+
+
+        const extension =
+            extensions[
+                extensionIndex
+            ];
+
+
+        extensionIndex++;
+
+
+        const url =
+            fileUrl(
+                folder,
+                "photo-01." +
+                extension
+            );
+
+
+        const test =
+            new Image();
+
+
+        test.onload =
+            function () {
+
+                img.src =
+                    url;
+
+            };
+
+
+        test.onerror =
+            function () {
+
+                tryNext();
+
+            };
+
+
+        test.src =
+            url;
     }
 
-    async function findFirstPhoto(folder) {
-        const extensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 
-        for (let i = 1; i <= 100; i++) {
-            const number = String(i).padStart(2, '0');
+    tryNext();
+}
 
-            for (const extension of extensions) {
-                const url = `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
 
-                if (await fileExists(url)) {
-                    return url;
-                }
-            }
-        }
+/* =========================
+   СОЗДАНИЕ КАРТОЧКИ
+========================= */
 
-        return null;
+function createCard(
+    id,
+    folder,
+    data
+) {
+
+    const card =
+        document.createElement(
+            "a"
+        );
+
+
+    card.className =
+        "card";
+
+
+    card.href =
+        "item.html?object=" +
+        encodeURIComponent(id);
+
+
+    /*
+     * Фотография
+     */
+
+    const imageBox =
+        document.createElement(
+            "div"
+        );
+
+
+    imageBox.className =
+        "card-image";
+
+
+    const img =
+        document.createElement(
+            "img"
+        );
+
+
+    img.alt =
+        data.title || "";
+
+
+    img.loading =
+        "lazy";
+
+
+    img.decoding =
+        "async";
+
+
+    imageBox.appendChild(
+        img
+    );
+
+
+    /*
+     * Текст
+     */
+
+    const info =
+        document.createElement(
+            "div"
+        );
+
+
+    info.className =
+        "card-info";
+
+
+    const cardTitle =
+        document.createElement(
+            "h2"
+        );
+
+
+    cardTitle.className =
+        "card-title";
+
+
+    cardTitle.textContent =
+        data.title || "";
+
+
+    info.appendChild(
+        cardTitle
+    );
+
+
+    if (
+        data.shortDescription
+    ) {
+
+        const shortDescription =
+            document.createElement(
+                "div"
+            );
+
+
+        shortDescription.className =
+            "card-description";
+
+
+        shortDescription.textContent =
+            data.shortDescription;
+
+
+        info.appendChild(
+            shortDescription
+        );
     }
 
-    async function loadCatalog() {
-        try {
-            const catalogResponse = await fetch('catalog.json', {
-                cache: 'no-store'
-            });
 
-            const catalog = await catalogResponse.json();
+    /*
+     * Собираем карточку
+     */
 
-            const objects = [];
+    card.appendChild(
+        imageBox
+    );
 
-            for (const [catalogNumber, folder] of Object.entries(catalog)) {
-                try {
-                    const response = await fetch(
-                        `objects/${encodeURIComponent(folder)}/info.json`,
-                        { cache: 'no-store' }
-                    );
 
-                    if (!response.ok) {
-                        continue;
-                    }
+    card.appendChild(
+        info
+    );
 
-                    const data = await response.json();
 
-                    if (
-                        selectedCategory &&
-                        data.category !== selectedCategory
-                    ) {
-                        continue;
-                    }
+    /*
+     * Добавляем на страницу
+     */
 
-                    if (
-                        selectedSubcategory &&
-                        data.subcategory !== selectedSubcategory
-                    ) {
-                        continue;
-                    }
+    grid.appendChild(
+        card
+    );
 
-                    objects.push({
-                        catalogNumber,
-                        folder,
-                        data
-                    });
 
-                } catch (error) {
-                    console.error(
-                        `Ошибка загрузки ${folder}/info.json`,
-                        error
-                    );
+    /*
+     * Начинаем загрузку фотографии
+     * сразу после создания карточки.
+     */
+
+    findFirstPhoto(
+        folder,
+        img
+    );
+}
+
+
+/* =========================
+   ЗАГРУЗКА КАТАЛОГА
+========================= */
+
+async function loadCatalog() {
+
+    try {
+
+        const response =
+            await fetch(
+                "catalog.json",
+                {
+                    cache: "no-cache"
                 }
-            }
+            );
 
-            objects.sort((a, b) =>
-                (a.data.title || '').localeCompare(
-                    b.data.title || '',
-                    'ru'
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Не удалось загрузить catalog.json"
+            );
+        }
+
+
+        const catalog =
+            await response.json();
+
+
+        /*
+         * Загружаем все info.json
+         * параллельно.
+         */
+
+        const objects =
+            await Promise.all(
+
+                Object.entries(
+                    catalog
+                ).map(
+                    async ([id, folder]) => {
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    fileUrl(
+                                        folder,
+                                        "info.json"
+                                    ),
+                                    {
+                                        cache:
+                                            "no-cache"
+                                    }
+                                );
+
+
+                            if (
+                                !response.ok
+                            ) {
+
+                                return null;
+                            }
+
+
+                            const data =
+                                await response.json();
+
+
+                            return {
+                                id,
+                                folder,
+                                data
+                            };
+
+                        }
+
+                        catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+                            return null;
+                        }
+
+                    }
                 )
             );
 
-            if (selectedSubcategory) {
-                pageTitle.textContent = selectedSubcategory;
-            } else if (selectedCategory) {
-                pageTitle.textContent = selectedCategory;
-            } else {
-                pageTitle.textContent = 'Все предметы';
-            }
 
-            if (objects.length === 0) {
-                catalogElement.innerHTML =
-                    '<div class="empty">Предметов пока нет.</div>';
-                return;
-            }
+        /*
+         * Убираем не загрузившиеся.
+         */
 
-            for (const object of objects) {
-                const card = document.createElement('a');
+        let filtered =
+            objects.filter(
+                object =>
+                    object !== null
+            );
 
-                card.className = 'card';
-                card.href =
-                    `item.html?object=${encodeURIComponent(object.catalogNumber)}`;
 
-                const imageContainer = document.createElement('div');
-                imageContainer.className = 'card-image';
+        /*
+         * Фильтр категории.
+         */
 
-                const image = document.createElement('img');
+        if (category) {
 
-                const photo = await findFirstPhoto(object.folder);
-
-                if (photo) {
-                    image.src = photo;
-                    image.alt = object.data.title || '';
-                    image.loading = 'lazy';
-                    imageContainer.appendChild(image);
-                }
-
-                const title = document.createElement('div');
-                title.className = 'card-title';
-                title.textContent = object.data.title || '';
-
-                card.appendChild(imageContainer);
-                card.appendChild(title);
-
-                if (object.data.shortDescription) {
-                    const description = document.createElement('div');
-                    description.className = 'card-description';
-                    description.textContent =
-                        object.data.shortDescription;
-
-                    card.appendChild(description);
-                }
-
-                catalogElement.appendChild(card);
-            }
-
-        } catch (error) {
-            console.error(error);
-
-            catalogElement.innerHTML =
-                '<div class="empty">Не удалось загрузить каталог.</div>';
+            filtered =
+                filtered.filter(
+                    object =>
+                        object.data.category ===
+                        category
+                );
         }
+
+
+        /*
+         * Фильтр подкатегории.
+         */
+
+        if (subcategory) {
+
+            filtered =
+                filtered.filter(
+                    object =>
+                        object.data.subcategory ===
+                        subcategory
+                );
+        }
+
+
+        /*
+         * Сортировка по названию.
+         */
+
+        filtered.sort(
+            (a, b) =>
+                (
+                    a.data.title || ""
+                ).localeCompare(
+                    b.data.title || "",
+                    "ru",
+                    {
+                        sensitivity:
+                            "base"
+                    }
+                )
+        );
+
+
+        /*
+         * Если ничего нет.
+         */
+
+        if (
+            filtered.length === 0
+        ) {
+
+            grid.innerHTML =
+                '<div class="empty">Предметов пока нет.</div>';
+
+            return;
+        }
+
+
+        /*
+         * Создаём карточки.
+         */
+
+        filtered.forEach(
+            object => {
+
+                createCard(
+                    object.id,
+                    object.folder,
+                    object.data
+                );
+            }
+        );
+
     }
 
-    loadCatalog();
+    catch (error) {
+
+        console.error(error);
+
+        grid.innerHTML =
+            '<div class="empty">Не удалось загрузить каталог.</div>';
+    }
+
+}
+
+
+/* =========================
+   ЗАПУСК
+========================= */
+
+loadCatalog();
+
 </script>
 
 </body>
