@@ -231,7 +231,9 @@
 
 <div class="container">
 
-    <a href="index.html" class="back" id="back-link">← Категория</a>
+    <a href="index.html" class="back" id="back-link">
+        ← Категория
+    </a>
 
     <h1 id="title"></h1>
 
@@ -295,7 +297,9 @@
 </div>
 
 <script>
-    const titleElement = document.getElementById('title');
+    const titleElement =
+        document.getElementById('title');
+
     const descriptionElement =
         document.getElementById('description');
 
@@ -337,19 +341,35 @@
 
     let touchStartX = 0;
     let touchStartY = 0;
+    let touchMoved = false;
 
-    async function fileExists(url) {
-        try {
-            const response = await fetch(url, {
-                method: 'HEAD',
-                cache: 'no-store'
-            });
 
-            return response.ok;
-        } catch {
-            return false;
-        }
+    /*
+     * Загружает фотографию напрямую.
+     * Никаких HEAD-запросов.
+     */
+
+    function tryLoadImage(url) {
+        return new Promise((resolve) => {
+            const image = new Image();
+
+            image.onload = () => {
+                resolve(url);
+            };
+
+            image.onerror = () => {
+                resolve(null);
+            };
+
+            image.src = url;
+        });
     }
+
+
+    /*
+     * Ищем photo-01.jpg ... photo-100.jpg.
+     * Каждый файл проверяется обычной загрузкой изображения.
+     */
 
     async function findPhotos(folder) {
         const extensions = [
@@ -360,34 +380,51 @@
             'gif'
         ];
 
-        const result = [];
+        const foundPhotos = [];
 
         for (let i = 1; i <= 100; i++) {
+
             const number =
                 String(i).padStart(2, '0');
 
             let found = false;
 
             for (const extension of extensions) {
+
                 const url =
                     `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
 
-                if (await fileExists(url)) {
-                    result.push(url);
+                const result =
+                    await tryLoadImage(url);
+
+                if (result) {
+                    foundPhotos.push(result);
                     found = true;
                     break;
                 }
             }
 
-            if (!found && i > 1) {
-                continue;
-            }
+            /*
+             * Если фотографии закончились,
+             * дальше обычно уже ничего нет.
+             *
+             * Продолжаем поиск, если это просто
+             * пропущенный номер.
+             */
         }
 
-        return result;
+        return foundPhotos;
     }
 
+
+    /*
+     * Заключение эксперта.
+     * Тоже проверяем обычной загрузкой,
+     * но через fetch GET, а не HEAD.
+     */
+
     async function findExpertise(folder) {
+
         const filenames = [
             'expertise-001.pdf',
             'expertise-002.pdf',
@@ -395,18 +432,36 @@
         ];
 
         for (const filename of filenames) {
+
             const url =
                 `objects/${encodeURIComponent(folder)}/${filename}`;
 
-            if (await fileExists(url)) {
-                return url;
+            try {
+                const response =
+                    await fetch(url, {
+                        method: 'GET',
+                        cache: 'no-store'
+                    });
+
+                if (response.ok) {
+                    return url;
+                }
+
+            } catch {
+                // продолжаем искать следующий вариант
             }
         }
 
         return null;
     }
 
+
+    /*
+     * Показ фотографии.
+     */
+
     function showPhoto(index, animate = true) {
+
         if (!photos.length) {
             return;
         }
@@ -414,22 +469,38 @@
         currentPhoto =
             (index + photos.length) % photos.length;
 
-        galleryFrame.classList.remove('zoomed');
+        resetZoom();
 
         if (animate) {
+
             mainImage.style.opacity = '0';
 
             setTimeout(() => {
-                mainImage.src = photos[currentPhoto];
+
+                mainImage.src =
+                    photos[currentPhoto];
+
                 mainImage.style.opacity = '1';
+
             }, 120);
+
         } else {
-            mainImage.src = photos[currentPhoto];
+
+            mainImage.src =
+                photos[currentPhoto];
+
             mainImage.style.opacity = '1';
         }
     }
 
+
+    /*
+     * Показываем стрелки только если
+     * фотографий больше одной.
+     */
+
     function updateArrows() {
+
         const shouldShow =
             photos.length > 1;
 
@@ -440,7 +511,13 @@
             shouldShow ? 'block' : 'none';
     }
 
+
+    /*
+     * Сброс увеличения.
+     */
+
     function resetZoom() {
+
         galleryFrame.classList.remove('zoomed');
 
         mainImage.style.transform =
@@ -450,12 +527,22 @@
             'center center';
     }
 
-    function toggleZoom(event) {
+
+    /*
+     * Лупа.
+     * Первое нажатие — увеличение вокруг точки.
+     * Второе — возврат.
+     */
+
+    function toggleZoom(clientX, clientY) {
+
         if (!photos.length) {
             return;
         }
 
-        if (galleryFrame.classList.contains('zoomed')) {
+        if (
+            galleryFrame.classList.contains('zoomed')
+        ) {
             resetZoom();
             return;
         }
@@ -464,10 +551,10 @@
             galleryFrame.getBoundingClientRect();
 
         const x =
-            ((event.clientX - rect.left) / rect.width) * 100;
+            ((clientX - rect.left) / rect.width) * 100;
 
         const y =
-            ((event.clientY - rect.top) / rect.height) * 100;
+            ((clientY - rect.top) / rect.height) * 100;
 
         mainImage.style.transformOrigin =
             `${x}% ${y}%`;
@@ -478,84 +565,195 @@
         galleryFrame.classList.add('zoomed');
     }
 
-    prevButton.addEventListener('click', () => {
-        showPhoto(currentPhoto - 1);
-    });
 
-    nextButton.addEventListener('click', () => {
-        showPhoto(currentPhoto + 1);
-    });
+    /*
+     * Стрелки.
+     */
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowLeft') {
+    prevButton.addEventListener(
+        'click',
+        () => {
             showPhoto(currentPhoto - 1);
         }
+    );
 
-        if (event.key === 'ArrowRight') {
+    nextButton.addEventListener(
+        'click',
+        () => {
             showPhoto(currentPhoto + 1);
         }
+    );
 
-        if (event.key === 'Escape') {
-            resetZoom();
+
+    /*
+     * Клавиатура.
+     */
+
+    document.addEventListener(
+        'keydown',
+        (event) => {
+
+            if (event.key === 'ArrowLeft') {
+                showPhoto(currentPhoto - 1);
+            }
+
+            if (event.key === 'ArrowRight') {
+                showPhoto(currentPhoto + 1);
+            }
+
+            if (event.key === 'Escape') {
+                resetZoom();
+            }
         }
-    });
+    );
 
-    mainImage.addEventListener('click', (event) => {
-        toggleZoom(event);
-    });
 
-    mainImage.addEventListener('touchstart', (event) => {
-        if (event.touches.length !== 1) {
-            return;
+    /*
+     * Обычный клик мышью по фотографии.
+     */
+
+    mainImage.addEventListener(
+        'click',
+        (event) => {
+
+            /*
+             * Если это был свайп на телефоне,
+             * click после него не должен включать лупу.
+             */
+
+            if (touchMoved) {
+                touchMoved = false;
+                return;
+            }
+
+            toggleZoom(
+                event.clientX,
+                event.clientY
+            );
         }
+    );
 
-        touchStartX =
-            event.touches[0].clientX;
 
-        touchStartY =
-            event.touches[0].clientY;
-    }, {
-        passive: true
-    });
+    /*
+     * Свайп на телефоне.
+     */
 
-    mainImage.addEventListener('touchend', (event) => {
-        if (event.changedTouches.length !== 1) {
-            return;
+    mainImage.addEventListener(
+        'touchstart',
+        (event) => {
+
+            if (event.touches.length !== 1) {
+                return;
+            }
+
+            touchMoved = false;
+
+            touchStartX =
+                event.touches[0].clientX;
+
+            touchStartY =
+                event.touches[0].clientY;
+
+        },
+        {
+            passive: true
         }
+    );
 
-        const touch =
-            event.changedTouches[0];
 
-        const deltaX =
-            touch.clientX - touchStartX;
+    mainImage.addEventListener(
+        'touchmove',
+        (event) => {
 
-        const deltaY =
-            touch.clientY - touchStartY;
+            if (event.touches.length !== 1) {
+                return;
+            }
 
-        if (Math.abs(deltaX) < 50) {
-            return;
+            const deltaX =
+                event.touches[0].clientX -
+                touchStartX;
+
+            const deltaY =
+                event.touches[0].clientY -
+                touchStartY;
+
+            if (
+                Math.abs(deltaX) > 10 ||
+                Math.abs(deltaY) > 10
+            ) {
+                touchMoved = true;
+            }
+
+        },
+        {
+            passive: true
         }
+    );
 
-        if (
-            Math.abs(deltaX) >
-            Math.abs(deltaY)
-        ) {
+
+    mainImage.addEventListener(
+        'touchend',
+        (event) => {
+
+            if (event.changedTouches.length !== 1) {
+                return;
+            }
+
+            const touch =
+                event.changedTouches[0];
+
+            const deltaX =
+                touch.clientX - touchStartX;
+
+            const deltaY =
+                touch.clientY - touchStartY;
+
+            /*
+             * Это просто тап.
+             * Лупу обработает click.
+             */
+
+            if (
+                Math.abs(deltaX) < 50 ||
+                Math.abs(deltaX) <= Math.abs(deltaY)
+            ) {
+                return;
+            }
+
             if (deltaX < 0) {
                 showPhoto(currentPhoto + 1);
             } else {
                 showPhoto(currentPhoto - 1);
             }
+
+        },
+        {
+            passive: true
         }
-    }, {
-        passive: true
-    });
+    );
+
+
+    /*
+     * Загрузка предмета.
+     */
 
     async function loadItem() {
+
         try {
+
             const catalogResponse =
-                await fetch('catalog.json', {
-                    cache: 'no-store'
-                });
+                await fetch(
+                    'catalog.json',
+                    {
+                        cache: 'no-store'
+                    }
+                );
+
+            if (!catalogResponse.ok) {
+                throw new Error(
+                    'Не удалось загрузить catalog.json'
+                );
+            }
 
             const catalog =
                 await catalogResponse.json();
@@ -569,10 +767,17 @@
                 );
             }
 
+
+            /*
+             * Загружаем info.json.
+             */
+
             const infoResponse =
                 await fetch(
                     `objects/${encodeURIComponent(folder)}/info.json`,
-                    { cache: 'no-store' }
+                    {
+                        cache: 'no-store'
+                    }
                 );
 
             if (!infoResponse.ok) {
@@ -584,22 +789,35 @@
             const data =
                 await infoResponse.json();
 
+
+            /*
+             * Заголовок.
+             */
+
             titleElement.textContent =
                 data.title || '';
+
+
+            /*
+             * Полное описание.
+             */
 
             descriptionElement.textContent =
                 data.description || '';
 
+
             /*
-             * Возврат в категорию.
+             * Кнопка назад.
              *
-             * Если у предмета есть подкатегория,
-             * возвращаем именно в неё.
-             * Если подкатегория отсутствует или равна "-",
-             * возвращаем в категорию.
+             * Если есть подкатегория:
+             * предмет → подкатегория
+             *
+             * Если подкатегории нет:
+             * предмет → категория
              */
 
             if (data.category) {
+
                 let backUrl =
                     `category.html?category=${encodeURIComponent(data.category)}`;
 
@@ -607,34 +825,60 @@
                     data.subcategory &&
                     data.subcategory !== '-'
                 ) {
+
                     backUrl +=
                         `&subcategory=${encodeURIComponent(data.subcategory)}`;
                 }
 
-                backLink.href = backUrl;
+                backLink.href =
+                    backUrl;
+
                 backLink.textContent =
                     '← Категория';
+
             } else {
-                backLink.href = 'index.html';
+
+                backLink.href =
+                    'index.html';
+
                 backLink.textContent =
                     '← Каталог';
             }
 
+
+            /*
+             * Фотографии.
+             */
+
             photos =
                 await findPhotos(folder);
 
-            if (photos.length) {
+            if (photos.length > 0) {
+
                 gallery.classList.remove('hidden');
 
-                showPhoto(0, false);
+                showPhoto(
+                    0,
+                    false
+                );
 
                 updateArrows();
+
+            } else {
+
+                gallery.classList.add('hidden');
             }
+
+
+            /*
+             * Заключение эксперта.
+             */
 
             const expertiseFile =
                 await findExpertise(folder);
 
             if (expertiseFile) {
+
                 expertise.classList.remove('hidden');
 
                 expertiseOpen.href =
@@ -642,9 +886,15 @@
 
                 expertiseDownload.href =
                     expertiseFile;
+
+            } else {
+
+                expertise.classList.add('hidden');
             }
 
+
         } catch (error) {
+
             console.error(error);
 
             titleElement.textContent =
@@ -652,10 +902,16 @@
 
             descriptionElement.textContent =
                 '';
+
+            gallery.classList.add('hidden');
+
+            expertise.classList.add('hidden');
         }
     }
 
+
     loadItem();
+
 </script>
 
 </body>
