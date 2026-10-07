@@ -1,900 +1,1474 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Предмет</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Страница предмета</title>
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background: #000;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<style>
 
-        body {
-            min-height: 100vh;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .container {
-            width: min(1100px, calc(100% - 40px));
-            margin: 0 auto;
-            padding: 40px 0 80px;
-        }
+html,
+body {
+    margin: 0;
+    padding: 0;
 
-        .back {
-            display: inline-block;
-            margin-bottom: 45px;
-            color: #999;
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.2s ease;
-        }
+    background: #000;
+    color: #fff;
 
-        .back:hover {
-            color: #fff;
-        }
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        h1 {
-            max-width: 850px;
-            margin: 0 auto 45px;
-            font-size: 34px;
-            line-height: 1.25;
-            font-weight: 400;
-            text-align: center;
-        }
+body {
+    min-height: 100vh;
+}
 
-        .gallery {
-            position: relative;
-            width: 100%;
-            padding: 0 65px;
-            margin-bottom: 55px;
-        }
+.page {
+    width: 100%;
+    max-width: 1300px;
 
-        .gallery-frame {
-            position: relative;
-            width: 100%;
-            height: 65vh;
-            min-height: 400px;
-            max-height: 700px;
+    margin: 0 auto;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    padding: 30px 30px 100px;
 
-            overflow: hidden;
-            background: #000;
-        }
+    text-align: center;
+}
 
-        .gallery-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
 
-            cursor: zoom-in;
-            user-select: none;
-            -webkit-user-drag: none;
+/* =========================
+   НАЗАД
+========================= */
 
-            transition:
-                opacity 0.25s ease,
-                transform 0.25s ease;
-        }
+.back {
+    display: block;
 
-        .gallery-frame.zoomed img {
-            cursor: zoom-out;
-        }
+    width: fit-content;
 
-        .gallery-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+    margin-bottom: 35px;
 
-            width: 48px;
-            height: 48px;
+    color: #777;
 
-            border: 0;
-            background: transparent;
-            color: #fff;
+    font-size: 14px;
 
-            font-size: 34px;
-            line-height: 1;
+    text-decoration: none;
 
-            cursor: pointer;
-            z-index: 5;
+    transition: color 0.2s ease;
+}
 
-            opacity: 0.65;
-            transition: opacity 0.2s ease;
-        }
+.back:hover {
+    color: #fff;
+}
 
-        .gallery-arrow:hover {
-            opacity: 1;
-        }
 
-        .gallery-arrow.prev {
-            left: 5px;
-        }
+/* =========================
+   ФОТОГАЛЕРЕЯ
+========================= */
 
-        .gallery-arrow.next {
-            right: 5px;
-        }
+.gallery {
+    position: relative;
 
-        .description {
-            max-width: 720px;
-            margin: 0 auto 70px;
-            padding: 0 20px;
+    width: 100%;
 
-            text-align: left;
-            white-space: pre-line;
+    display: flex;
 
-            font-size: 17px;
-            line-height: 1.75;
-        }
+    justify-content: center;
+    align-items: center;
 
-        .expertise {
-            max-width: 720px;
-            margin: 0 auto;
+    margin-bottom: 15px;
+}
 
-            padding: 30px 20px 0;
-            border-top: 1px solid #222;
-        }
 
-        .expertise-title {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
+/*
+ * Это поле существует сразу,
+ * даже пока фотография ещё грузится.
+ */
 
-        .expertise-links {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-        }
+.photo-container {
 
-        .expertise-links a {
-            color: #aaa;
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.2s ease;
-        }
+    position: relative;
 
-        .expertise-links a:hover {
-            color: #fff;
-        }
+    width: min(1000px, 88vw);
 
-        .hidden {
-            display: none;
-        }
+    height: min(700px, 70vh);
 
-        @media (max-width: 700px) {
-            .container {
-                width: calc(100% - 28px);
-                padding-top: 28px;
-            }
+    min-height: 420px;
 
-            .back {
-                margin-bottom: 35px;
-            }
+    display: flex;
 
-            h1 {
-                margin-bottom: 30px;
-                font-size: 27px;
-            }
+    align-items: center;
+    justify-content: center;
 
-            .gallery {
-                padding: 0 48px;
-                margin-bottom: 40px;
-            }
+    overflow: hidden;
 
-            .gallery-frame {
-                height: 52vh;
-                min-height: 280px;
-                max-height: 520px;
-            }
+    background: #050505;
+}
 
-            .gallery-arrow {
-                width: 40px;
-                height: 40px;
-                font-size: 28px;
-            }
 
-            .gallery-arrow.prev {
-                left: 2px;
-            }
+/*
+ * Надпись во время загрузки
+ */
 
-            .gallery-arrow.next {
-                right: 2px;
-            }
+.photo-loading {
 
-            .description {
-                padding: 0 10px;
-                margin-bottom: 50px;
-                font-size: 16px;
-                line-height: 1.7;
-            }
+    position: absolute;
 
-            .expertise {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-        }
-    </style>
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #666;
+
+    font-size: 14px;
+
+    transition: opacity 0.3s ease;
+}
+
+
+/*
+ * Фотография
+ */
+
+.photo-container img {
+
+    max-width: 100%;
+    max-height: 100%;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.25s ease;
+
+    cursor: zoom-in;
+
+    user-select: none;
+}
+
+
+/*
+ * Когда фотография загрузилась
+ */
+
+.photo-container.loaded img {
+    opacity: 1;
+}
+
+.photo-container.loaded .photo-loading {
+    opacity: 0;
+}
+
+
+/*
+ * Увеличение фотографии
+ */
+
+.photo-container.zoomed {
+    cursor: zoom-out;
+}
+
+.photo-container.zoomed img {
+    transform: scale(2.2);
+}
+
+
+/* =========================
+   СТРЕЛКИ
+========================= */
+
+.arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 52px;
+    height: 52px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.08);
+
+    color: #fff;
+
+    font-size: 32px;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    transition:
+        background 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.arrow:hover {
+    background: rgba(255,255,255,0.18);
+}
+
+.arrow:disabled {
+    opacity: 0.25;
+
+    cursor: default;
+}
+
+.arrow-left {
+    left: 10px;
+}
+
+.arrow-right {
+    right: 10px;
+}
+
+
+/* =========================
+   СЧЁТЧИК
+========================= */
+
+.photo-counter {
+
+    margin: 15px 0 50px;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   ИНФОРМАЦИЯ
+========================= */
+
+.content {
+
+    max-width: 800px;
+
+    margin: 0 auto;
+}
+
+h1 {
+
+    margin: 0 0 35px;
+
+    font-size: clamp(26px, 4vw, 44px);
+
+    font-weight: 400;
+
+    line-height: 1.15;
+}
+
+
+.description {
+
+    max-width: 700px;
+
+    margin: 0 auto 60px;
+
+    padding: 0 20px;
+
+    color: #ddd;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+
+    white-space: pre-line;
+}
+
+
+/* =========================
+   ЭКСПЕРТИЗА
+========================= */
+
+.expertise {
+
+    width: 100%;
+
+    margin: 0 auto;
+
+    padding-top: 40px;
+
+    border-top: 1px solid #222;
+}
+
+.expertise-title {
+
+    margin-bottom: 30px;
+
+    color: #777;
+
+    font-size: 13px;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+}
+
+.pdf-viewer {
+
+    width: 100%;
+
+    height: 1100px;
+
+    display: block;
+
+    border: none;
+
+    background: #fff;
+}
+
+.expertise-download {
+
+    display: inline-block;
+
+    margin-top: 25px;
+
+    padding: 12px 24px;
+
+    border: 1px solid #444;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.expertise-download:hover {
+
+    background: #fff;
+
+    color: #000;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================
+   МОБИЛЬНАЯ ВЕРСИЯ
+========================= */
+
+@media (max-width: 600px) {
+
+    .page {
+
+        padding: 20px 15px 60px;
+    }
+
+    .back {
+
+        margin-bottom: 25px;
+    }
+
+    .photo-container {
+
+        width: 100%;
+
+        height: 58vh;
+
+        min-height: 330px;
+    }
+
+    .arrow {
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 25px;
+    }
+
+    .arrow-left {
+        left: 0;
+    }
+
+    .arrow-right {
+        right: 0;
+    }
+
+    h1 {
+
+        margin-bottom: 25px;
+    }
+
+    .description {
+
+        padding: 0 10px;
+
+        font-size: 16px;
+
+        line-height: 1.65;
+    }
+
+    .pdf-viewer {
+
+        height: 800px;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-<div class="container">
+<div class="page">
 
-    <a href="index.html" class="back" id="back-link">
-        ← Категория
+
+    <!-- НАЗАД -->
+
+    <a
+        id="back"
+        class="back"
+        href="index.html">
+
+        ← Каталог
+
     </a>
 
-    <h1 id="title"></h1>
 
-    <div id="gallery" class="gallery hidden">
+    <!-- ФОТОГАЛЕРЕЯ -->
+
+    <div
+        class="gallery"
+        id="gallery">
+
 
         <button
-            class="gallery-arrow prev"
+            class="arrow arrow-left"
             id="prev"
-            type="button"
-            aria-label="Предыдущее фото"
-        >‹</button>
+            aria-label="Предыдущая фотография">
 
-        <div class="gallery-frame" id="gallery-frame">
-            <img id="main-image" alt="">
+            ‹
+
+        </button>
+
+
+        <div
+            class="photo-container"
+            id="photo-container">
+
+
+            <div
+                class="photo-loading"
+                id="photo-loading">
+
+                Фотографии загружаются…
+
+            </div>
+
+
+            <img
+                id="photo"
+                src=""
+                alt="">
+
+
         </div>
 
+
         <button
-            class="gallery-arrow next"
+            class="arrow arrow-right"
             id="next"
-            type="button"
-            aria-label="Следующее фото"
-        >›</button>
+            aria-label="Следующая фотография">
+
+            ›
+
+        </button>
+
 
     </div>
 
-    <div id="description" class="description"></div>
 
-    <div id="expertise" class="expertise hidden">
+    <div
+        class="photo-counter"
+        id="counter">
+    </div>
+
+
+    <!-- ИНФОРМАЦИЯ -->
+
+    <main class="content">
+
+
+        <h1 id="title"></h1>
+
+
+        <div
+            class="description"
+            id="description">
+        </div>
+
+
+    </main>
+
+
+    <!-- ЭКСПЕРТИЗА -->
+
+    <section
+        class="expertise hidden"
+        id="expertise">
+
 
         <div class="expertise-title">
-            Заключение эксперта
-        </div>
 
-        <div class="expertise-links">
-
-            <a
-                id="expertise-open"
-                href="#"
-                target="_blank"
-                rel="noopener"
-            >Открыть</a>
-
-            <a
-                id="expertise-download"
-                href="#"
-                download
-            >Скачать</a>
+            Экспертное заключение
 
         </div>
 
-    </div>
+
+        <iframe
+            id="pdf-viewer"
+            class="pdf-viewer"
+            src="">
+        </iframe>
+
+
+        <a
+            id="expertise-download"
+            class="expertise-download"
+            href=""
+            download>
+
+            Скачать экспертное заключение
+
+        </a>
+
+
+    </section>
+
 
 </div>
 
+
 <script>
-    const titleElement =
-        document.getElementById('title');
 
-    const descriptionElement =
-        document.getElementById('description');
-
-    const backLink =
-        document.getElementById('back-link');
-
-    const gallery =
-        document.getElementById('gallery');
-
-    const galleryFrame =
-        document.getElementById('gallery-frame');
-
-    const mainImage =
-        document.getElementById('main-image');
-
-    const prevButton =
-        document.getElementById('prev');
-
-    const nextButton =
-        document.getElementById('next');
-
-    const expertise =
-        document.getElementById('expertise');
-
-    const expertiseOpen =
-        document.getElementById('expertise-open');
-
-    const expertiseDownload =
-        document.getElementById('expertise-download');
-
-    const params =
-        new URLSearchParams(window.location.search);
-
-    const objectNumber =
-        params.get('object');
-
-    let photos = [];
-    let currentPhoto = 0;
-
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchMoved = false;
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
 
-    /*
-     * Проверяем существование изображения
-     * обычной загрузкой Image.
-     */
+const objectId =
+    params.get("object");
 
-    function checkImage(url) {
-        return new Promise(resolve => {
 
-            const image = new Image();
+let photos = [];
 
-            image.onload = () => {
-                resolve(url);
-            };
+let currentPhoto = 0;
 
-            image.onerror = () => {
-                resolve(null);
-            };
+let objectFolder = "";
 
-            image.src = url;
-        });
+let photoLoading = false;
+
+
+/* =========================
+   ЭЛЕМЕНТЫ
+========================= */
+
+const gallery =
+    document.getElementById("gallery");
+
+const photoContainer =
+    document.getElementById(
+        "photo-container"
+    );
+
+const photoLoadingText =
+    document.getElementById(
+        "photo-loading"
+    );
+
+const photo =
+    document.getElementById("photo");
+
+const counter =
+    document.getElementById("counter");
+
+const prev =
+    document.getElementById("prev");
+
+const next =
+    document.getElementById("next");
+
+const title =
+    document.getElementById("title");
+
+const description =
+    document.getElementById(
+        "description"
+    );
+
+const back =
+    document.getElementById("back");
+
+
+/* =========================
+   URL ФАЙЛОВ
+========================= */
+
+function fileUrl(fileName) {
+
+    return (
+        "objects/" +
+        encodeURIComponent(objectFolder) +
+        "/" +
+        encodeURIComponent(fileName)
+    );
+}
+
+
+/* =========================
+   ЗАГРУЗКА ПРЕДМЕТА
+========================= */
+
+async function loadObject() {
+
+    if (!objectId) {
+
+        title.textContent =
+            "Предмет не указан";
+
+        gallery.classList.add("hidden");
+
+        counter.classList.add("hidden");
+
+        return;
     }
 
 
-    /*
-     * Ищем фотографии.
-     *
-     * photo-01, photo-02, photo-03...
-     *
-     * Поддерживаются jpg/jpeg/png/webp/gif.
-     */
+    try {
 
-    async function findPhotos(folder) {
+        /*
+         * catalog.json
+         */
 
-        const extensions = [
-            'jpg',
-            'jpeg',
-            'png',
-            'webp',
-            'gif'
-        ];
-
-        const result = [];
-
-        for (let i = 1; i <= 100; i++) {
-
-            const number =
-                String(i).padStart(2, '0');
-
-            const candidates =
-                extensions.map(extension =>
-                    `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`
-                );
-
-            const loaded =
-                await Promise.all(
-                    candidates.map(checkImage)
-                );
-
-            const found =
-                loaded.find(url => url !== null);
-
-            if (found) {
-
-                result.push(found);
-
-            } else if (result.length > 0) {
-
-                /*
-                 * Фотографии идут подряд.
-                 * Если уже нашли хотя бы одну и
-                 * следующий номер отсутствует —
-                 * прекращаем поиск.
-                 */
-
-                break;
-            }
-        }
-
-        return result;
-    }
-
-
-    /*
-     * Ищем заключение эксперта.
-     */
-
-    async function findExpertise(folder) {
-
-        const filenames = [
-            'expertise-001.pdf',
-            'expertise-002.pdf',
-            'expertise.pdf'
-        ];
-
-        for (const filename of filenames) {
-
-            const url =
-                `objects/${encodeURIComponent(folder)}/${filename}`;
-
-            try {
-
-                const response =
-                    await fetch(url, {
-                        cache: 'no-store'
-                    });
-
-                if (response.ok) {
-                    return url;
+        const catalogResponse =
+            await fetch(
+                "catalog.json",
+                {
+                    cache: "no-cache"
                 }
+            );
 
-            } catch {
-                // следующий файл
+
+        if (!catalogResponse.ok) {
+
+            throw new Error(
+                "Не удалось загрузить catalog.json"
+            );
+        }
+
+
+        const catalog =
+            await catalogResponse.json();
+
+
+        objectFolder =
+            catalog[objectId];
+
+
+        if (!objectFolder) {
+
+            throw new Error(
+                "Предмет не найден"
+            );
+        }
+
+
+        /*
+         * info.json
+         */
+
+        const infoResponse =
+            await fetch(
+                fileUrl("info.json"),
+                {
+                    cache: "no-cache"
+                }
+            );
+
+
+        if (!infoResponse.ok) {
+
+            throw new Error(
+                "Не удалось загрузить info.json"
+            );
+        }
+
+
+        const data =
+            await infoResponse.json();
+
+
+        /*
+         * Заголовок
+         */
+
+        document.title =
+            data.title ||
+            "Страница предмета";
+
+
+        title.textContent =
+            data.title || "";
+
+
+        description.textContent =
+            data.description || "";
+
+
+        /*
+         * Ссылка назад
+         */
+
+        if (data.category) {
+
+            let url =
+                "category.html?category=" +
+                encodeURIComponent(
+                    data.category
+                );
+
+
+            if (
+                data.subcategory &&
+                data.subcategory !== "-"
+            ) {
+
+                url +=
+                    "&subcategory=" +
+                    encodeURIComponent(
+                        data.subcategory
+                    );
             }
-        }
-
-        return null;
-    }
 
 
-    /*
-     * Показ фотографии.
-     */
+            back.href = url;
 
-    function showPhoto(index, animate = true) {
-
-        if (!photos.length) {
-            return;
-        }
-
-        currentPhoto =
-            (index + photos.length) %
-            photos.length;
-
-        resetZoom();
-
-        if (animate) {
-
-            mainImage.style.opacity = '0';
-
-            setTimeout(() => {
-
-                mainImage.src =
-                    photos[currentPhoto];
-
-                mainImage.style.opacity = '1';
-
-            }, 120);
+            back.textContent =
+                "← Категория";
 
         } else {
 
-            mainImage.src =
-                photos[currentPhoto];
+            back.href =
+                "index.html";
 
-            mainImage.style.opacity = '1';
+            back.textContent =
+                "← Каталог";
         }
+
+
+        /*
+         * Сразу запускаем загрузку
+         * фотографий.
+         *
+         * Экспертизу грузим отдельно,
+         * чтобы она не задерживала галерею.
+         */
+
+        loadPhotos();
+
+        loadExpertise();
+
     }
 
+    catch (error) {
 
-    function updateArrows() {
+        console.error(error);
 
-        const visible =
-            photos.length > 1;
+        title.textContent =
+            "Не удалось загрузить предмет.";
 
-        prevButton.style.display =
-            visible ? 'block' : 'none';
-
-        nextButton.style.display =
-            visible ? 'block' : 'none';
     }
 
+}
+
+
+/* =========================
+   ФОТОГРАФИИ
+========================= */
+
+async function loadPhotos() {
 
     /*
-     * Лупа.
+     * Галерея уже существует на странице.
+     * Поэтому пользователь сразу видит
+     * поле и надпись о загрузке.
      */
 
-    function resetZoom() {
-
-        galleryFrame.classList.remove('zoomed');
-
-        mainImage.style.transform =
-            'scale(1)';
-
-        mainImage.style.transformOrigin =
-            'center center';
-    }
-
-
-    function toggleZoom(x, y) {
-
-        if (!photos.length) {
-            return;
-        }
-
-        if (
-            galleryFrame.classList.contains('zoomed')
-        ) {
-
-            resetZoom();
-            return;
-        }
-
-        const rect =
-            galleryFrame.getBoundingClientRect();
-
-        const originX =
-            ((x - rect.left) / rect.width) * 100;
-
-        const originY =
-            ((y - rect.top) / rect.height) * 100;
-
-        mainImage.style.transformOrigin =
-            `${originX}% ${originY}%`;
-
-        mainImage.style.transform =
-            'scale(2.2)';
-
-        galleryFrame.classList.add('zoomed');
-    }
-
-
-    /*
-     * Кнопки.
-     */
-
-    prevButton.addEventListener(
-        'click',
-        () => showPhoto(currentPhoto - 1)
-    );
-
-    nextButton.addEventListener(
-        'click',
-        () => showPhoto(currentPhoto + 1)
+    photoContainer.classList.remove(
+        "loaded"
     );
 
 
     /*
-     * Клавиатура.
+     * Получаем список файлов одним
+     * запросом к GitHub API.
+     *
+     * Это намного быстрее, чем
+     * проверять photo-01, photo-02...
+     * по отдельности.
      */
 
-    document.addEventListener(
-        'keydown',
-        event => {
-
-            if (event.key === 'ArrowLeft') {
-                showPhoto(currentPhoto - 1);
-            }
-
-            if (event.key === 'ArrowRight') {
-                showPhoto(currentPhoto + 1);
-            }
-
-            if (event.key === 'Escape') {
-                resetZoom();
-            }
-        }
-    );
+    const apiUrl =
+        "https://api.github.com/repos/" +
+        "mima12344/catalog/contents/objects/" +
+        encodeURIComponent(objectFolder) +
+        "?ref=main";
 
 
-    /*
-     * Клик мышью.
-     */
+    try {
 
-    mainImage.addEventListener(
-        'click',
-        event => {
+        const response =
+            await fetch(apiUrl);
 
-            if (touchMoved) {
-                touchMoved = false;
-                return;
-            }
 
-            toggleZoom(
-                event.clientX,
-                event.clientY
+        if (!response.ok) {
+
+            throw new Error(
+                "Не удалось получить список фотографий"
             );
         }
-    );
 
 
-    /*
-     * Телефон — начало свайпа.
-     */
-
-    mainImage.addEventListener(
-        'touchstart',
-        event => {
-
-            if (event.touches.length !== 1) {
-                return;
-            }
-
-            touchMoved = false;
-
-            touchStartX =
-                event.touches[0].clientX;
-
-            touchStartY =
-                event.touches[0].clientY;
-
-        },
-        {
-            passive: true
-        }
-    );
+        const files =
+            await response.json();
 
 
-    /*
-     * Телефон — движение.
-     */
+        /*
+         * Находим все фотографии.
+         */
 
-    mainImage.addEventListener(
-        'touchmove',
-        event => {
+        photos =
+            files
 
-            if (event.touches.length !== 1) {
-                return;
-            }
+                .filter(file => {
 
-            const deltaX =
-                event.touches[0].clientX -
-                touchStartX;
-
-            const deltaY =
-                event.touches[0].clientY -
-                touchStartY;
-
-            if (
-                Math.abs(deltaX) > 10 ||
-                Math.abs(deltaY) > 10
-            ) {
-                touchMoved = true;
-            }
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    /*
-     * Телефон — конец свайпа.
-     */
-
-    mainImage.addEventListener(
-        'touchend',
-        event => {
-
-            if (event.changedTouches.length !== 1) {
-                return;
-            }
-
-            const touch =
-                event.changedTouches[0];
-
-            const deltaX =
-                touch.clientX -
-                touchStartX;
-
-            const deltaY =
-                touch.clientY -
-                touchStartY;
-
-            if (
-                Math.abs(deltaX) < 50 ||
-                Math.abs(deltaX) <= Math.abs(deltaY)
-            ) {
-                return;
-            }
-
-            if (deltaX < 0) {
-                showPhoto(currentPhoto + 1);
-            } else {
-                showPhoto(currentPhoto - 1);
-            }
-
-        },
-        {
-            passive: true
-        }
-    );
-
-
-    /*
-     * Загружаем предмет.
-     */
-
-    async function loadItem() {
-
-        try {
-
-            const catalogResponse =
-                await fetch(
-                    'catalog.json',
-                    {
-                        cache: 'no-store'
+                    if (
+                        file.type !==
+                        "file"
+                    ) {
+                        return false;
                     }
+
+                    return /^photo-\d+\.(jpg|jpeg|png|webp|gif)$/i
+                        .test(
+                            file.name
+                        );
+                })
+
+                .sort((a, b) => {
+
+                    const numberA =
+                        parseInt(
+                            a.name.match(
+                                /^photo-(\d+)/i
+                            )[1],
+                            10
+                        );
+
+
+                    const numberB =
+                        parseInt(
+                            b.name.match(
+                                /^photo-(\d+)/i
+                            )[1],
+                            10
+                        );
+
+
+                    return (
+                        numberA -
+                        numberB
+                    );
+                })
+
+                .map(file =>
+                    file.name
                 );
 
-            if (!catalogResponse.ok) {
-                throw new Error(
-                    'Не удалось загрузить catalog.json'
-                );
-            }
 
-            const catalog =
-                await catalogResponse.json();
+        if (photos.length === 0) {
 
-            const folder =
-                catalog[objectNumber];
+            photoLoadingText.textContent =
+                "Фотографии отсутствуют";
 
-            if (!folder) {
-                throw new Error(
-                    'Предмет не найден'
-                );
-            }
+            prev.style.display =
+                "none";
 
+            next.style.display =
+                "none";
 
-            /*
-             * info.json
-             */
+            counter.textContent = "";
 
-            const infoResponse =
-                await fetch(
-                    `objects/${encodeURIComponent(folder)}/info.json`,
-                    {
-                        cache: 'no-store'
-                    }
-                );
-
-            if (!infoResponse.ok) {
-                throw new Error(
-                    'Не удалось загрузить info.json'
-                );
-            }
-
-            const data =
-                await infoResponse.json();
-
-
-            /*
-             * Название.
-             */
-
-            titleElement.textContent =
-                data.title || '';
-
-
-            /*
-             * Описание.
-             */
-
-            descriptionElement.textContent =
-                data.description || '';
-
-
-            /*
-             * Возврат.
-             */
-
-            if (data.category) {
-
-                let url =
-                    `category.html?category=${encodeURIComponent(data.category)}`;
-
-                if (
-                    data.subcategory &&
-                    data.subcategory !== '-'
-                ) {
-
-                    url +=
-                        `&subcategory=${encodeURIComponent(data.subcategory)}`;
-                }
-
-                backLink.href =
-                    url;
-
-                backLink.textContent =
-                    '← Категория';
-
-            } else {
-
-                backLink.href =
-                    'index.html';
-
-                backLink.textContent =
-                    '← Каталог';
-            }
-
-
-            /*
-             * Фотографии.
-             */
-
-            photos =
-                await findPhotos(folder);
-
-            if (photos.length > 0) {
-
-                gallery.classList.remove('hidden');
-
-                showPhoto(
-                    0,
-                    false
-                );
-
-                updateArrows();
-
-            } else {
-
-                gallery.classList.add('hidden');
-
-                console.error(
-                    'Фотографии не найдены:',
-                    folder
-                );
-            }
-
-
-            /*
-             * Экспертиза.
-             */
-
-            const expertiseFile =
-                await findExpertise(folder);
-
-            if (expertiseFile) {
-
-                expertise.classList.remove('hidden');
-
-                expertiseOpen.href =
-                    expertiseFile;
-
-                expertiseDownload.href =
-                    expertiseFile;
-
-            } else {
-
-                expertise.classList.add('hidden');
-            }
-
-        } catch (error) {
-
-            console.error(error);
-
-            titleElement.textContent =
-                'Предмет не найден';
-
-            descriptionElement.textContent =
-                '';
-
-            gallery.classList.add('hidden');
-
-            expertise.classList.add('hidden');
+            return;
         }
+
+
+        /*
+         * Сразу начинаем загружать
+         * первую фотографию.
+         */
+
+        showPhoto(0);
+
+
+        /*
+         * Остальные фотографии
+         * загружаются в фоне.
+         */
+
+        preloadPhotos();
+
+
+        /*
+         * Стрелки.
+         */
+
+        if (photos.length === 1) {
+
+            prev.style.display =
+                "none";
+
+            next.style.display =
+                "none";
+
+            counter.textContent =
+                "1 / 1";
+
+        } else {
+
+            prev.style.display =
+                "";
+
+            next.style.display =
+                "";
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        photoLoadingText.textContent =
+            "Не удалось загрузить фотографии";
+
+    }
+
+}
+
+
+/* =========================
+   ПРЕДЗАГРУЗКА
+========================= */
+
+function preloadPhotos() {
+
+    photos.forEach(
+        (fileName, index) => {
+
+            /*
+             * Первую фотографию уже
+             * загружаем через showPhoto.
+             */
+
+            if (index === 0) {
+                return;
+            }
+
+
+            const image =
+                new Image();
+
+
+            image.src =
+                fileUrl(fileName);
+        }
+    );
+
+}
+
+
+/* =========================
+   ПОКАЗ ФОТО
+========================= */
+
+function showPhoto(index) {
+
+    if (
+        photos.length === 0 ||
+        photoLoading
+    ) {
+        return;
     }
 
 
-    loadItem();
+    currentPhoto =
+        index;
+
+
+    const url =
+        fileUrl(
+            photos[currentPhoto]
+        );
+
+
+    /*
+     * Сбрасываем увеличение.
+     */
+
+    photoContainer.classList.remove(
+        "zoomed"
+    );
+
+
+    /*
+     * Пока новая фотография
+     * не загрузилась, оставляем
+     * предыдущую фотографию.
+     */
+
+    const newImage =
+        new Image();
+
+
+    newImage.onload =
+        function () {
+
+            photo.src =
+                url;
+
+
+            photo.alt =
+                title.textContent;
+
+
+            photoContainer.classList.add(
+                "loaded"
+            );
+
+
+            photoLoadingText.textContent =
+                "";
+
+
+            counter.textContent =
+                `${currentPhoto + 1} / ${photos.length}`;
+        };
+
+
+    newImage.onerror =
+        function () {
+
+            console.error(
+                "Не удалось загрузить:",
+                url
+            );
+
+        };
+
+
+    newImage.src =
+        url;
+}
+
+
+/* =========================
+   СТРЕЛКА НАЗАД
+========================= */
+
+prev.addEventListener(
+    "click",
+    function () {
+
+        if (
+            photos.length === 0
+        ) {
+            return;
+        }
+
+
+        let index =
+            currentPhoto - 1;
+
+
+        if (index < 0) {
+
+            index =
+                photos.length - 1;
+        }
+
+
+        showPhoto(index);
+    }
+);
+
+
+/* =========================
+   СТРЕЛКА ВПЕРЁД
+========================= */
+
+next.addEventListener(
+    "click",
+    function () {
+
+        if (
+            photos.length === 0
+        ) {
+            return;
+        }
+
+
+        let index =
+            currentPhoto + 1;
+
+
+        if (
+            index >=
+            photos.length
+        ) {
+
+            index = 0;
+        }
+
+
+        showPhoto(index);
+    }
+);
+
+
+/* =========================
+   КЛАВИАТУРА
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
+
+            prev.click();
+        }
+
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            next.click();
+        }
+
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            photoContainer.classList.remove(
+                "zoomed"
+            );
+        }
+    }
+);
+
+
+/* =========================
+   УВЕЛИЧЕНИЕ
+========================= */
+
+photoContainer.addEventListener(
+    "click",
+    function (event) {
+
+        /*
+         * Не увеличиваем, если нажали
+         * на пустое поле до загрузки.
+         */
+
+        if (
+            !photoContainer.classList.contains(
+                "loaded"
+            )
+        ) {
+            return;
+        }
+
+
+        /*
+         * Если нажали на фотографию,
+         * рассчитываем точку увеличения.
+         */
+
+        if (
+            event.target !== photo
+        ) {
+            return;
+        }
+
+
+        if (
+            photoContainer.classList.contains(
+                "zoomed"
+            )
+        ) {
+
+            photoContainer.classList.remove(
+                "zoomed"
+            );
+
+            photo.style.transformOrigin =
+                "center center";
+
+            return;
+        }
+
+
+        const rect =
+            photo.getBoundingClientRect();
+
+
+        const x =
+            (
+                (event.clientX -
+                rect.left) /
+                rect.width
+            ) * 100;
+
+
+        const y =
+            (
+                (event.clientY -
+                rect.top) /
+                rect.height
+            ) * 100;
+
+
+        photo.style.transformOrigin =
+            `${x}% ${y}%`;
+
+
+        photoContainer.classList.add(
+            "zoomed"
+        );
+
+    }
+);
+
+
+/* =========================
+   СВАЙП НА ТЕЛЕФОНЕ
+========================= */
+
+let touchStartX = 0;
+
+let touchStartY = 0;
+
+
+photoContainer.addEventListener(
+    "touchstart",
+    function (event) {
+
+        if (
+            event.touches.length !== 1
+        ) {
+            return;
+        }
+
+
+        touchStartX =
+            event.touches[0].clientX;
+
+
+        touchStartY =
+            event.touches[0].clientY;
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+photoContainer.addEventListener(
+    "touchend",
+    function (event) {
+
+        if (
+            event.changedTouches.length !== 1
+        ) {
+            return;
+        }
+
+
+        const endX =
+            event.changedTouches[0].clientX;
+
+
+        const endY =
+            event.changedTouches[0].clientY;
+
+
+        const deltaX =
+            endX - touchStartX;
+
+
+        const deltaY =
+            endY - touchStartY;
+
+
+        /*
+         * Реагируем только на
+         * горизонтальный свайп.
+         */
+
+        if (
+            Math.abs(deltaX) < 50 ||
+            Math.abs(deltaX) <
+            Math.abs(deltaY)
+        ) {
+            return;
+        }
+
+
+        if (deltaX < 0) {
+
+            next.click();
+
+        } else {
+
+            prev.click();
+        }
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+/* =========================
+   ЭКСПЕРТИЗА
+========================= */
+
+async function loadExpertise() {
+
+    try {
+
+        const apiUrl =
+            "https://api.github.com/repos/" +
+            "mima12344/catalog/contents/objects/" +
+            encodeURIComponent(objectFolder) +
+            "?ref=main";
+
+
+        const response =
+            await fetch(apiUrl);
+
+
+        if (!response.ok) {
+            return;
+        }
+
+
+        const files =
+            await response.json();
+
+
+        const expertiseFile =
+            files.find(
+                file =>
+                    file.type ===
+                    "file" &&
+                    /^expertise.*\.pdf$/i
+                        .test(file.name)
+            );
+
+
+        if (!expertiseFile) {
+            return;
+        }
+
+
+        const file =
+            fileUrl(
+                expertiseFile.name
+            );
+
+
+        const expertise =
+            document.getElementById(
+                "expertise"
+            );
+
+
+        const viewer =
+            document.getElementById(
+                "pdf-viewer"
+            );
+
+
+        const download =
+            document.getElementById(
+                "expertise-download"
+            );
+
+
+        viewer.src =
+            file + "#view=FitH";
+
+
+        download.href =
+            file;
+
+
+        expertise.classList.remove(
+            "hidden"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================
+   ЗАПУСК
+========================= */
+
+loadObject();
+
 </script>
 
 </body>
