@@ -244,9 +244,7 @@
             id="prev"
             type="button"
             aria-label="Предыдущее фото"
-        >
-            ‹
-        </button>
+        >‹</button>
 
         <div class="gallery-frame" id="gallery-frame">
             <img id="main-image" alt="">
@@ -257,9 +255,7 @@
             id="next"
             type="button"
             aria-label="Следующее фото"
-        >
-            ›
-        </button>
+        >›</button>
 
     </div>
 
@@ -278,17 +274,13 @@
                 href="#"
                 target="_blank"
                 rel="noopener"
-            >
-                Открыть
-            </a>
+            >Открыть</a>
 
             <a
                 id="expertise-download"
                 href="#"
                 download
-            >
-                Скачать
-            </a>
+            >Скачать</a>
 
         </div>
 
@@ -345,12 +337,13 @@
 
 
     /*
-     * Загружает фотографию напрямую.
-     * Никаких HEAD-запросов.
+     * Проверяем существование изображения
+     * обычной загрузкой Image.
      */
 
-    function tryLoadImage(url) {
-        return new Promise((resolve) => {
+    function checkImage(url) {
+        return new Promise(resolve => {
+
             const image = new Image();
 
             image.onload = () => {
@@ -367,11 +360,15 @@
 
 
     /*
-     * Ищем photo-01.jpg ... photo-100.jpg.
-     * Каждый файл проверяется обычной загрузкой изображения.
+     * Ищем фотографии.
+     *
+     * photo-01, photo-02, photo-03...
+     *
+     * Поддерживаются jpg/jpeg/png/webp/gif.
      */
 
     async function findPhotos(folder) {
+
         const extensions = [
             'jpg',
             'jpeg',
@@ -380,47 +377,49 @@
             'gif'
         ];
 
-        const foundPhotos = [];
+        const result = [];
 
         for (let i = 1; i <= 100; i++) {
 
             const number =
                 String(i).padStart(2, '0');
 
-            let found = false;
+            const candidates =
+                extensions.map(extension =>
+                    `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`
+                );
 
-            for (const extension of extensions) {
+            const loaded =
+                await Promise.all(
+                    candidates.map(checkImage)
+                );
 
-                const url =
-                    `objects/${encodeURIComponent(folder)}/photo-${number}.${extension}`;
+            const found =
+                loaded.find(url => url !== null);
 
-                const result =
-                    await tryLoadImage(url);
+            if (found) {
 
-                if (result) {
-                    foundPhotos.push(result);
-                    found = true;
-                    break;
-                }
+                result.push(found);
+
+            } else if (result.length > 0) {
+
+                /*
+                 * Фотографии идут подряд.
+                 * Если уже нашли хотя бы одну и
+                 * следующий номер отсутствует —
+                 * прекращаем поиск.
+                 */
+
+                break;
             }
-
-            /*
-             * Если фотографии закончились,
-             * дальше обычно уже ничего нет.
-             *
-             * Продолжаем поиск, если это просто
-             * пропущенный номер.
-             */
         }
 
-        return foundPhotos;
+        return result;
     }
 
 
     /*
-     * Заключение эксперта.
-     * Тоже проверяем обычной загрузкой,
-     * но через fetch GET, а не HEAD.
+     * Ищем заключение эксперта.
      */
 
     async function findExpertise(folder) {
@@ -437,9 +436,9 @@
                 `objects/${encodeURIComponent(folder)}/${filename}`;
 
             try {
+
                 const response =
                     await fetch(url, {
-                        method: 'GET',
                         cache: 'no-store'
                     });
 
@@ -448,7 +447,7 @@
                 }
 
             } catch {
-                // продолжаем искать следующий вариант
+                // следующий файл
             }
         }
 
@@ -467,7 +466,8 @@
         }
 
         currentPhoto =
-            (index + photos.length) % photos.length;
+            (index + photos.length) %
+            photos.length;
 
         resetZoom();
 
@@ -494,26 +494,21 @@
     }
 
 
-    /*
-     * Показываем стрелки только если
-     * фотографий больше одной.
-     */
-
     function updateArrows() {
 
-        const shouldShow =
+        const visible =
             photos.length > 1;
 
         prevButton.style.display =
-            shouldShow ? 'block' : 'none';
+            visible ? 'block' : 'none';
 
         nextButton.style.display =
-            shouldShow ? 'block' : 'none';
+            visible ? 'block' : 'none';
     }
 
 
     /*
-     * Сброс увеличения.
+     * Лупа.
      */
 
     function resetZoom() {
@@ -528,13 +523,7 @@
     }
 
 
-    /*
-     * Лупа.
-     * Первое нажатие — увеличение вокруг точки.
-     * Второе — возврат.
-     */
-
-    function toggleZoom(clientX, clientY) {
+    function toggleZoom(x, y) {
 
         if (!photos.length) {
             return;
@@ -543,6 +532,7 @@
         if (
             galleryFrame.classList.contains('zoomed')
         ) {
+
             resetZoom();
             return;
         }
@@ -550,14 +540,14 @@
         const rect =
             galleryFrame.getBoundingClientRect();
 
-        const x =
-            ((clientX - rect.left) / rect.width) * 100;
+        const originX =
+            ((x - rect.left) / rect.width) * 100;
 
-        const y =
-            ((clientY - rect.top) / rect.height) * 100;
+        const originY =
+            ((y - rect.top) / rect.height) * 100;
 
         mainImage.style.transformOrigin =
-            `${x}% ${y}%`;
+            `${originX}% ${originY}%`;
 
         mainImage.style.transform =
             'scale(2.2)';
@@ -567,21 +557,17 @@
 
 
     /*
-     * Стрелки.
+     * Кнопки.
      */
 
     prevButton.addEventListener(
         'click',
-        () => {
-            showPhoto(currentPhoto - 1);
-        }
+        () => showPhoto(currentPhoto - 1)
     );
 
     nextButton.addEventListener(
         'click',
-        () => {
-            showPhoto(currentPhoto + 1);
-        }
+        () => showPhoto(currentPhoto + 1)
     );
 
 
@@ -591,7 +577,7 @@
 
     document.addEventListener(
         'keydown',
-        (event) => {
+        event => {
 
             if (event.key === 'ArrowLeft') {
                 showPhoto(currentPhoto - 1);
@@ -609,17 +595,12 @@
 
 
     /*
-     * Обычный клик мышью по фотографии.
+     * Клик мышью.
      */
 
     mainImage.addEventListener(
         'click',
-        (event) => {
-
-            /*
-             * Если это был свайп на телефоне,
-             * click после него не должен включать лупу.
-             */
+        event => {
 
             if (touchMoved) {
                 touchMoved = false;
@@ -635,12 +616,12 @@
 
 
     /*
-     * Свайп на телефоне.
+     * Телефон — начало свайпа.
      */
 
     mainImage.addEventListener(
         'touchstart',
-        (event) => {
+        event => {
 
             if (event.touches.length !== 1) {
                 return;
@@ -661,9 +642,13 @@
     );
 
 
+    /*
+     * Телефон — движение.
+     */
+
     mainImage.addEventListener(
         'touchmove',
-        (event) => {
+        event => {
 
             if (event.touches.length !== 1) {
                 return;
@@ -691,9 +676,13 @@
     );
 
 
+    /*
+     * Телефон — конец свайпа.
+     */
+
     mainImage.addEventListener(
         'touchend',
-        (event) => {
+        event => {
 
             if (event.changedTouches.length !== 1) {
                 return;
@@ -703,15 +692,12 @@
                 event.changedTouches[0];
 
             const deltaX =
-                touch.clientX - touchStartX;
+                touch.clientX -
+                touchStartX;
 
             const deltaY =
-                touch.clientY - touchStartY;
-
-            /*
-             * Это просто тап.
-             * Лупу обработает click.
-             */
+                touch.clientY -
+                touchStartY;
 
             if (
                 Math.abs(deltaX) < 50 ||
@@ -734,7 +720,7 @@
 
 
     /*
-     * Загрузка предмета.
+     * Загружаем предмет.
      */
 
     async function loadItem() {
@@ -769,7 +755,7 @@
 
 
             /*
-             * Загружаем info.json.
+             * info.json
              */
 
             const infoResponse =
@@ -791,7 +777,7 @@
 
 
             /*
-             * Заголовок.
+             * Название.
              */
 
             titleElement.textContent =
@@ -799,7 +785,7 @@
 
 
             /*
-             * Полное описание.
+             * Описание.
              */
 
             descriptionElement.textContent =
@@ -807,18 +793,12 @@
 
 
             /*
-             * Кнопка назад.
-             *
-             * Если есть подкатегория:
-             * предмет → подкатегория
-             *
-             * Если подкатегории нет:
-             * предмет → категория
+             * Возврат.
              */
 
             if (data.category) {
 
-                let backUrl =
+                let url =
                     `category.html?category=${encodeURIComponent(data.category)}`;
 
                 if (
@@ -826,12 +806,12 @@
                     data.subcategory !== '-'
                 ) {
 
-                    backUrl +=
+                    url +=
                         `&subcategory=${encodeURIComponent(data.subcategory)}`;
                 }
 
                 backLink.href =
-                    backUrl;
+                    url;
 
                 backLink.textContent =
                     '← Категория';
@@ -867,11 +847,16 @@
             } else {
 
                 gallery.classList.add('hidden');
+
+                console.error(
+                    'Фотографии не найдены:',
+                    folder
+                );
             }
 
 
             /*
-             * Заключение эксперта.
+             * Экспертиза.
              */
 
             const expertiseFile =
@@ -892,7 +877,6 @@
                 expertise.classList.add('hidden');
             }
 
-
         } catch (error) {
 
             console.error(error);
@@ -911,7 +895,6 @@
 
 
     loadItem();
-
 </script>
 
 </body>
