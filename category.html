@@ -455,7 +455,7 @@ const grid =
 
 
 /* =========================
-   ЗАГОЛОВОК
+   ЗАГОЛОВОК И ВКЛАДКА
 ========================= */
 
 if (category) {
@@ -470,6 +470,18 @@ if (category) {
     title.textContent =
         "Все предметы";
 }
+
+
+/*
+ * Название во вкладке браузера
+ */
+
+document.title =
+    subcategory
+        ? subcategory
+        : category
+            ? category
+            : "Все предметы";
 
 
 /* =========================
@@ -498,14 +510,6 @@ function findFirstPhoto(
     folder,
     img
 ) {
-
-    /*
-     * Сначала jpg — это основной
-     * формат каталога.
-     *
-     * Если его нет, пробуем
-     * остальные форматы.
-     */
 
     const extensions = [
         "jpg",
@@ -723,8 +727,7 @@ function createCard(
 
 
     /*
-     * Начинаем загрузку фотографии
-     * сразу после создания карточки.
+     * Загружаем фотографию
      */
 
     findFirstPhoto(
@@ -764,8 +767,8 @@ async function loadCatalog() {
 
 
         /*
-         * Загружаем все info.json
-         * параллельно.
+         * Загружаем info.json
+         * всех предметов параллельно.
          */
 
         const objects =
