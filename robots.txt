@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://katanagallery.ru/sitemap.xml
+Sitemap: https://www.katanagallery.ru/sitemap.xml
