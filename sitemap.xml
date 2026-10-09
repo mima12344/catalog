@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Главная -->
   <url>
     <loc>https://www.katanagallery.ru/</loc>
   </url>
+
+  <!-- Весь каталог -->
   <url>
     <loc>https://www.katanagallery.ru/category.html</loc>
   </url>
+
+  <!-- Категория: Катана -->
+  <url>
+    <loc>https://www.katanagallery.ru/category.html?category=Катана</loc>
+  </url>
+
+  <!-- Предмет 001 -->
+  <url>
+    <loc>https://www.katanagallery.ru/item.html?object=001</loc>
+  </url>
+
+  <!-- Предмет 002 -->
+  <url>
+    <loc>https://www.katanagallery.ru/item.html?object=002</loc>
+  </url>
+
 </urlset>
